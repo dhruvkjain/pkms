@@ -2,7 +2,7 @@
     title: Dhruv Jain's PKMS
 ---
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=40&duration=2500&pause=1000&color=1FFF0F&vCenter=true&random=false&width=680&lines=Hi%2C+I+am+Dhruv+Jain;Welcome+to+my+knowledge+base)](https://git.io/typing-svg)
+![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=40&duration=2500&pause=1000&color=1FFF0F&vCenter=true&random=false&width=680&lines=Hi%2C+I+am+Dhruv+Jain;Welcome+to+my+PKMS)
 
 
 ## Note :
