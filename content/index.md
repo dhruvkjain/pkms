@@ -11,9 +11,7 @@ I have tried my best to keep all this in simpliest and easiest form.
 ### "Storms in my head ruin the garden that my heart holds". 
 ### This quote inspired me to organize my mind more to avoid such storms.
 
-For my current leanings visit : [[what_im_learning]]
+---
+### For my current leanings visit : [[what_im_learning]]
 
 ---
-
-#### All References for Graph View :
-[[Web Dev/index|index]], [[System Design/index|index]], [[ML/index|index]], [[QT/index|index]], [[UI-UX]], [[Rust]], [[Random]], [[OS]], [[AI and WebDev]], [[Courses]], [[MATLAB]], [[GitHub]], [[Ethical Hacking]], [[DSA]]

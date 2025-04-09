@@ -1,5 +1,6 @@
 [[Web Dev/index|index]]
 [[ML/index|index]]
+[[index]]
 
 # ML+ web dev (learning): 
 https://m.youtube.com/playlist?list=PLOU2XLYxmsILr3HQpqjLAUkIPa5EaZiui

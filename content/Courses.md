@@ -1,3 +1,4 @@
+[[index]]
 # Py Torch (ZTM 2023): 
 [Py Torch For Deep Learning In 2023 Zero To Mastery : Free Download, Borrow, and Streaming : Internet Archive](https://archive.org/details/py-torch-for-deep-learning-in-2023-zero-to-mastery)
 Main Course Videos :

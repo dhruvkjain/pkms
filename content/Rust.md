@@ -1,3 +1,5 @@
+[[index]]
+
 70% of errors listed in MISRA rules for C++ to avoid error are avoided by RUST by default. 
 # Learning Resources
 - [ ] [A 10-minute lightning talk taking you from zero to Rust!](https://youtu.be/br3GIIQeefY?si=6V39a6fD_djz44cL)

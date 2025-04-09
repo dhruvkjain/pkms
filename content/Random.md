@@ -1,3 +1,5 @@
+[[index]]
+
 ## Random
 - [To make README easily](https://readme.so/editor)
 - [overapi CHEATSHEATS](https://overapi.com/)

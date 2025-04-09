@@ -1,3 +1,5 @@
+[[index]]
+
 # Basics :
 
 You can save variables that are accessible to any `script(.m) or livescript(.mlx)` in a `.mat` file and access it anywhere.
