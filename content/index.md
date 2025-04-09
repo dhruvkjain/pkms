@@ -14,4 +14,4 @@ I have tried my best to keep all this in simpliest and easiest form.
 ---
 ### For my current leanings visit : [[what_im_learning]]
 
----
+
