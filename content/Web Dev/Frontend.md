@@ -218,6 +218,12 @@
     - Zapier end to end
     - Real world open source projects
 
+# **`Animation/Components libraries`**:
+- transitions between your website’s pages - https://barba.js.org/
+- Animations: https://animejs.com/
+- Animations: https://gsap.com/
+- Components: https://ui.shadcn.com/
+
 # **`TOOLS/WEBSITES`**:
 
 - [Free for Developers (free-for.dev)](https://free-for.dev/#/)

@@ -1,4 +1,4 @@
-[[index]]
+[[index|Home]]
 
 70% of errors listed in MISRA rules for C++ to avoid error are avoided by RUST by default. 
 # Learning Resources

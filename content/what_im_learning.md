@@ -1,4 +1,4 @@
-[[index]]
+[[index|Home]]
 [[Tech Articles & Videos]]
 
 ## what_im_learning
@@ -9,4 +9,4 @@
 - C++ design patterns for low-latency applications including high-frequency trading: 
 	  https://arxiv.org/pdf/2309.04259
 - [How to Create Your Own Google Chrome Extension (freecodecamp.org)](https://www.freecodecamp.org/news/building-chrome-extension/)
-- create my own language: https://craftinginterpreters.com/
+- create my own language: https://craftinginterpreters.com/5

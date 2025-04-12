@@ -1,4 +1,4 @@
-[[index]]
+[[index|Home]]
 
 ## Random
 - [To make README easily](https://readme.so/editor)

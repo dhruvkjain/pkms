@@ -1,4 +1,4 @@
-[[ML/index|index]]
+[[ML/index|ML/index]]
 
 # Tensorflow.js : 
 https://m.youtube.com/playlist?list=PLOU2XLYxmsILr3HQpqjLAUkIPa5EaZiui

@@ -1,4 +1,4 @@
-[[index]]
+[[index|Home]]
 
 ## Architecture ([[System Design/index|for concepts]])
 - How Hotstar Application Scaled 25 Million Concurrent Users | Performance Testing | Load Testing: https://www.youtube.com/watch?v=9b7HNzBB3OQ

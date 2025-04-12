@@ -1,6 +1,7 @@
 ---
     title: ML
 ---
+[[index|Home]]
 # Roadmap :
 [Machine Learning Roadmap 2020 (whimsical.com)](https://whimsical.com/machine-learning-roadmap-2020-CA7f3ykvXpnJ9Az32vYXva)
 # Project ideas :

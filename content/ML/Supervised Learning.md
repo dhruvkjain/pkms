@@ -1,4 +1,4 @@
-[[ML/index|index]]
+[[ML/index|ML/index]]
 
 # Supervised Learning Algorithms:
 

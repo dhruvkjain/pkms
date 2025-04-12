@@ -1,6 +1,8 @@
 ---
     title: QT
 ---
+[[index|Home]]
+
 >In Qt, when you attempt to open a resource file (indicated by the `:/` prefix), you cannot open it for writing (`QIODevice::ReadWrite`). Resource files are typically compiled into your application's binary and are read-only by default. Therefore, attempting to open a resource file for writing will fail, resulting in the error you encountered.
 
 >To set equal portions in Layout :

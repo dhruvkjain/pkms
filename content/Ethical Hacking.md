@@ -1,4 +1,4 @@
-[[index]]
+[[index|Home]]
 
 [OverTheWire: Wargames](https://overthewire.org/wargames/)
 
