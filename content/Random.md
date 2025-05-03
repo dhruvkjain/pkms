@@ -1,6 +1,7 @@
 [[index|Home]]
 
 ## Random
+- Linux wallpapers: https://wallhaven.cc/hot?page=2
 - [To make README easily](https://readme.so/editor)
 - [overapi CHEATSHEATS](https://overapi.com/)
 - [quickref CHEATSHEATS](https://quickref.me/)

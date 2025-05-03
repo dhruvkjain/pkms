@@ -22,3 +22,5 @@ So instead of seeking validation from society, deep thinkers should embrace soli
 People who can deliver more simpler, emotional and instant content without any depth gets more attention which kind of chambers a person into beliefs and perspectives of the content they consume.
 
 *"Socrates" -> The unexamined life is not worth living.*
+
+[[Philosophy/index|Philosophy/index]]
