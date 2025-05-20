@@ -1,4 +1,4 @@
-[[index|Home]]
+[[DSA_CP/index|DSA_CP/index]]
 
 Striver sheet A2Z : 
 https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/

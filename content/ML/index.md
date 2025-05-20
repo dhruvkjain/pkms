@@ -2,22 +2,32 @@
     title: ML
 ---
 [[index|Home]]
-# Roadmap :
+# Roadmap
 [Machine Learning Roadmap 2020 (whimsical.com)](https://whimsical.com/machine-learning-roadmap-2020-CA7f3ykvXpnJ9Az32vYXva)
-# Project ideas :
+# Project ideas
 [Machine Learning Projects - YouTube](https://www.youtube.com/playlist?list=PLfFghEzKVmjvuSA67LszN1dZ-Dd_pkus6)
+
+# Mathematics
+
+[The Complete Mathematics of Neural Networks and Deep Learning (youtube.com)](https://www.youtube.com/watch?v=Ixl3nykKG9M)
+
+
+# Machine Learning
+- [MLU-Explain](https://mlu-explain.github.io/)is an education initiative from Amazon designed to teach machine learning theory and practical application.
+- [Machine Learning University (MLU)](https://aws.amazon.com/machine-learning/mlu/) 
+- Teaching library for machine learning engineers [MiniTorch](https://minitorch.github.io/)
+- Detailed and clear explanation of ML https://distill.pub/
+- A work-in-progress to catalog the state of **machine learning in Rust**: https://www.arewelearningyet.com/
+
+# Deep Learning
+https://course.fast.ai/
+
 
 # GenAI :
 [genieincodebottle/generative-ai: Comprehensive resources on Generative AI, including a detailed roadmap, projects, use cases, interview preparation, and coding preparation. (github.com)](https://github.com/genieincodebottle/generative-ai/tree/main)
-### Teaching library for machine learning engineers [MiniTorch](https://minitorch.github.io/)
-### [Machine Learning University (MLU)](https://aws.amazon.com/machine-learning/mlu/) 
 
-### [MLU-Explain](https://mlu-explain.github.io/)is an education initiative from Amazon designed to teach machine learning theory and practical application.
 
-# Deploy Flask Application on Google Cloud:
-https://www.youtube.com/watch?v=sqUuofLBfFw
 
-[The Complete Mathematics of Neural Networks and Deep Learning (youtube.com)](https://www.youtube.com/watch?v=Ixl3nykKG9M)
 # Courses :
 
 [Python code for ML , only main implementation and basic idea](https://www.youtube.com/playlist?list=PL7yh-TELLS1EZGz1-VDltwdwZvPV-jliQ)
@@ -43,6 +53,9 @@ https://www.youtube.com/watch?v=sqUuofLBfFw
 - [Introduction - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/chapter1/1)
 
 [The spelled-out intro to neural networks and backpropagation: building micrograd (youtube.com)](https://www.youtube.com/watch?v=VMj-3S1tku0&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
+
+### Deploy Flask Application on Google Cloud:
+https://www.youtube.com/watch?v=sqUuofLBfFw
 
 
 

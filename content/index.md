@@ -9,7 +9,6 @@ This knowledge base contains random methods and resources which I discovered and
 I have tried my best to keep all this in simpliest and easiest form.
 
 ### "Storms in my head ruin the garden that my heart holds". 
-### This quote inspired me to organize my mind more to avoid such storms.
 
 ---
 ### For my current leanings visit : [[what_im_learning]]
