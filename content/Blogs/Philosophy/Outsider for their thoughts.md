@@ -23,4 +23,4 @@ People who can deliver more simpler, emotional and instant content without any d
 
 *"Socrates" -> The unexamined life is not worth living.*
 
-[[Philosophy/index|Philosophy/index]]
+[[Blogs/Philosophy/index|Philosophy/index]]
