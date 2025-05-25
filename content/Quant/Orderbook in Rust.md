@@ -1,5 +1,7 @@
+[[Quant/index|index]]
 
 https://lobsterdata.com/
+
 https://www.kaggle.com/datasets/freemanone/fi2010
 
 an orderbook is a store of **buy(bid)** and **sell(ask)** orders for a specific asset/financial instrument usually organized by **price-time priority**.
