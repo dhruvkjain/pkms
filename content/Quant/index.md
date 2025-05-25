@@ -10,3 +10,8 @@ https://www.youtube.com/@imctrading6385
 
 
 IMC Lauchpad Program: https://www.imc.com/in/careers/students-graduates/programs/launchpad
+
+## Research Papers:
+- Apr 2019: [ABIDES: TOWARDS HIGH-FIDELITY MARKET SIMULATION FOR AI RESEARCH](https://arxiv.org/pdf/1904.12066)
+- Sep 2023: [C++ design patterns for low-latency applications including high-frequency trading](https://arxiv.org/pdf/2309.04259)
+
