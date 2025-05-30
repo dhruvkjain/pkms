@@ -1,4 +1,4 @@
-[[Quant/index|index]]
+[[Quant/index|Quant/index]]
 
 https://lobsterdata.com/
 
@@ -12,8 +12,8 @@ inshort: It shows who wants to **buy or sell**, **how much**, and **at what pric
 The different **"levels"** of order book data represent **how much information** is being shown or used.
 1. **Level 1 (L1) - Top of the book**
 		Best Bid Offer (BBO), 
-		best ask ==> minimum ask somebody is willing to accept
-		best bid ==> highest someone is willing to pay
+		best ask => minimum ask somebody is willing to accept
+		best bid => highest someone is willing to pay
 2. **Level 2 (L2) – Market Depth**
 		Market by Price (MBP),
 		Shows multiple prices, their quantity, number of asks/bids
@@ -29,9 +29,9 @@ The different **"levels"** of order book data represent **how much information**
 
 
 ## Rust details:
-`Box<T>` – Single Owner, Heap Allocation
-`Rc<T>` – Multiple Owners (Single Thread)
-`Arc<T>` – Multiple Owners (Multi-Thread)
+- `Box<T>` – Single Owner, Heap Allocation
+- `Rc<T>` – Multiple Owners (Single Thread) - [Rc docs](https://doc.rust-lang.org/rust-by-example/std/rc.html)
+- `Arc<T>` – Multiple Owners (Multi-Thread) - 
 
 If you want **mutability** inside `Rc` or `Arc`, wrap your type:
 - `Rc<RefCell<T>>` for single-threaded mutable access
