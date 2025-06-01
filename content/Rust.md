@@ -1,6 +1,10 @@
 [[index|Home]]
 
 70% of errors listed in MISRA rules for C++ to avoid error are avoided by RUST by default. 
+
+Use static dispatch instead of dynamic dispatch and don't use OOP's as much as possible and in case of a vector of trait that is implemented by multiple structs use enum
+example: https://youtu.be/0XFq9K7N9o4?si=5ehhwDs4HURIhAa1
+
 # Learning Resources
 - [ ] [A 10-minute lightning talk taking you from zero to Rust!](https://youtu.be/br3GIIQeefY?si=6V39a6fD_djz44cL)
 - [ ] [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)

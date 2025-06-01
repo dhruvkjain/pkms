@@ -153,4 +153,6 @@ pub fn ncr(n: usize, r: usize) -> usize {
     let denominator: usize = (1..=r).product();
     return numerator / denominator
 } 
+
+// add binary search algorithms
 ```

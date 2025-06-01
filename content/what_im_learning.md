@@ -8,6 +8,7 @@
 	  https://arxiv.org/pdf/2309.04259
 
 ## Ideas
+- Qualitative ESG rating project [MSCI dataset](https://www.msci.com/data-and-analytics/sustainability-solutions/esg-ratings) 
 - [Sharing a state between windows without a server - DEV Community](https://dev.to/notachraf/sharing-a-state-between-windows-without-a-serve-23an)
 - [How to Create Your Own Google Chrome Extension (freecodecamp.org)](https://www.freecodecamp.org/news/building-chrome-extension/)
 - create my own language: https://craftinginterpreters.com/5

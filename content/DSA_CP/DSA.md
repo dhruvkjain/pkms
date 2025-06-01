@@ -6,6 +6,9 @@ https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2
 Siddh recommendation:
 https://youkn0wwho.academy/topic-list
 
+CP-algorithms:
+https://cp-algorithms.com/
+
 CSES Problemset:
 https://cses.fi/problemset/
 
