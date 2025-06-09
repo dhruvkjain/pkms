@@ -15,6 +15,9 @@ IMC Lauchpad Program: https://www.imc.com/in/careers/students-graduates/programs
 - Apr 2019: [ABIDES: TOWARDS HIGH-FIDELITY MARKET SIMULATION FOR AI RESEARCH](https://arxiv.org/pdf/1904.12066)
 - Sep 2023: [C++ design patterns for low-latency applications including high-frequency trading](https://arxiv.org/pdf/2309.04259)
 
+## Varsity by Zerodha
+https://zerodha.com/varsity/
+
 ## Basics GK 
 Data are of two types Quantitative and Qualitative 
 - **Quantitative** => you can measure => Finance is all about numbers => Quant Finance => Data-driven, analytical, model-based
