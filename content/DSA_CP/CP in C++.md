@@ -27,7 +27,7 @@ vector<vector<int>> merge(vector<vector<int>>& intervals) {
 }
 ```
 
-***Merge two Sorted Arrays Without Extra Space***
+### Merge two Sorted Arrays Without Extra Space
 ```cpp
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 	int i = m+n-1;
@@ -52,9 +52,9 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 }
 ```
 
-***Count Inversion***
+### Count Inversion
 
-***Reverse Pairs***
+### Reverse Pairs
 ```cpp
 
 ```
@@ -137,7 +137,7 @@ int main()
 }
 ```
 
-***Upper Lower Bounds***
+### Upper Lower Bounds
 ```cpp
 int lower_bound(vector<int>& arr, int x) {
 	int pos = arr.size();
@@ -314,7 +314,7 @@ int findPeakElement(vector<int>& nums) {
 when you can find a range in which answer lies and can eliminate some segments based on condition and can find min or max using the low high pointers.
 **condition is always like after some elements all further elements are either possible or not possible.**
 
-***Koko Eating Bananas***
+### Koko Eating Bananas
 ```cpp
 int timeReq(vector<int>& piles, int k){
 	int time = 0;
@@ -515,7 +515,7 @@ so it's like :
 let `n` be highest possible so for max(min) we will return max i.e highest i.e `n`.
 if `n` is highest possible the `n-1` is lowest for not possible answer i.e min(max).
 
-***Aggressive Cows***
+### Aggressive Cows
 max(min) type
 ```cpp
 bool canWePlaceCows (vector<int>& stalls, int dist, int cows) {
@@ -553,7 +553,7 @@ int aggressiveCows(vector<int> &stalls, int k) {
 }
 ```
 
-***Allocate Minimum Number of Pages***
+### Allocate Minimum Number of Pages
 min(max) type
 ```cpp
 bool canAllotPage(vector<int>& pageNumbers, int m, int capacity) {
@@ -595,7 +595,7 @@ int allocatePages(vector<int>& pageNumbers, int m) {
 }
 ```
 
-***Split Array - Largest Sum***
+### Split Array - Largest Sum
 min(max) type
 ```cpp
 int countPartitions (vector<int>& nums, int capacity) {
@@ -677,7 +677,7 @@ int paintersProblem (vector<int>& boards, int k) {
 }
 ```
 
-***Minimize Maximum Distance between Gas Stations***
+### Minimize Maximum Distance between Gas Stations
 min(max) type, but we have to place them so the points are also variable not like Aggressive Cows questions where we had to place cows on given stalls, therefore for this problem we have to find optimal way to reduce maximum distance which is:
 place new stations between largest gaps and distribute equal length of distance/gap between them.
 
@@ -721,7 +721,7 @@ bool isIsomorphic(string s, string t) {
 }
 ```
 
-***Sort characters by frequency***
+### Sort characters by frequency
 ```cpp
 string frequencySort(string s) {
   unordered_map<char, int> freq;
@@ -750,7 +750,7 @@ string frequencySort(string s) {
 }
 ```
 
-**Count Number of Homogenous Substrings**
+### Count Number of Homogenous Substrings
 A string is **homogenous** if all the characters of the string are the same.
 ```
 Input: s = "abbcccaa"
@@ -792,7 +792,7 @@ int countHomogenous(string s) {
 }
 ```
 
-***Longest Palindromic Substring***
+### Longest Palindromic Substring
 ```cpp
 int expandAroundCenter(string s, int left, int right) {
 	while (left >= 0 && right < s.length() && s[left] == s[right]) {
@@ -824,7 +824,7 @@ string longestPalindrome(string s) {
 }
 ```
 
-***Sum of Beauty of All Substrings***
+### Sum of Beauty of All Substrings
 ```cpp
 int beautySum(string s) {
 	int n = s.size();
@@ -857,7 +857,7 @@ https://cp-algorithms.com/string/string-hashing.html
 # Linked List
 the fast slow pointers used here are very useful in array and in general traversal of any data structure.
 
-***Middle element in a Linked List***
+### Middle element in a Linked List
 two pointer fast and slow such that fast moves 2 * slows so in O(N/2) we can find middle element. 
 ```cpp
 ListNode* middleNode(ListNode* head) {
@@ -873,7 +873,7 @@ ListNode* middleNode(ListNode* head) {
 }
 ```
 
-Reverse a linked list (iterative)
+### Reverse a linked list (iterative)
 ```cpp
 ListNode* reverseList(ListNode* head) {
 	ListNode* prev = nullptr;
@@ -907,7 +907,7 @@ ListNode* reverseList(ListNode* head) {
 }
 ```
 
-**Detect Loop in Linked List using 2 pointer (fast and slow):**
+### Detect Loop in Linked List using 2 pointer (fast and slow)
 inside loop, slow move by 1 and fast by 2 so each iteration causes distance between them to reduce by 1
 ```cpp
 bool hasCycle(ListNode *head) {
@@ -922,7 +922,7 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-**Find Starting point of Loop in Linked List (fast and slow):**
+### Find Starting point of Loop in Linked List (fast and slow)
 If distance from starting of Linked List to starting of Loop is `d`, then
 the collision point of fast and slow is always mid point of loop,
 which is `d` so:
@@ -1013,7 +1013,7 @@ ListNode* oddEvenList(ListNode* head) {
 }
 ```
 
-**Remove Nth node from the end (i.e. (length-N)th node):**
+### Remove Nth node from the end (i.e. (length-N)th node)
 To reach nth node from end, 
 we first move fast pointer `n` nodes so now it has `length-n` nodes left 
 so now if we start moving slow pointer from start till fast pointer cover `length-n` nodes
@@ -1105,7 +1105,7 @@ ListNode* sortList(ListNode* head) {
 }
 ```
 
- **Intersection Node of Two Linked Lists:**
+### Intersection Node of Two Linked Lists
 ```cpp
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 	if (headA == NULL || headB == NULL) {
@@ -1132,5 +1132,190 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 	return t1;
 }
 ```
+
+reverse K nodes groups:
+```cpp
+ListNode* reverseList(ListNode* head) {
+	ListNode* prev = nullptr;
+	ListNode* next = head;
+	ListNode* curr = head;
+	
+	while (next!=nullptr) {
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	
+	return prev;
+}
+
+ListNode* getKthNode(ListNode* temp, int k){
+	k -= 1; 
+	while(temp != nullptr && k > 0){
+		k--; 
+		temp = temp -> next; 
+	}
+	return temp; 
+}
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+	ListNode* temp = head; 
+	ListNode* prevLast = nullptr; 
+	
+	while(temp != nullptr){
+		ListNode* kThNode = getKthNode(temp, k); 
+		if(kThNode == nullptr){
+			if(prevLast){
+				prevLast -> next = temp; 
+			}
+			break; 
+		}
+		
+		ListNode* nextNode = kThNode -> next;
+		kThNode -> next = nullptr; 
+		reverseList(temp); 
+		
+		if(temp == head){
+			head = kThNode;
+		}else{
+			prevLast -> next = kThNode; 
+		}
+		
+		prevLast = temp; 
+		temp = nextNode; 
+	}
+	
+	return head; 
+}
+```
+
+
+# Recursion
+[Binary Exponentiation - Errichto](https://youtu.be/L-Wzglnm4dM?si=Mj1RGDW4XQHRt1hA)
+```cpp
+double myPow(double x, int n) {
+	double res = 1;
+	long long nn = n;
+	if (nn<0) {
+		nn = -1*nn;
+		x = 1/x;
+	}
+	while (nn > 0) {
+		if (nn%2 == 1) res*=x;
+		x *= x;
+		nn /= 2;
+	}
+	
+	return res;
+}
+```
+
+Recursive backtracking is complex, but very useful when we have to conditionally skip/create a branch of choices
+Though in below example it's not that useful
+
+Generate Binary Strings Without Adjacent Zeros (Iterative)
+```cpp
+vector<string> generate_binary_strings(vector<string> bs, int n) {
+	vector<string> temp = bs; 
+    while (n--) {
+        vector<string> current = temp;
+        temp.clear();
+		
+        for (const auto& b : current) {
+            if (b.back() == '0') {
+                temp.push_back(b + '1');
+            } else {
+                temp.push_back(b + '0');
+                temp.push_back(b + '1');
+            }
+        }
+    }
+    return temp;
+}
+
+vector<string> validStrings(int n) {
+	return generate_binary_strings({"0", "1"}, n-1); 
+}
+```
+
+Generate Binary Strings Without Adjacent Zeros (Recursive)
+```cpp
+vector<string> generate_binary_strings(vector<string> bs, int n) {
+	if (n == 0) return bs;
+	
+	vector<string> current = bs;
+	bs.clear();
+	for (const auto& b : current) {
+		if (b.back() == '0') {
+			bs.push_back(b + '1');
+		} else {
+			bs.push_back(b + '0');
+			bs.push_back(b + '1');
+		}
+	}
+	
+	return generate_binary_strings(bs, n-1);
+}
+
+vector<string> validStrings(int n) {
+	return generate_binary_strings({"0","1"}, n-1);
+}
+```
+
+### Combination Sum:
+```cpp
+
+```
+
+# Bit Manipulation
+
+### Generate a Power set i.e all subsets i.e. all subsequences of an array
+outer loop from `0` to `2^n` generates masks 
+inner loop iterate through each bit in mask and if bit is `1` then take element from `nums` from that position.
+
+we use mask as a map to guide us which element to take by `&` operator checking for each bit if we want to take that element represented by `i` bit.
+```cpp
+vector<vector<int>> subsets(vector<int>& nums) {
+	int n = nums.size();
+	vector<vector<int>> subsets;
+	
+	for (long long mask=0; mask<(1<<n); mask++) {
+		vector<int> curr;
+		for (int j=0; j<n; j++) {
+			if (mask & (1<<j)) {
+				curr.push_back(nums[j]);
+			}
+		}
+		subsets.push_back(curr);
+	}
+	return subsets;
+}
+```
+
+Subsequences with sum equal to k 
+```cpp
+int subsequence_sum_equal_k(vector<int>& nums, int k) {
+	int n = nums.size();
+	int curr_cnt = 0;
+	
+	for (long long mask=0; mask<(1<<n); mask++) {
+		long long sum_of_this_subset = 0;
+		for (int j=0; j<n; j++) {
+			if (mask & (1<<j)) {
+				sum_of_this_subset += nums[j];
+			}
+		}
+		if (sum_of_this_subset == k) {
+			curr_cnt++;
+		}
+	}
+	
+	return curr_cnt;
+}
+```
+
+
+
 
 

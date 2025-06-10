@@ -3,19 +3,26 @@
 Striver sheet A2Z : 
 https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/
 
-Siddh recommendation:
+CP-31 sheet :
+https://www.tle-eliminators.com/cp-sheet
+
+Siddh recommendation :
 https://youkn0wwho.academy/topic-list
 
-CP-algorithms:
+Standard Questions :
+[NeetCode](https://neetcode.io/)
+[AlgoMap](https://algomap.io/)
+
+CP-algorithms :
 https://cp-algorithms.com/
 
-CSES Problemset:
+CSES Problemset :
 https://cses.fi/problemset/
 
-Codeforces all useful blogs:
+Codeforces all useful blogs :
 [I compiled a list of almost all useful blogs ever published on Codeforces [update: till 09.06.2021] - Codeforces](https://codeforces.com/blog/entry/91363)
 
-Youtube channels: 
+Youtube channels : 
 [Abdul Bari - YouTube](https://www.youtube.com/@abdul_bari)
 [Algorithms Conquered - YouTube](https://www.youtube.com/@AlgorithmsConquered)
 [CF Step - YouTube](https://www.youtube.com/@cfstepofficial)
@@ -23,13 +30,10 @@ Youtube channels:
 [Colin Galen - YouTube](https://www.youtube.com/@ColinGalen)
 [Binary Box - YouTube](https://www.youtube.com/@binarybox3681)
 
-Japanese ICPC contest website: 
+Japanese ICPC contest website : 
 [OI Wiki - OI Wiki (oi-wiki.org)](https://oi-wiki.org/)
 
 [Kyopro Encyclopedia of Algorithms | Kyopro Encyclopedia of Algorithms (noshi91.github.io)](https://noshi91.github.io/algorithm-encyclopedia/)
-
-[NeetCode](https://neetcode.io/)
-[AlgoMap - Free Data Structures & Algorithms Roadmap](https://algomap.io/)
 
 
 > Time and Space Complexity :
