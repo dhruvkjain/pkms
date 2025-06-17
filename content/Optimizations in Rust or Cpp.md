@@ -1,6 +1,7 @@
 [[Rust]]
 [[OS]]
 
+### SIMD (Single Instruction Multiple Data)
 [https://linebender.org/blog/towards-fearless-simd/]
 
 [The Future of SIMD, with Raph Levien](https://youtu.be/y0WcCUKxk50?si=XxrXi_L8rA_HNOlr)
@@ -13,3 +14,5 @@ let's say we have a if statement if A else B then, a SIMT compiler will map that
 `true` or `1` means operation proceeds
 `false` or `0` means operation is skipped
 
+### Layout biases measurement
+- ["Performance Matters" by Emery Berger](https://youtu.be/r-TLSBdHe1A)

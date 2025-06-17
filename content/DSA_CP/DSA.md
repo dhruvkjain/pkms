@@ -254,7 +254,7 @@ Note : for `1<<k`, `~(1<<k) == (1<<k)-1`
 `1<< k` make `100000..` 
 and `1<<k - 1` makes  `011111..`
 now if we do AND the we get only last k bits of x which represents remainder.
-### Swap 2 numbers using bit manupilation
+### Swap 2 numbers using bit manipulation
 `x = x^y` ==> `x = x^y , y = y`
 `y = x^y` ==> `x = x^y , y = x^y^y = x`
 `x = x^y` ==> `x = x^y^x = y , y = x`

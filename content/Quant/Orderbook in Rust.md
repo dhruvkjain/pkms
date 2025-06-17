@@ -27,6 +27,9 @@ The different **"levels"** of order book data represent **how much information**
 - **Pro-Rata Matching**: priority to high quantity at best price. Orders at the **same price level** are matched proportionally based on their sizes.
 - **Size-Time Priority** (Hybrid model): larger orders which came ahead of others get matched first if prices are equal. Orders are sorted first by size(like prorata), then by time within same size(like fifo).
 
+### Order Types:
+- **cancel-on-disconnect (COD)**: open orders to be canceled if we lose connection to the market in order to reduce risk. 
+- 
 
 ## Rust details:
 - `Box<T>` – Single Owner, Heap Allocation

@@ -1211,9 +1211,6 @@ double myPow(double x, int n) {
 }
 ```
 
-Recursive backtracking is complex, but very useful when we have to conditionally skip/create a branch of choices
-Though in below example it's not that useful
-
 Generate Binary Strings Without Adjacent Zeros (Iterative)
 ```cpp
 vector<string> generate_binary_strings(vector<string> bs, int n) {
@@ -1263,12 +1260,473 @@ vector<string> validStrings(int n) {
 }
 ```
 
-### Combination Sum:
-```cpp
+## Recursive Backtracking
+Recursive backtracking is complex, but very useful when we have to conditionally skip/create a branch of choices
+we can understand recursive backtracking with problems like conditional subsets
+how recursion might help ? -> In recursion if we know a branch won't yield the results we can simply skip whole branch. 
 
+lets say we have an array and we want to generate subsets what can we do ?
+Methods:
+1) Use bitmask (2^n * n) -> use only if use want all subsets as it's same as recursive but is simpler than recursive  
+2) Use Recursion -> for each element think if you want to take it or not sequentially
+		Example: Combination Sum I or Subsets I 
+3) Use Recursion -> sequentially pick how many elements you want in subsets
+		Example: Combination Sum II or Subsets II
+
+
+### Subsets II
+```cpp
+void findSubsets(int pos, vector<int>& nums, vector<vector<int>>& ans, vector<int>& ds){
+	ans.push_back(ds);
+	for (int i=pos; i<nums.size(); i++){
+		if(i!=pos && nums[i] == nums[i-1]) continue;
+		ds.push_back(nums[i]);
+		findSubsets(i+1, nums, ans, ds);
+		ds.pop_back();
+	}
+}
+
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+	vector<vector<int>> ans;
+	vector<int> ds;
+	
+	sort(nums.begin(), nums.end());
+	findSubsets(0, nums, ans, ds);
+	
+	return ans;
+}
 ```
 
+### Combination Sum
+all subsequences that sum up to target and **each element can be selected multiple times**
+```cpp
+void find_combinations (int pos, int target, vector<int>& candidates, vector<vector<int>>& ans, vector<int>& ds) {
+	if (pos == candidates.size()) {
+		if (target == 0){
+			ans.push_back(ds);
+		}
+		return;
+	}
+	
+	if (candidates[pos] <= target) {
+		ds.push_back(candidates[pos]);
+		// taking the same element again
+		find_combinations(pos, target - candidates[pos], candidates, ans, ds);
+		// after backtracking if this branch final ds does not sum up to target we pop back the element
+		ds.pop_back();
+	}
+	
+	// taking the next element
+	find_combinations(pos+1, target, candidates, ans, ds);
+}
+
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+	vector<vector<int>> ans;
+	vector<int> ds;
+	
+	find_combinations(0, target, candidates, ans, ds);
+	return ans;
+}
+```
+
+### Combination Sum II
+all subsequences that sum up to target and **each element can be selected once only**
+
+to solve this we can use similar method as used in Combination Sum, i.e at each point select or not select and then move ahead to next recursion with updated target and length of array. We just need to move to next element no matter what and use set to store.
+
+```cpp
+void find_unique_combinations (int pos, int target, vector<int>& candidates, set<vector<int>>& ans, vector<int>& ds) {
+	if (pos == candidates.size()) {
+		if (target == 0){
+			if (ans.find(ds) == ans.end()) {
+				ans.insert(ds);
+			}
+		}
+		return;
+	}
+	
+	if (candidates[pos] <= target) {
+		ds.push_back(candidates[pos]);
+		find_unique_combinations(pos+1, target - candidates[pos], candidates, ans, ds);
+		ds.pop_back();
+	}
+	
+    find_unique_combinations(pos+1, target, candidates, ans, ds);
+}
+
+vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+	set<vector<int>> ans;
+	vector<int> ds;
+	vector<vector<int>> res;
+	sort(candidates.begin(), candidates.end());
+	find_unique_combinations(0, target, candidates, ans, ds);
+	for (auto i : ans) {
+		res.push_back(i);
+	}
+	
+	return res;
+}
+```
+
+Here instead of picking not picking each element we pick every possible element that is unique for given length of subset
+```cpp
+void find_unique_combinations(int pos, int target, vector<int> &candidates, vector<vector<int>> &ans, vector<int> &ds) {
+	if (target == 0) {
+		ans.push_back(ds);
+		return;
+	}
+	for (int i = pos; i < candidates.size(); i++) {
+		// Skip duplicates at the same level
+		if (i != pos && candidates[i] == candidates[i - 1])
+			continue;
+		// Stop if the current element is too large
+		if (candidates[i] > target)
+			break;
+		// Include the current element
+		ds.push_back(candidates[i]);
+		find_unique_combinations(i + 1,target - candidates[i],candidates,ans,ds);
+		ds.pop_back(); // Backtrack
+	}
+}
+
+vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+	vector<vector<int>> ans;
+	vector<int> ds;
+	sort(candidates.begin(), candidates.end());
+	find_unique_combinations(0, target, candidates, ans, ds);
+	return ans;
+}
+```
+
+## Standard Recursive questions
+
+### Palindrome Partitioning
+```cpp
+bool ispalin(string s, int start, int end) {
+	while (start<=end) {
+		if (s[start++] != s[end--]) return false;
+	}
+	return true;
+}
+
+void func(int pos, string s, vector<vector<string>>& ans, vector<string>& ds) {
+	if (pos == s.size()) {
+		ans.push_back(ds);
+		return;
+	}
+	
+	for (int i=pos; i<s.size(); i++) {
+		if (ispalin(s, pos, i)) {
+			ds.push_back(s.substr(pos, i-pos+1));
+			func(i+1, s, ans, ds);
+			ds.pop_back();
+		}
+	}
+}
+
+vector<vector<string>> partition(string s) {
+	vector<vector<string>> ans;
+	vector<string> ds;
+	
+	func(0, s, ans, ds);
+	return ans;
+}
+```
+
+### Word Search in 2D Grid
+```cpp
+bool try_search(int pos, vector<vector<char>> board, string word, int i, int j, int n, int m) {
+	if (pos == word.length()) return true;
+
+	if (i < 0 || j < 0 || j == m || i == n || board[i][j] != word[pos] or board[i][j] == '!')
+		return false;
+
+	char temp = board[i][j]; 
+	board[i][j] = '!';
+	bool bottom = try_search(pos+1, board, word, i+1, j, n, m);
+	bool right = try_search(pos+1, board, word, i, j+1, n, m);
+	bool top = try_search(pos+1, board, word, i-1, j, n, m);
+	bool left = try_search(pos+1, board, word, i, j-1, n, m);
+	board[i][j] = temp;
+	
+	return top || bottom || right || left;
+}
+
+bool exist(vector<vector<char>>& board, string word) {
+	int n = board.size();
+	int m = board[0].size();
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<m; j++) {
+			if (board[i][j] == word[0]){
+				if (try_search(0, board, word, i, j, n, m)) return true;
+			} 
+		}
+	}
+	return false;
+}
+```
+
+
+
 # Bit Manipulation
+[Bitwise operations for beginners - Codeforces](https://codeforces.com/blog/entry/73490)
+https://youtu.be/LGrE0siZ-ZA?si=Ohjq6KG7pHqf8st0
+
+### Even or Odd
+```cpp
+if (x%2 == 0)    // even
+if (x&1 == 0)    // even (takes O(1) time dbetter way)
+```
+as last bit of every even number is `0`
+
+### Check if number is prime
+```cpp
+bool is_prime(int n) {
+	if (n<=1) return false;
+	if (n == 2) return true;
+	if ((n&1) == 0) return false;
+	
+	int root = sqrt(n);
+	for (int i=3; i<=root; i+=2) {
+		if (n%i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+```
+
+### Prime factors of a number
+if a number is divisible by `i`(lets say 2) then divide it till it can so that all multiples of `i` are removed and at last as we are iterating only till sqrt of n if a number is still in n then it is the prime factor above sqrt of n.
+```cpp
+vector<int> prime_factors(int n) {
+	int root = sqrt(n);
+	vector<int> factors;
+	
+	for (int i=2; i<=root; i++) {
+		if (n%i == 0) {
+			factors.push_back(i);
+			while (n%i == 0) {
+				n = n/i;
+			}
+		}
+	}
+	if (n!=1) factors.push_back(n);
+	
+	return factors;
+}
+```
+
+### factors of a number
+```cpp
+vector<int> all_factors(int n) {
+	vector<int> f1, f2;
+	int root = sqrt(n);
+	
+	for (int i=1; i<=root; i++) {
+		if (n%i == 0) {
+			f1.push_back(i);
+			if (i != n/i) {
+				f2.insert(f2.begin(), n/i);
+			}
+		}
+	}
+	
+	vector<int> result;
+	result.reserve(f1.size() + f2.size());
+	result.insert(result.end(), f1.begin(), f1.end());
+	result.insert(result.end(), f2.begin(), f2.end());
+	return result;
+}
+```
+
+### Sieve of Eratosthenes
+prime till n, mark all multiples of a number as 0 in an array
+```cpp
+vector<int> prime_till_n(int n) {
+	int primes[n+1];
+	for (int i=2; i<=n; i++) primes[i] = 1;
+	
+	for (int i=2; (i*i)<=n; i++) {
+		if (is_prime(i) == 1) {
+			for (int j=i*i; j<=n; j+=i){
+				primes[j] = 0;
+			}
+		}
+	}
+	
+	vector<int> result;
+	for (int i=2; i<=n; i++) {
+		if (primes[i] == 1) result.push_back(i);
+	}
+	
+	return result;
+}
+```
+
+### check if number is power of 2
+```cpp
+bool powerof2(int x){
+	return x && !( x&(x-1) )
+}
+```
+
+### Multiply or Divide a number by 2^k
+> `x * 2^k`  = `x<<k`
+> `x / 2^k  = x>>k`
+
+### kth bit:
+`1<<k = 2^k`
+
+> Toggle kth bit: `x ^ (1<<k)`
+> Set kth bit (make kth bit `1`): `x | (1<<k)`
+> Unset kth bit (make kth bit `0`): `x & ~(1<<k)`
+> Remove the last set bit (rightmost): `x & (x-1)`
+
+### Swap 2 numbers using bit manipulation
+`x = x^y` => `x = x^y , y = y`
+`y = x^y` => `x = x^y , y = x^y^y = x`
+`x = x^y` => `x = x^y^x = y , y = x`
+
+### Count number of set bits (traditional method)
+```cpp
+int count_set_bits(int n) {
+	int cnt = 0;
+	while (n>1) {
+		cnt += (n&1);
+		n = n>>1; 
+	}
+	if (n==1) cnt+=1;
+	return cnt;
+}
+```
+
+### Count number of set bits (each step we turn off the right most bit)
+```cpp
+int count_set_bits(int n) {
+	int cnt = 0;
+	while (n!=0) {
+		n = n&(n-1);
+		cnt++; 
+	}
+	return cnt;
+}
+```
+
+### Divide without division operator
+```cpp
+int divide(int dividend, int divisor) {
+	if(dividend == divisor) return 1;
+	bool sign = true;
+	if ((dividend>=0 && divisor<0) || (dividend<0 && divisor>0)) sign = false;
+	long long ans=0;
+	long long n = abs((long long)dividend);
+	long long d = abs((long long)divisor);
+	
+	while (n>=d) {
+		long long cnt = 0;
+		while(n>=(d<<(cnt+1))){
+			cnt++;
+		}
+		ans += (long long)1<<cnt;
+		n = n - (d*((long long)1<<cnt));
+	}
+	
+	if (ans>INT_MAX && sign) return INT_MAX;
+	if (ans>INT_MAX && !(sign)) return INT_MIN;
+	
+	return sign ? ans : (-1*ans);
+}
+```
+
+### XOR from 1 to n (follows a pattern)
+```cpp
+int xor_till_n(int n) {
+	if (n%4 == 0) return n;
+	else if (n%4 == 1) return 1;
+	else if (n%4 == 2) return n+1;
+	else return 0;
+}
+```
+
+### Single Number I
+all numbers appear twice except one that appear once
+sol :- xor of all numbers 
+```cpp
+int singleNumber(vector<int>& nums) {
+	int temp = 0;
+	for (auto i: nums){
+		temp ^= i;
+	}
+	return temp;
+}
+```
+
+### Single Number II
+all numbers appear thrice except one that appear once
+sol 1:- count the number of set bits at a single position in all numbers, if it's multiple of 3 then that bit of answer is 0 otherwise it's 1 
+```cpp
+int singleNumber(vector<int>& nums) {
+	int ans = 0;
+	for (int i=0; i<31; i++) {
+		int pos_bit = 1<<i;
+		int cnt = 0;
+		for (auto num: nums) {
+			if ((num&pos_bit) != 0) {
+				cnt++;
+			}
+		}
+		if ((cnt%3) != 0) {
+			ans |= pos_bit;
+		}
+	}
+	return ans;
+}
+```
+
+sol 2:- ones store numbers that appear once, if a number appear second time we store it in twos so, twos store numbers that appear twice and if number appear thrice we remove it from twos
+- now think that all thrice appearing numbers are together at start and last one is the answer (it's for understanding but it all works out for any order because we are dealing with bits)
+- now first we check if new number is not in twos (as not of number and number is zero) and if it's not in twos we add it in ones by xor (so that when we get second time it deletes and if it's first time xor of 0 and number occurs leading to number)
+- now check if new number is already in ones
+```cpp
+int singleNumber(vector<int>& nums) {
+	int ones = 0;
+	int twos = 0;
+	
+	for (const int num : nums) {
+		ones ^= (num & ~twos);
+		twos ^= (num & ~ones);
+	}
+	
+	return ones;
+}
+```
+
+### Single Number III
+two elements appear only once and all the other elements appear exactly twice.
+```cpp
+vector<int> singleNumber(vector<int>& nums) {
+	int n = nums.size();
+	long long xorr=0;
+	for (auto num: nums) {
+		xorr ^= num;
+	}
+	
+	long long right_most_set_bit = (xorr&(xorr-1))^xorr;
+	int bucket_1 = 0;
+	int bucket_2 = 0;
+	
+	for (auto num: nums) {
+		if (num&right_most_set_bit) {
+			bucket_1 ^= num;
+		} else {
+			bucket_2 ^= num;
+		}
+	}
+	
+	return {bucket_1, bucket_2};
+}
+```
 
 ### Generate a Power set i.e all subsets i.e. all subsequences of an array
 outer loop from `0` to `2^n` generates masks 
@@ -1315,7 +1773,7 @@ int subsequence_sum_equal_k(vector<int>& nums, int k) {
 }
 ```
 
-
+# Stacks and Queue
 
 
 
