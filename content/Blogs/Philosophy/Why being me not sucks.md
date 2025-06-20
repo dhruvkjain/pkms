@@ -28,8 +28,8 @@ I just want to understand and explore programming as much as possible and obviou
 
 So, while all my friends are achieving something, I don't feel the need of rush to achieve something fast.
 I will simply polish my skills till my talent blooms.
-And a great player said, "Believe that one day your talent will bloom, till then polish your instincts, in next 5, 10, 30 or even later, believe it will bloom as if you won't believe then it probably won't"
-basically don'y give up cause future you successful you is relying on you
+And a great player said, "Believe that one day your talent will bloom, till then polish your instincts, in next 5, 10, 30 years or even later, believe it will bloom as if you won't believe then it probably won't"
+basically don't give up cause future successful you is relying on present you
 or whateverrrr the way you interpret.
 
 So, from the past few weeks I have been practicing a simple rule **You do it right & you do it everyday** 

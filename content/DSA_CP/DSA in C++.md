@@ -1774,6 +1774,829 @@ int subsequence_sum_equal_k(vector<int>& nums, int k) {
 ```
 
 # Stacks and Queue
+Stack => Last In First Out (LIFO) rule
+Queue => First In First Out (FIFO) rule
+
+stack using array
+```cpp
+class Stack {
+	int size;
+	int* arr;
+	int top;
+	
+	public:
+		Stack() {
+			top = -1;
+			size = 5;
+			arr = new int[size];
+		}
+		
+		void push(int n) {
+			if (top+1 > size) {
+				cout << "stack full" << endl;
+			}
+			top++;
+			arr[top] = n;
+		}
+		
+		int pop() {
+			if (top-1 < 0) {
+				cout << "stack empty" << endl;
+			}
+			int res = arr[top];
+			top--;
+			
+			return res;
+		}
+		
+		int Top() {
+			return arr[top];
+		}
+		
+		int Size() {
+			return top+1;
+		}
+};
+```
+
+queue using array (this implementation keeps start at 0)
+```cpp
+class Queue {
+	int size;
+	int* arr;
+	int start;
+	int end;
+	
+	public:
+		Queue() {
+			start = -1;
+			end = -1;
+			size = 5;
+			arr = new int[size];
+		}
+		
+		void push(int n) {
+			if (end+1 > size) {
+				cout << "queue full" << endl;
+				return;
+			}
+			if (start == -1) {
+				start = 0;
+			}
+			end++;
+			arr[end] = n;
+		}
+		
+		int pop() {
+			if (start == -1) {
+				cout << "queue empty" << endl;
+				return INT_MIN;
+			}
+			int res = arr[start];
+			for (int i=1; i<=end; i++) {
+				arr[i-1] = arr[i];
+			}
+			end--;
+		
+			return res;
+		}
+		
+		int Top() {
+			if (end == -1) {
+				cout << "queue empty" << endl;
+				return INT_MIN;
+			}
+			return arr[end];
+		}
+		
+		int Size() {
+			return end+1;
+		}
+};
+```
+
+### Stack using Queue
+```cpp
+class Stack_using_Queue {
+	queue<int> q;
+	
+	public:
+		void Push(int n) {
+			q.push(n);
+			for (int i=0; i<q.size()-1; i++) {
+				q.push(q.front());
+				q.pop();
+			}
+		}
+		
+		int Pop() {
+			int temp = q.front();
+			q.pop();
+			return temp;
+		}
+		
+		int Top() {
+			return q.front();
+		}
+		
+		int Size() {
+			return q.size();
+		}
+};
+```
+
+### Queue using Stack
+```cpp
+class Queue_using_Stack {
+	stack<int> s1, s2;
+	
+	public:
+		void Push(int n) {
+			while (!s1.empty()) {
+				s2.push(s1.top());
+				s1.pop();
+			}
+			s2.push(n);
+			while (!s2.empty()) {
+				s1.push(s2.top());
+				s2.pop();
+			}
+		}
+		
+		int Pop() {
+			int temp = s1.top();
+			s1.pop();
+			return temp;
+		}
+		
+		int Top() {
+			return s1.top();
+		}
+		
+		int Size() {
+			return s1.size();
+		}
+};
+```
+
+### Check for Balanced Parentheses
+```cpp
+bool isValid(string s) {
+	stack<char> st;
+	for (auto c: s) {
+		if (c == '(' || c == '{' || c == '[') {
+			st.push(c);
+		} else {
+			if (st.size() == 0) return false;
+			if ((st.top() == '(' && c == ')') || (st.top() == '{' && c == '}') || (st.top() == '[' && c == ']')) {
+				st.pop();
+				continue;
+			} else {
+				return false;
+			}
+		}
+	}
+	return st.empty();
+}
+```
+
+## Infix Prefix Postfix
+### Infix to Postfix
+```cpp
+string infix_str = "a+b*(c^d-e)^(f+g*h)-i";
+string postfix_str = "abcd^e-fgh*+^*+i-";
+string prefix_str = "-+a*b^-^cde+f*ghi";
+```
+- if any operand add to result
+- if opening bracket add to operators stack, if closing bracket pop and add to result till opening bracket comes
+- if an operator 
+	- if it's precedence is smaller than stack's top operator i.e. last operator then remove the operator till stack is empty of the new operator have greater precedence than that in stack top
+	- finally add the new operator in stack
+- at the end if any operators are left print out all
+```cpp
+string infix_to_postfix(string s) {
+	stack<char> st;
+	string res;
+	
+	for (auto c: s) {
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			res += c;
+		} else if (c == '(') {
+			st.push(c);
+		} else if (c == ')') {
+			while (st.top() != '(') {
+				res += st.top();
+				st.pop();
+			}
+			st.pop();
+		} else {
+			while (!st.empty() && prec(c)<=prec(st.top())) {
+				res += st.top();
+				st.pop();
+			}
+			st.push(c);
+		}
+	}
+	
+	while (!st.empty()) {
+		res += st.top();
+		st.pop();
+	}
+	
+	return res;
+}
+```
+
+### Infix to Prefix
+- reverse the infix (make sure the brackets are reversed after reversing so that `(` comes before `)`)
+- result = apply infix to postfix with condition that if `^` then pop till `<=` precedence otherwise pop till `<` precedence
+- reverse the result (make sure the brackets are reversed after reversing so that `(` comes before `)`)
+```cpp
+string infix_to_prefix(string s) {
+	stack<char> st;
+	string res;
+
+	reverse(s.begin(), s.end());
+	for (int i = 0; i<s.length(); i++) {
+        if (s[i] == '(') {
+            s[i] = ')';
+        } else if (s[i] == ')') {
+            s[i] = '(';
+        }
+    }
+	
+	for (auto c: s) {
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			res += c;
+		} else if (c == '(') {
+			st.push(c);
+		} else if (c == ')') {
+			while (st.top() != '(') {
+				res += st.top();
+				st.pop();
+			}
+			st.pop();
+		} else {
+			if (c == '^') {
+				while (!st.empty() && prec(c)<=prec(st.top())) {
+					res += st.top();
+					st.pop();
+				}
+			} else {
+				while (!st.empty() && prec(c)<prec(st.top())) {
+					res += st.top();
+					st.pop();
+				}
+			}
+			st.push(c);
+		}
+	}
+	
+	while (!st.empty()) {
+		res += st.top();
+		st.pop();
+	}
+	
+	reverse(res.begin(), res.end());
+	for (int i = 0; i<res.length(); i++) {
+        if (res[i] == '(') {
+            res[i] = ')';
+        } else if (res[i] == ')') {
+            res[i] = '(';
+        }
+    }
+	
+	return res;
+}
+```
+
+### Postfix to Infix
+- add operands to stack
+- if encounter a operator takes last 2 operands from stack, add operator between them and wrap them into a single unit such that `top2 + operator + top1`
+```cpp
+string postfix_to_infix(string s) {
+	stack<string> st;
+	
+	for (auto c: s) {
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			string temp;
+			temp.push_back(c);
+			st.push(temp);
+		} else {
+			string t1 = st.top();
+			st.pop();
+			string t2 = st.top();
+			st.pop();
+			string temp = '(' + t2 + c + t1 + ')';
+			st.push(temp);
+		}
+	}
+	
+	return st.top();
+}
+```
+
+### Prefix to Infix
+- start iterator from end
+- add operands to stack
+- if encounter a operator takes last 2 operands from stack, add operator between them and wrap them into a single unit such that `top1 + operator + top2`
+```cpp
+string prefix_to_infix(string s) {
+	stack<string> st;
+	int i = s.length()-1;
+	
+	while (i >= 0) {
+		char c = s[i];
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			string temp;
+			temp.push_back(c);
+			st.push(temp);
+		} else {
+			string t1 = st.top();
+			st.pop();
+			string t2 = st.top();
+			st.pop();
+			string temp = '(' + t1 + c + t2 + ')';
+			st.push(temp);
+		}
+		i--;
+	}
+	
+	return st.top();
+}
+```
+
+### Postfix to Infix
+- add operands to stack
+- if encounter a operator takes last 2 operands from stack, add operator between them and wrap them into a single unit such that `operator + top2 + top1`
+```cpp
+string postfix_to_prefix(string s) {
+	stack<string> st;
+	
+	for (auto c: s) {
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			string temp;
+			temp.push_back(c);
+			st.push(temp);
+		} else {
+			string t1 = st.top();
+			st.pop();
+			string t2 = st.top();
+			st.pop();
+			string temp = c + t2 + t1;
+			st.push(temp);
+		}
+	}
+	
+	return st.top();
+}
+```
+
+### Postfix to Infix
+- add operands to stack
+- if encounter a operator takes last 2 operands from stack, add operator between them and wrap them into a single unit such that `top1 + top2 + operator`
+```cpp
+string prefix_to_postfix(string s) {
+	stack<string> st;
+	int i = s.length()-1;
+	
+	while (i >= 0) {
+		char c = s[i];
+		if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<='9')) {
+			string temp;
+			temp.push_back(c);
+			st.push(temp);
+		} else {
+			string t1 = st.top();
+			st.pop();
+			string t2 = st.top();
+			st.pop();
+			string temp = t1 + t2 + c;
+			st.push(temp);
+		}
+		i--;
+	}
+	
+	return st.top();
+}
+```
+
+
+## Monotonic Stack/Queue problems
+
+### Next greater element
+- start from end
+- keep stack in ascending order and if a number is > top then remove from stack till we can place it in ascending order
+```cpp
+vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+	int n = nums2.size()-1;
+	unordered_map<int, int> reference;
+	stack<int> nge;
+	
+	for (int i=n; i>=0; i--) {
+		while (!nge.empty() && (nge.top() < nums2[i])) {
+			nge.pop();
+		}
+		if (nge.empty()) {
+			reference[nums2[i]] = -1;
+		} else {
+			reference[nums2[i]] = nge.top();
+		}
+		nge.push(nums2[i]);
+	}
+	
+	vector<int> res(nums1.size(), -1);
+	for (int i=0; i<nums1.size(); i++) {
+		res[i] = reference[nums1[i]];
+	}
+	
+	return res;
+}
+```
+
+### Next greater element (circular)
+- start from twice of end and use %n to get elements 
+- so for first n iterations of loop only push pop will be executed and thus leaving us with the rightmost greater elements in order in stack.
+- keep stack in ascending order and if a number is > top then remove from stack till we can place it in ascending order
+```cpp
+vector<int> nextGreaterElements(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> nge(n, -1);
+	stack<int> st;
+	
+	for (int i=2*n-1; i >= 0; i--) {
+		while (!st.empty() && st.top() <= nums[i % n]) {
+			st.pop();
+		}
+		
+		if (i < n) {
+			if (!st.empty()) nge[i] = st.top();
+		}
+		st.push(nums[i % n]);
+	}
+	
+	return nge;
+}
+```
+
+### Trapping Rain Water
+for any `arr[i]` we know it can store water above it of height `min(leftMax, rightMax) - arr[i]`
+
+so for each position we need to find the maximum height on both sides of that position, which is equal to `prefixMax` and `suffixMax`, but finding all max would take `O(N)` for both prefix and suffix.
+we can take `2 pointer` each pointing to the max.
+
+- prefixMax suffixMax method
+```cpp
+int trap(vector<int>& arr) {
+	int n = arr.size();
+	
+	int prefix[n], suffix[n];
+	prefix[0] = arr[0];
+	for (int i = 1; i < n; i++) {
+		prefix[i] = max(prefix[i - 1], arr[i]);
+	}
+	suffix[n - 1] = arr[n - 1];
+	for (int i = n - 2; i >= 0; i--) {
+		suffix[i] = max(suffix[i + 1], arr[i]);
+	}
+	
+	int waterTrapped = 0;
+	for (int i = 0; i < n; i++) {
+		waterTrapped += min(prefix[i], suffix[i]) - arr[i];
+	}
+	
+	return waterTrapped;
+}
+```
+
+- using 2 pointer
+```cpp
+int trap(vector<int>& height) {
+	int n = height.size();
+	int waterTrapped = 0; 
+	int leftMax = 0, rightMax = 0;
+	int l=0, r=n-1;
+	
+	while (l<r) {
+		if (height[l] <= height[r]) {
+			if (leftMax > height[l]) {
+				waterTrapped += leftMax - height[l]; 
+			} else {
+				leftMax = height[l];
+			}
+			l = l+1;
+		} else {
+			if (rightMax > height[r]) {
+				waterTrapped += rightMax - height[r];
+			} else {
+				rightMax = height[r];
+			}
+			r = r-1;
+		}
+	}
+	
+	return waterTrapped;
+}
+```
+
+asteroid collision
+```cpp
+vector<int> asteroidCollision(vector<int>& asteroids) {
+	int n = asteroids.size();
+	vector<int> st;
+	
+	for (int i=0; i<n; i++) {
+		if (asteroids[i] >= 0 ) st.push_back(asteroids[i]);
+		else {
+			while(!st.empty() && st.back()>0 && (st.back() < abs(asteroids[i]))){
+				st.pop_back();
+			}
+			if (!st.empty() && st.back()==abs(asteroids[i])) {
+				st.pop_back();
+			} else if (st.empty() || st.back()<0) {
+				st.push_back(asteroids[i]);
+			}
+		}
+	}
+	
+	return st; 
+}
+```
+
+### Sum of subarray minimums
+- find after how many elements we get next smallest
+- then PnC 
+```cpp
+vector<int> nextSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> nse;
+	
+	for (int i=n-1; i>=0; i--) {
+		while (!nse.empty() && (nums[nse.top()] >= nums[i])) {
+			nse.pop();
+		}
+		if (nse.empty()) {
+			res[i] = n;
+		} else {
+			res[i] = nse.top();
+		}
+		nse.push(i);
+	}
+	
+	return res;
+}
+
+vector<int> prevSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> pse;
+	
+	for (int i=0; i<n; i++) {
+		while (!pse.empty() && (nums[pse.top()] > nums[i])) {
+			pse.pop();
+		}
+		if (pse.empty()) {
+			res[i] = -1;
+		} else {
+			res[i] = pse.top();
+		}
+		pse.push(i);
+	}
+	
+	return res;
+}
+
+int sumSubarrayMins(vector<int>& arr) {
+	int n = arr.size();
+	int mod = 1e9+7;
+	long long res = 0;
+	
+	vector<int> nse = nextSmallerElement(arr);
+	vector<int> pse = prevSmallerElement(arr);
+	
+	for (int i=0; i<n; i++) {
+		int left = i-pse[i];
+		int right = nse[i]-i;
+		res = (res + (right * left * (long long)1 * arr[i]) % mod) % mod; 
+	}
+	
+	return res;
+}
+```
+
+### Sum of subarray ranges
+```cpp
+
+```
+
+
+### Remove K digits to create smallest number
+greedy - at each `i` iteratively check if it is smaller than stack's top element, if it is, replace it.
+```cpp
+string removeKdigits(string num, int k) {
+	int n = num.length();
+	stack<char> st;
+	
+	for (int i=0; i<n; i++) {
+		while (!st.empty() && k>0 && ((st.top()-'0') > (num[i]-'0'))) {
+			st.pop();
+			k--;
+		}
+		st.push(num[i]);
+	}
+	
+	while (k>0) {
+		st.pop();
+		k--;
+	}
+	
+	if (st.empty()) return "0";
+	
+	string res;
+	while (!st.empty()) {
+		res += st.top();
+		st.pop();
+	}
+	
+	while (res.size()!=0 && res.back() == '0') {
+		res.pop_back();
+	}
+	
+	reverse(res.begin(), res.end());
+	
+	if (res.empty()) return "0";
+	
+	return res;
+}
+```
+
+### Largest Rectangle in Histogram
+- to find the width for a height `i` we need the smallest previous and smallest next
+- then maximum area by that height`i` is `heights[i] * (nse[i]-pse[i]-1)` 
+```cpp
+vector<int> nextSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> nse;
+	
+	for (int i=n-1; i>=0; i--) {
+		while (!nse.empty() && (nums[nse.top()] >= nums[i])) {
+			nse.pop();
+		}
+		if (nse.empty()) {
+			res[i] = n;
+		} else {
+			res[i] = nse.top();
+		}
+		nse.push(i);
+	}
+	
+	return res;
+}
+
+vector<int> prevSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> pse;
+	
+	for (int i=0; i<n; i++) {
+		while (!pse.empty() && (nums[pse.top()] >= nums[i])) {
+			pse.pop();
+		}
+		if (pse.empty()) {
+			res[i] = -1;
+		} else {
+			res[i] = pse.top();
+		}
+		pse.push(i);
+	}
+	
+	return res;
+}
+
+int largestRectangleArea(vector<int>& heights) {
+	int res = 0;
+	vector<int> pse = prevSmallerElement(heights);
+	vector<int> nse = nextSmallerElement(heights);
+	
+	for (int i=0; i<heights.size(); i++) {
+		res = max(res, (heights[i]*(nse[i] - pse[i]-1)));
+	}
+	
+	return res;
+}
+```
+
+### Maximal Rectangle
+- treat each row as a histogram and column as heights, now use the previous question
+- to find heights use a prefix sum on each col with condition that if encountered 0 then reset sum 
+```cpp
+ vector<int> nextSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> nse;
+	
+	for (int i=n-1; i>=0; i--) {
+		while (!nse.empty() && (nums[nse.top()] >= nums[i])) {
+			nse.pop();
+		}
+		if (nse.empty()) {
+			res[i] = n;
+		} else {
+			res[i] = nse.top();
+		}
+		nse.push(i);
+	}
+	
+	return res;
+}
+
+vector<int> prevSmallerElement(vector<int>& nums) {
+	int n = nums.size();
+	vector<int> res(n, -1);
+	stack<int> pse;
+	
+	for (int i=0; i<n; i++) {
+		while (!pse.empty() && (nums[pse.top()] >= nums[i])) {
+			pse.pop();
+		}
+		if (pse.empty()) {
+			res[i] = -1;
+		} else {
+			res[i] = pse.top();
+		}
+		pse.push(i);
+	}
+	
+	return res;
+}
+
+int largestRectangleArea(vector<int>& heights) {
+	int res = 0;
+	vector<int> pse = prevSmallerElement(heights);
+	vector<int> nse = nextSmallerElement(heights);
+	
+	for (int i=0; i<heights.size(); i++) {
+		res = max(res, (heights[i]*(nse[i] - pse[i]-1)));
+	}
+	
+	return res;
+}
+
+int maximalRectangle(vector<vector<char>>& matrix) {
+	int rows = matrix.size();
+	int cols = matrix[0].size();
+	vector<vector<int>> prefixSum(rows, vector<int>(cols, 0));
+	int maxArea = 0;
+	
+	for (int j=0; j<cols; j++) {
+		int curr_sum=0;
+		for (int i=0; i<rows; i++) {
+			curr_sum += matrix[i][j]-'0';
+			if (matrix[i][j] == '0') curr_sum = 0;
+			prefixSum[i][j] = curr_sum; 
+		}
+	}
+	
+	for (int i=0; i<rows; i++) {
+		maxArea = max(maxArea, largestRectangleArea(prefixSum[i]));
+	}
+	
+	return maxArea;
+}
+```
+
+### Sliding Window maximum
+maintain a dequeue that has elements in descending order.
+```cpp
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+	if (k==1) return nums;
+	int n = nums.size();
+	vector<int> swmax;
+	deque<int> dq;
+	
+	for (int i=0; i<n; i++) {
+		// this if ensures we maintain correct window 
+		if (!dq.empty() && dq.front() <= i - k) {
+			dq.pop_front();
+		}
+		// maintain dq in decending order (front element is largest)
+		while (!dq.empty() && nums[dq.back()] <= nums[i]) {
+			dq.pop_back();
+		}
+		dq.push_back(i);
+	
+		if (i >= k-1) swmax.push_back(nums[dq.front()]); 
+	}
+	
+	return swmax;
+}
+```
 
 
 
+
+
+
+# Sliding Window and 2 Pointers
