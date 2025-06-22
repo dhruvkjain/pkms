@@ -2600,3 +2600,150 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
 
 
 # Sliding Window and 2 Pointers
+
+
+### Longest Substring Without Repeating Characters
+- use sliding window i.e. 2 pointers and an unordered map 
+```cpp
+int lengthOfLongestSubstring(string s) {
+	if (s.length() == 0) return 0; 
+	int start=0, end=0, res=0;
+	unordered_map<char, int> mp;
+	
+	for (int end = 0; end < s.length(); end++) {
+        if (mp.find(s[end]) != mp.end() && mp[s[end]] >= start) {
+            start = mp[s[end]] + 1; // Move start to after the last occurrence
+        }
+        res = max(res, end - start + 1); // Update max length
+        mp[s[end]] = end; // Update last seen position
+    }
+	
+	return res;
+}
+```
+
+### Max Consecutive Ones III
+```cpp
+int longestOnes(vector<int>& nums, int k) {
+	int n = nums.size();
+	int start = 0, temp = k, res = 0;
+	
+	for (int end=0; end<n; end++) {
+		if (nums[end] == 0) {
+			temp--;
+		}
+		while (temp < 0) {
+			if (nums[start] == 0) {
+				temp++;
+			}
+			start++;
+		}
+		res = max(res, end-start+1);
+	}
+	
+	return res;
+}
+```
+
+### Longest Repeating Character Replacement
+```cpp
+int characterReplacement(string s, int k) {
+	int n = s.length();
+    unordered_map<char, int> mp;
+    int start = 0, res = 0, maxFreq = 0;
+    
+    for (int end = 0; end < n; end++) {
+        mp[s[end]]++;
+        maxFreq = max(maxFreq, mp[s[end]]); // Track max frequency in window
+        
+        // If window size - max frequency > k, shrink window
+        if (end - start + 1 - maxFreq > k) {
+            mp[s[start]]--;
+            start++;
+        }
+        res = max(res, end - start + 1);
+    }
+    
+    return res;
+}
+```
+
+### Binary Subarrays With Sum
+This questions seems similar to **count subarrays with sum equal to k** which is solved by using an `unordered_map` of `prefix sums` so that we can in O(1) search if we have encountered `curr_sum - goal` sum and if we have then we can directly add it's count to ans     
+```cpp
+int numSubarraysWithSum(vector<int>& nums, int goal) {
+	int n = nums.size();
+	unordered_map<int, int> mp;
+	mp[0] = 1; // Initialize for subarrays starting at index 0
+	int res = 0, curr_sum = 0;
+	
+	for (int i = 0; i<n; i++) {
+		curr_sum += nums[i];
+		if (mp.find(curr_sum-goal)!=mp.end()) {
+			res += mp[curr_sum-goal];
+		}
+		mp[curr_sum]++;
+	}
+	
+	return res;
+}
+```
+
+This method takes O(N) time and O(N) space too, but we can also sum elements with Sliding Window using 2 pointers. 
+but here's the catch, in Sliding Window we continuously move the `end` pointer and updates `start` upon reaching a condition, 
+In this question we would shrink the window (`start++`, `curr_sum -= nums[start]`) as soon as `curr_sum == goal`. This assumes only one subarray ending at end has sum goal, but multiple subarrays can end at end with the same sum due to different combinations of 1s and 2s.
+
+Example: `nums = [1,1,2]`, `goal = 4`. 
+Subarrays `[1,1,2]` (sum = 1+1+2 = 4) and `[1,2]` (sum = 1+2 = 3, but we will miss this because we shrink the window after finding `[1,1,2]`). 
+**This approach counts only one subarray per window.**
+
+So what we can use the above **prefix sum with hash map** approach.
+And **Sliding Window (At Most K)** approach too
+
+
+### Number of Substrings Containing All Three Characters
+Brute force generate all substrings and count frequency
+Brute force optimized:
+We know that if a substring has `((cnt_a > 0) && (cnt_b > 0) && (cnt_c > 0))` then all substrings that contains that substring are valid so we directly add `n-j` to total count and break that iteration of `j`.
+```cpp
+int numberOfSubstrings(string s) {
+	int n = s.length();
+	int res = 0;
+	
+	for (int i=0; i<n; i++) {
+		int cnt_a=0, cnt_b=0, cnt_c=0;
+		for (int j=i; j<n; j++) {
+			if (s[j] == 'a') cnt_a++;
+			if (s[j] == 'b') cnt_b++;
+			if (s[j] == 'c') cnt_c++; 
+			if (cnt_a && cnt_b && cnt_c) {
+				res += n-j;
+				break;	
+			}
+		}
+	}
+	
+	return res;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
