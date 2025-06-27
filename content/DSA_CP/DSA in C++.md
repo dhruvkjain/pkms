@@ -2727,19 +2727,524 @@ int numberOfSubstrings(string s) {
 }
 ```
 
+Optimal: 
+we keep track of last occurrence of a, b and c and when we encounter a character such that all of them becomes > -1, we for sure know that each character has appeared more than once so the least last seen position is the minimal window and anything bigger than that on the left side will be valid.
+instead of our usual approach of increasing the window from start by one we find minimal window the expand it to left.
+```cpp
+int numberOfSubstrings(string s) {
+	int n = s.length();
+	int res = 0;
+	int pos_a=-1, pos_b=-1, pos_c=-1;
+	
+	for (int i=0; i<n; i++) {
+		if (s[i] == 'a') pos_a = i;
+		if (s[i] == 'b') pos_b = i;
+		if (s[i] == 'c') pos_c = i;
+		if (pos_a > -1 && pos_b > -1 && pos_c > -1) {
+			int mini1 = min(pos_a, pos_b);
+			int mini2 = min(mini1, pos_c);
+			res += mini2+1;
+		}
+	}
+	
+	return res;
+}
+```
+
+### Maximum Points You Can Obtain from Cards
+Brute Force: Recursion
+use recursion where each branch is element taking either from front or back.
+```cpp
+int rec_sum (vector<int>& cardPoints, int n, int sum, int l, int r, int k) {
+	if (k==0) {
+		return sum;
+	}
+	
+	int s1 = cardPoints[l]+rec_sum(cardPoints, n, sum, l+1, r,  k-1);
+	int s2 = cardPoints[r]+rec_sum(cardPoints, n, sum, l, r-1, k-1);
+	return max(s1, s2);
+}
+
+int maxScore(vector<int>& cardPoints, int k) {
+	int n = cardPoints.size();
+	if (k>n) return accumulate(cardPoints.begin(), cardPoints.end(), 0);
+	return rec_sum(cardPoints, n, 0, 0, n-1,  k);
+}
+```
+
+Optimal: Prefix Sum and Sliding Window
+Sliding Window of size `n-k`, we will subtract the sum of sliding window from prefix sum leaving us with the sum of k elements distributed on both sides.
+```cpp
+int maxScore(vector<int>& cardPoints, int k) {
+	int n = cardPoints.size();
+	int total_sum = accumulate(cardPoints.begin(), cardPoints.end(), 0);
+	if (k>n) return total_sum;
+	
+	vector<int> prefix_sum(n, 0);
+	prefix_sum[0] = cardPoints[0];
+	for (int i=1; i<n; i++) {
+		prefix_sum[i] = cardPoints[i] + prefix_sum[i-1];
+	}
+	
+	int l=-1, r=n-k;
+	int res=0;
+	for (int i=n-k; i<n; i++) {
+		res += cardPoints[i];
+	}
+	
+	l++;
+	r++;
+	while (r<=n) {
+		res = max(res, total_sum - (prefix_sum[r-1] - prefix_sum[l]));
+		l++;
+		r++;
+	}
+	
+	return res;
+}
+```
+
+### Subarrays with K Different Integers
+instead of finding subarrays with == k distinct integers find subarrays with <=k and <=k-1 distinct integers.
+```cpp
+int subarraysWithAtMostKDistinct(vector<int>& nums, int k) {
+	int n = nums.size();
+	int l=0, r=0, res=0;
+	unordered_map<int, int> mp;
+	
+	while (r < n) {
+		mp[nums[r]]++;
+	
+		// shrink window till less than k
+		while (mp.size() > k) {
+			mp[nums[l]]--;
+			if (mp[nums[l]] == 0) {
+				mp.erase(nums[l]);
+			}
+			l++;
+		}
+	
+		// total valid subarray with <=k distinct elements are all elements
+		// till r so length of a window == new valid subarrays
+		res += r-l+1;
+	}
+	
+	return res;
+}
+
+int subarraysWithKDistinct(vector<int>& nums, int k) {
+	return (subarraysWithAtMostKDistinct(nums, k) - subarraysWithAtMostKDistinct(nums, k-1));
+}
+```
 
 
 
 
+# Heap (Priority Queue)
+A binary tree where elements are arranged is called heap
+two types: min heap and max heap
+
+if a node in binary tree is represented by `i` then it's children are `2*i + 1` and `2*i + 2`.
+
+Max Heap in cpp using priority queue
+```cpp
+priority_queue<int> maxHeap;
+
+// Insert elements
+maxHeap.push(3);
+maxHeap.push(1);
+maxHeap.push(4);
+maxHeap.push(2);
+
+// Print and remove elements (largest first)
+cout << "Max Heap elements (in descending order): ";
+while (!maxHeap.empty()) {
+	cout << maxHeap.top() << " ";
+	maxHeap.pop();
+}
+cout << endl;
+```
+
+Min Heap in cpp using priority queue
+```cpp
+priority_queue<int, vector<int>, greater<int>> minHeap;
+
+// Insert elements
+minHeap.push(3);
+minHeap.push(1);
+minHeap.push(4);
+minHeap.push(2);
+
+// Print and remove elements (smallest first)
+cout << "Min Heap elements (in ascending order): ";
+while (!minHeap.empty()) {
+	cout << minHeap.top() << " ";
+	minHeap.pop();
+}
+cout << endl;
+```
+
+### Task Scheduler
+- while priority queue is not empty {
+	- greedly allot n distinct elements if not possible then add idle 
+	- replace the alloted elements in priority_queue with a decrement in frequency
+- }
+```cpp
+int leastInterval(vector<char>& tasks, int n) {
+	int time = 0;
+	
+	unordered_map<char, int> mp;
+    for (char c : tasks) {
+        mp[c]++;
+    }
+    
+    priority_queue<pair<int, char>> pq;
+    for (auto [c, f] : mp) {
+        pq.push({f, c});
+    }
+	
+    while (!pq.empty()) {
+        vector<pair<int, char>> temp;
+        int cycle = n + 1; // Maximum tasks in one cycle
+        while (cycle > 0 && !pq.empty()) {
+            auto [f, c] = pq.top();
+            pq.pop();
+            if (f > 1) {
+                temp.push_back({f - 1, c}); // Decrement frequency
+            }
+            time++; // One task scheduled
+            cycle--;
+        }
+        // Restore tasks for next cycle
+        for (auto p : temp) {
+            pq.push(p);
+        }
+        // Add idle time if queue is not empty
+        if (!pq.empty()) {
+            time += cycle;
+        }
+    }
+	
+	return time;
+}
+```
+
+Optimal:
+- find the number of elements required to fill the max number of elements
+- then fill it with other task and order don't matter
+```cpp
+int leastInterval(vector<char>& tasks, int n) {
+    vector<int> freq(26, 0); // Step 1: Frequency array for tasks A-Z
+	
+    for (auto x : tasks) {
+        freq[x - 'A']++; // Step 2: Count frequency of each task
+    }
+	
+    sort(freq.begin(), freq.end(), greater<int>()); // Step 3: Sort frequencies in descending order
+	
+    int gap = (freq[0] - 1) * n; // Step 4: Calculate initial gaps (idle slots)
+	
+    for (int i = 1; i < freq.size(); i++) { // Step 5: Fill gaps with other tasks
+        gap = gap - min(freq[0] - 1, freq[i]);
+    }
+	
+    return tasks.size() + max(0, gap); // Step 6: Return total time
+}
+```
+
+Hands of Straights
+```cpp
+bool isNStraightHand(vector<int>& hand, int groupSize) {
+	if (hand.size()%groupSize != 0) return false;
+	map<int, int> mp;
+	for (int i: hand) {
+		mp[i]++;
+	}
+	
+	while (!mp.empty()) {
+		int temp = mp.begin()->first;
+		for (int i = 0; i < groupSize; i++) {
+			if (mp[temp + i] == 0) {
+				return false;
+			}
+			mp[temp + i]--;
+			if (mp[temp + i] < 1) {
+				mp.erase(temp + i);
+			}
+		}
+	}
+	
+	return true;
+}
+```
+
+### Kth Largest Element in a Stream
+```cpp
+class KthLargest {
+    int k;
+    priority_queue<int, vector<int>, greater<int>> pq;
+public:
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+        for (int num: nums) {
+            if (pq.size() < k) {
+                pq.push(num);
+            } else {
+                if (num > pq.top()) {
+                    pq.pop();
+                    pq.push(num);
+                }
+            }
+        }
+    }
+    
+    int add(int val) {
+        if (pq.size() >= k) {
+			if (val > pq.top()) {
+				pq.pop();
+				pq.push(val);
+			}
+		} else {
+			pq.push(val);
+		}
+        return pq.top();
+    }
+};
+```
+
+### Find Median from Data Stream
+```cpp
+class MedianFinder {
+    priority_queue<int> maxpq; // largest at top so, numbers < median
+    priority_queue<int, vector<int>, greater<int>> minpq;  // smallest at top so, numbers > median
+public:
+    MedianFinder() {}
+    
+    void addNum(int num) {
+        // Push to appropriate heap
+        if (maxpq.empty() || num <= maxpq.top()) {
+            maxpq.push(num);
+        } else {
+            minpq.push(num);
+        }
+
+        // Balance heaps
+        if (maxpq.size() > minpq.size()+1) {
+            minpq.push(maxpq.top());
+            maxpq.pop();
+        } else {
+            if (minpq.size() > maxpq.size()) {
+                maxpq.push(minpq.top());
+                minpq.pop();
+            }
+        }
+    }
+    
+    double findMedian() {
+        // if equal size find mean of mids
+        if (maxpq.size() == minpq.size()) {
+            return ((maxpq.top() + minpq.top()) / 2.0); 
+        } else {
+            return maxpq.top();
+        }
+    }
+};
+```
 
 
+# Greedy
 
+### Valid Parenthesis String
+```cpp
+bool checkValidString(string s) {
+	int min_open = 0;   // '*' acts as ')'
+	int max_open = 0;   // '*' acts as '('
+	for (char c : s) {
+		if (c == '(') {
+			min_open++;
+			max_open++;
+		} else if (c == ')') {
+			min_open--;
+			max_open--;
+			if (max_open < 0) return false;
+			if (min_open < 0) min_open = 0;
+		} else {
+			min_open--;
+			max_open++;
+			if (min_open < 0) min_open = 0;
+		}
+	}
+	return min_open == 0;
+}
+```
 
+### Jump Game
+only problem is when we encounter 0 as if all positive numbers we can definetly reach end by even one one jumps
+keep track of max u can reach so that if any point you encounter a `i` that you can't reach/cross-over in any way then return false  
+```cpp
+bool canJump(vector<int>& nums) {
+	int n = nums.size();
+	int max_reach = 0;
 
+	for (int i=0; i<n; i++) {
+		if (i > max_reach) {
+			return false;
+		}
+		max_reach = max(i+nums[i], max_reach);
+	}
 
+	return true;
+}
+```
 
+### Jump Game II
+find minimum number of jumps
+we keep track of range `l -> r` where we can reach
+```cpp
+int jump(vector<int>& nums) {
+	int n = nums.size();
+	int cnt = 0, l = 0, r = 0;
+	
+	while (r < n-1) {
+		int max_reach = 0;
+		for (int i=l; i<=r; i++) {
+			max_reach = max(i+nums[i], max_reach);
+		}
+		l = r+1;
+		r = max_reach;
+		cnt++;
+	}
+	
+	return cnt;
+}
+```
 
+### Candy
+Brute Force:
+- find minimum number of candies that satisfies from left
+- find minimum number of candies that satisfies from right
+- maximum of both would satisfy both 
+```cpp
+int candy(vector<int>& ratings) {
+	int n = ratings.size();
+	int cnt = 0;
+	vector<int> l(n, 0);
+	vector<int> r(n, 0);
+	l[0] = 1;
+	r[n-1] = 1;
+	
+	for (int i=1; i<n; i++) {
+		if (ratings[i] > ratings[i-1]) {
+			l[i] = l[i-1]+1;
+		} else {
+			l[i] = 1;
+		}
+	}
+	
+	for (int i=n-2; i>=0; i--) {
+		if (ratings[i] > ratings[i+1]) {
+			r[i] = r[i+1]+1;
+		} else {
+			r[i] = 1;
+		}
+	}
+	
+	int sum = 0;
+	for (int i=0; i<n; i++) {
+		sum += max(l[i], r[i]);
+	}
+	
+	return sum;
+}
+```
 
+Optimal: Peaks
+we know peaks would have the largest number of candies so if we can find peaks then we can give every candies accordingly.
+main observation => sum from top of peak == sum from bottom of peak, so after reaching peak we can start alloting from 1 to bottom then compare bottom candies and peak and take maximum of them.  
+```cpp
+int candy(vector<int>& ratings) {
+	int n = ratings.size();
+	int sum=1, i=1;
+	while (i<n) {
+		if (ratings[i] == ratings[i-1]) {
+			sum++; 
+			i++;
+			continue;
+		}
+		
+		int peak = 1;
+		while (i<n && ratings[i] > ratings[i-1]) {
+			peak++;
+			sum += peak;
+			i++;
+		}
+		int down = 1;
+		while (i<n && ratings[i] < ratings[i-1]) {
+			sum += down;
+			down++;
+			i++;
+		}
+		
+		if (down > peak) {
+			sum += down-peak;
+		}
+	}  
+	return sum;
+}
+```
+
+### Insert Interval
+try to optimize with binary search as they are sorted
+```cpp
+vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+	int n = intervals.size();
+	vector<vector<int>> res;
+	
+	int i = 0;
+	while (i < n && intervals[i][1] < newInterval[0]) {
+		res.push_back(intervals[i]);
+		i++;
+	}
+	
+	while (i < n && intervals[i][0] <= newInterval[1]) {
+		newInterval[0] = min(newInterval[0], intervals[i][0]);
+		newInterval[1] = max(newInterval[1], intervals[i][1]);
+		i++;
+	}
+	
+	res.push_back(newInterval);
+	while (i < n) {
+		res.push_back(intervals[i]);
+		i++;
+	}
+	
+	return res;
+}
+```
+
+### Non-overlapping Intervals
+- sort according to end time
+- increase counter if end time for a interval is smaller than it's previous one
+```cpp
+int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+	int res = 0;
+	
+	sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b) {
+		return a[1] < b[1];
+	});
+	int prev_end = intervals[0][1];
+	
+	for (int i = 1; i < intervals.size(); i++) {
+		if (prev_end > intervals[i][0]) {
+			res++;
+		} else {
+			prev_end = intervals[i][1];
+		}
+	}
+	
+	return res;
+}
+```
 
 
 

@@ -1,6 +1,10 @@
 [[Rust]]
 [[OS]]
 
+### Rust optimizations / Advance Rust
+- [Measure Rust Performance - Let's Get Rusty YT](https://youtu.be/q3VOsGzkM-M) 
+- [Advance Rust Techniques - GOTO conf](https://youtu.be/QQzAWxYKPSE)
+
 ### SIMD (Single Instruction Multiple Data)
 [https://linebender.org/blog/towards-fearless-simd/]
 
