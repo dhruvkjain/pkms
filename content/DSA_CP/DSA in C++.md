@@ -3246,6 +3246,358 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 }
 ```
 
+# Binary Trees
+
+Types:
+- Full BT                -> either 2 or 0 children
+- Complete BT      -> all levels except last have 0 or children, last level / leaf nodes should be as left as possible
+- Perfect BT          -> all leaf nodes are at same level
+- Balanced BT       -> height of tree must be less than equal to log(N) 
+- Degenerate BT   -> each node has a single child (basically a linked list)
+
+Traversal:
+- Depth First Technique (DFS):
+	- Inorder       (Left Root Right)
+	- Preorder    (Root Left Right)
+	- Postorder  (Left Right Root)
+- Breadth First Technique (BFS):
+	visit all nodes at a level before moving to next
+
+## Traversals
+### Recursive DFS Traversal
+```cpp
+// Inorder
+void inorder(TreeNode* node, vector<int>& res) {
+	if (node == nullptr) return;
+	inorder(node->left, res);
+	res.push_back(node->val);
+	inorder(node->right, res);
+}
+vector<int> inorderTraversal(TreeNode* root) {
+	vector<int> res;
+	inorder(root, res);
+	return res;
+}
+
+
+// Preorder
+void preorder(TreeNode* node, vector<int>& res) {
+	if (node == nullptr) return;
+	res.push_back(node->val);
+	preorder(node->left, res);
+	preorder(node->right, res);
+}
+vector<int> preorderTraversal(TreeNode* root) {
+	vector<int> res;
+	preorder(root, res);
+	return res;
+}
+
+
+// Postorder
+void postorder(TreeNode* node, vector<int>& res) {
+	if (node == nullptr) return;
+	postorder(node->left, res);
+	postorder(node->right, res);
+	res.push_back(node->val);
+}
+vector<int> postorderTraversal(TreeNode* root) {
+	vector<int> res;
+	postorder(root, res);
+	return res;
+}
+```
+
+### BFS Traversal
+```cpp
+vector<vector<int>> levelOrder(TreeNode* root) {
+	vector<vector<int>> res;
+	if (root == nullptr) return res;
+	queue<TreeNode*> q;
+	q.push(root);
+	
+	while (!q.empty()) {
+		vector<int> level;
+		int size = q.size();
+		for (int i=0; i<size; i++) {
+			TreeNode* node = q.front();
+			q.pop();
+			
+			if(node->left!=NULL){
+				q.push(node->left);
+			}
+			if(node->right!=NULL){
+				q.push(node->right);
+			}
+			
+			level.push_back(node->val);
+		}
+		
+		res.push_back(level);
+	}
+	
+	return res; 
+}
+```
+
+### Iterative DFS traversal
+```cpp
+// Preorder (Root Left Right)
+// as we are using stack i.e. LIFO we push right first then left
+vector<int> preorderTraversal(TreeNode* root) {
+	vector<int> res;
+	if (root == nullptr) return res;
+	
+	stack<TreeNode*> st;
+	st.push(root);
+	while (!st.empty()) {
+		TreeNode* node = st.top();
+		st.pop();
+		res.push_back(node->val);
+		
+		if (node->right != nullptr) {
+			st.push(node->right);
+		}
+		if (node->left != nullptr) {
+			st.push(node->left);
+		}
+	}
+	
+	return res;
+}
+
+
+// Inorder (Left Root Right)
+
+vector<int> inorderTraversal(TreeNode* root) {
+	vector<int> res;
+	if (root == nullptr) return res;
+	
+	stack<TreeNode*> st;
+	TreeNode* node = root;
+	while (true) {
+		if (node != nullptr) {
+			st.push(node);
+			node = node->left;
+		} else {
+			if (st.empty()) break;
+			node = st.top();
+			st.pop();
+			res.push_back(node->val);
+			node = node->right; 
+		}
+	}
+	
+	return res;
+}
+```
+
+### Maximum Depth of Binary tree
+```cpp
+int max_depth(TreeNode* node) {
+	if (node == nullptr) return 0;
+	
+	int d1 = max_depth(node->left);
+	int d2 = max_depth(node->right);
+	return max(d1, d2)+1;
+}
+
+int maxDepth(TreeNode* root) {
+	return max_depth(root);
+}
+```
+
+### Check for Balanced Binary Tree
+```cpp
+int max_depth(TreeNode* node) {
+	if (node == nullptr) return 0;
+	
+	int d1 = max_depth(node->left);
+	if (d1 == -1) return -1; 
+	int d2 = max_depth(node->right);
+	if (d2 == -1) return -1;
+	
+	if (abs(d1-d2) > 1) return -1;
+	
+	return max(d1, d2)+1;
+}
+
+bool isBalanced(TreeNode* root) {
+	if (root == nullptr) return true; 
+	return max_depth(root)!=-1;
+}
+```
+
+### Diameter of Binary Tree
+```cpp
+int fnc (TreeNode* node, int& ans) {
+	int lh = 0, rh = 0;
+	if (node->left != nullptr) {
+		lh = fnc(node->left, ans);
+	}
+	if (node->right != nullptr) {
+		rh = fnc(node->right, ans);
+	}
+	ans = max(lh+rh+1, ans);
+	
+	return max(lh+1, rh+1);
+}
+
+int diameterOfBinaryTree(TreeNode* root) {
+	int ans = INT_MIN;
+	int temp = fnc(root, ans);
+	return ans-1;
+}
+```
+
+Maximum Path Sum
+```cpp
+int fnc (TreeNode* node, int& ans) {
+	int lh = 0, rh = 0;
+	if (node->left != nullptr) {
+		lh = max(lh, fnc(node->left, ans));
+	}
+	if (node->right != nullptr) {
+		rh = max(rh, fnc(node->right, ans));
+	}
+	ans = max(lh+rh+node->val, ans); 
+	
+	return max(lh+node->val, rh+node->val);
+}
+int maxPathSum(TreeNode* root) {
+	int ans = INT_MIN;
+	int temp = fnc(root, ans);
+	return ans;
+}
+```
+
+### Same Tree
+```cpp
+bool isSameTree(TreeNode* p, TreeNode* q) {
+	if (p == nullptr || q == nullptr) {
+		return p == q;
+	}
+	return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right); 
+}
+```
+
+### Vertical Order Traversal of a Binary Tree
+```cpp
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+	vector<vector<int>> res;
+	if (root == nullptr) return res;
+	
+	queue<pair<TreeNode*, pair<int, int>>> q;
+	map<int, map<int, priority_queue<int, vector<int>, greater<int>> >> mp;
+	q.push({root, {0, 0}});
+	
+	while (!q.empty()) {
+		int size = q.size();
+		
+		for (int i=0; i<size; i++) {
+			auto [node, cords] = q.front();
+			int row = cords.first;
+			int col = cords.second;
+			q.pop();
+			mp[col][row].push(node->val);
+			
+			if (node->left != nullptr) {
+				q.push({node->left, {row+1, col-1}});
+			}
+			if (node->right != nullptr) {
+				q.push({node->right, {row+1, col+1}});
+			}
+		}
+	}
+	
+	for (auto& [col, temp]: mp) {
+		vector<int> vals;
+		for (auto& [row, pq]: temp) {
+			while (!pq.empty()) {
+				vals.push_back(pq.top());
+				pq.pop();
+			}
+		}
+		res.push_back(vals);
+	}
+	
+	return res;
+}
+```
+
+### Binary Tree Right Side View
+```cpp
+vector<int> rightSideView(TreeNode* root) {
+	vector<int> res;
+	if (root == nullptr) return res;
+	
+	queue<TreeNode*> q;
+	q.push(root);
+	while (!q.empty()) {
+		int size = q.size();
+		
+		for (int i=0; i<size; i++) {
+			TreeNode* node = q.front();
+			q.pop();
+			if (i == size-1) res.push_back(node->val);
+			if (node->left) q.push(node->left);
+			if (node->right) q.push(node->right);
+		}
+	}
+	
+	return res;
+}
+```
+
+### Symmetric Tree
+```cpp
+bool isMirror(TreeNode* n1, TreeNode* n2) {
+	if (n1 == nullptr && n2 == nullptr) {
+		return true;
+	}
+	if (n1 == nullptr || n2 == nullptr) {
+		return false;
+	}
+	return n1->val == n2->val && isMirror(n1->left, n2->right) && isMirror(n1->right, n2->left);
+}
+
+bool isSymmetric(TreeNode* root) {
+	return isMirror(root->left, root->right);
+}
+```
+
+### Lowest Common Ancestor (LCA)
+```cpp
+bool root_to_node_path(TreeNode* node, int val, vector<TreeNode*>& path) {
+	if (node == nullptr) return false;
+	
+	path.push_back(node);
+	if (node->val == val) return true;
+	if (root_to_node_path(node->left, val, path) || root_to_node_path(node->right, val, path)) {
+		return true;
+	}
+	
+	path.pop_back();
+	return false;
+}
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	vector<TreeNode*> v1, v2;
+	bool t1 = root_to_node_path(root, p->val, v1);
+	bool t2 = root_to_node_path(root, q->val, v2);
+	
+	TreeNode* res = nullptr;
+	int mini = min(v1.size(), v2.size());
+	for (int i=0; i<mini; i++) {
+		cout << v1[i]->val << " " << v2[i]->val << endl;
+		if (v1[i] == v2[i]) {
+			res = v1[i];
+		}
+	}
+	
+	return res;
+}
+```
 
 
 

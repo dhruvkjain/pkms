@@ -16,6 +16,7 @@ JavaScript is synchronous / single threaded but in Web V8 engine is run in Web A
 
 Node(V8) has some reserved token so it separates them from words which it can't understand and pass them to Node.js APIs which then use libuv to interact with OS or Threads init.
 
+# Event Loop 
 Node runs an EVENT LOOP for asynchronous operations by making Threads (from a Thread pool of 4(default) Threads) or use our OS to run operations in it's own call-stack (FIFO). This call-stack is called EVENT QUEUES.
 ![[Pasted image 20240106142247.png]]
 
@@ -123,7 +124,7 @@ req.end();
 
 >if we try to 'require' a folder, node automatically exports any file with name " index.js ".
 
->AXIOS :
+# AXIOS :
 ```javascript
 const axios = require('axios');
 
@@ -136,7 +137,7 @@ axios.get('https://www.google.com')
 	});
 ```
 
-> Stream and Buffers :
+# Stream and Buffers :
 
 Stream is to wait for a minimum chunk of data (data received before minimum data is reached is stored in a BUFFER) and load it when reached and then wait for another chunk of data to load.
 
@@ -160,8 +161,7 @@ console.log(buffer.toJSON());
 
 ```
 
-> Connect Streams :
-
+### Connect Streams :
 ![[Pasted image 20240109005653.png]]
 
 ```javascript
@@ -171,10 +171,10 @@ fs.createReadStream('kepler-data.csv')
 
 Like above, after reading a chunk of data received from a fs stream it is piped to csv parser to parse the data from csv to objects/json.
 
->MVC (Model - View - Controller) pattern :
+# MVC (Model - View - Controller) pattern :
 ![[Pasted image 20240202204629.png]]
 
-> ROUTER :
+## ROUTER :
  
 Routers are used to bundle a group of controllers who have same base endpoint . So this isolates this bundle from others and we can make router folder like controllers.
 
@@ -214,7 +214,7 @@ path.join(__dirname , '..' , public , 'file-name');
 
 ```
 
-> To share files/pdf/images :
+### To share files/pdf/images :
 ```javascript
 // ===========================================================
 // To send a file for example .jpg use sendFile
@@ -222,13 +222,13 @@ path.join(__dirname , '..' , public , 'file-name');
 res.sendFile( path.join(__dirname , '..' , public , 'file-name.jpg') );
 ```
 
->To send some static files like html css js we can use express.static() middleware.
+### To send some static files like html css js we can use express.static() middleware.
 ```javascript
 app.use(express.static(path.join(__dirname , 'public')));Gr
 ```
 
 
-> TEMPLATE ENGINES : 
+# TEMPLATE ENGINES : 
 
 Template engines are used to render dynamic pages which changes as values which are passed are changed.
 We will use Handlebars as our Template engine but , first we have to let node know that we are going to use which template engine.
@@ -238,7 +238,7 @@ app.set('view engine' , 'hbs');
 app.set('views' , path.join(__dirname , 'views'));
 ```
 
-> PROMISES :
+# PROMISES :
 
 ```javascript
 const promise1 = new Promise((resolve,reject)=>{
@@ -254,7 +254,7 @@ promise1.then((result)=>{
 const result = await promise1;
 ```
 
-> TESTING ( JEST ):
+# TESTING ( JEST ):
 
 - Test runner  : find test files (`jest`) .
 - Test fixtures : test fixture are functions which run test of respective modules (`describe()`).
@@ -285,7 +285,7 @@ describe('test group name', ()=>{
 // npm run test-watch ==> check once and if respective modules/test is upated 
 ```
 
-> SUPERTEST (for making a test request to our endpoints) : 
+## SUPERTEST (for making a test request to our endpoints) : 
 
 ``` javascript
 const request = require('supertest');
@@ -371,7 +371,7 @@ describe('Test launches', () => {
 })
 ```
 
-> PERFORMANCE  OPTIMISATION : 
+# PERFORMANCE  OPTIMISATION : 
 
 Node default Async process => FILE IO process , NETWORK process (like requesting or sending data over network) , 
 
@@ -379,7 +379,7 @@ Node default Sync process  => LOOPS , SORT , `JSON.stringify()`, `JSON.parse()`,
 
 *Example : if every `JSON.stringify() or JSON.parse()` takes 10ms and run on Sync Event loop thread then many request can pile up the delay.
 
-> CLUSTER (round-robin method):
+## CLUSTER (round-robin method):
 
 ```
 node server.js --> master --> fork() worker
@@ -388,7 +388,8 @@ node server.js --> master --> fork() worker
 ```
 ***round-robin method*** --> first request goes to first worker, second request to second worker, and so on till end and then again to first worker.
 
-> PM2 (comes with build in clustering and is used to manage processes) :
+ 
+### PM2 (comes with build in clustering and is used to manage processes) :
 
 - pm2 with using node.js build in cluster module
 ```javascript
@@ -484,11 +485,11 @@ pm2 show id_of_worker --> shows all data about that id worker.
 pm2 monit --> opens a live monitor for all processes.
 ```
 
-> Zero Down Time approach :
+## Zero Down Time approach :
 
 If we want to change some code in production and if all servers are restarted by **`pm2 restart server`** then for sometime no request will be processed so to handle this Zero Down Time approach is used **`pm2 reload server`** where , workers are restarted one by one.
 
-> Cluster vs Web Workers :
+## Cluster vs Web Workers :
 
 Clusters works in single process and have build-in method to pass request to different worker but all worker don't share any data among them as each worker work on different thread on CPU cores.
 cluster module allows us to create child processes that all share server ports.
@@ -502,7 +503,7 @@ worker thread --> distribute work among thread in a process.
 ```
 ![[Pasted image 20240414184607.png]]
 
-> WORKER THREADS 
+## WORKER THREADS 
 
 ```javascript
 const {isMainThread , Worker} = require('worker_threads');
@@ -555,7 +556,8 @@ Worker 17316
 
 Helmet helps secure Express apps by setting HTTP response headers.
 
-> OAuth 2.0 code flow :
+ 
+# OAuth 2.0 code flow :
 
 ![[Pasted image 20240601011913.png]]
 
@@ -582,7 +584,7 @@ app.get('/', (req, res)=>{
 
 
 
-> JWT 
+# JWT 
 
 JWT (JSON Web Token) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
 
@@ -617,7 +619,7 @@ openssl rand -base64 32
 > 
 > therefore do authentication inside `server.use()`/`io.use()`.
 
-# How to send recieve cookies over socket :
+## How to send recieve cookies over socket :
 
 > Server Side :
 ```javascript
@@ -678,7 +680,7 @@ const createSocketConnection = () => {
 }
 ```
 
-> Circular dependencies :
+## Circular dependencies :
 > When 2 modules depends somehow on each other.
 ![[Pasted image 20240801182426.png]]
 
@@ -699,7 +701,8 @@ const createSocketConnection = () => {
 
 
 
-> KNIP (Find unused files, dependencies and exports in JavaScript and TypeScript projects) :
+# KNIP 
+(Find unused files, dependencies and exports in JavaScript and TypeScript projects) :
 
 **NOTE : Knip is a static analysis tool and so can't recognize dynamic imports that use the `path` module or alias path**
 **Therefore don't use knip in frontend (as UI libraries like shadcn use alias or `*`(all) import)**
@@ -742,7 +745,7 @@ export default {
 
 
 
-> Caching :
+# Caching :
 
 Fetching data is 𝘀𝗹𝗼𝘄. Caching speeds things up by storing frequently accessed data for quick reads. But how do you populate and update the cache? That's where strategies come in.  
   
