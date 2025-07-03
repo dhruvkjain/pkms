@@ -3368,7 +3368,6 @@ vector<int> preorderTraversal(TreeNode* root) {
 
 
 // Inorder (Left Root Right)
-
 vector<int> inorderTraversal(TreeNode* root) {
 	vector<int> res;
 	if (root == nullptr) return res;
@@ -3598,6 +3597,805 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 	return res;
 }
 ```
+
+### All Nodes Distance K in Binary Tree
+- make a parent child map (creating parent pointers)
+- do a dfs till k from target
+```cpp
+vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+	vector<int> res;
+	if (!root) return res;
+	
+	unordered_map<TreeNode*, TreeNode*> parent;
+	queue<TreeNode*> q;
+	q.push(root);
+	
+	while (!q.empty()) {
+		TreeNode* node = q.front();
+		q.pop();
+		if (node->left) {
+			parent[node->left] = node;
+			q.push(node->left);
+		}
+		if (node->right) {
+			parent[node->right] = node;
+			q.push(node->right);
+		}
+	}
+	
+	unordered_set<TreeNode*> visited;
+	q.push(target);
+	visited.insert(target);
+	int dist = 0;
+	
+	while (!q.empty()) {
+		int size = q.size();
+		if (dist == k) {
+			for (int i = 0; i < size; i++) {
+				TreeNode* node = q.front();
+				q.pop();
+				res.push_back(node->val);
+			}
+			return res;
+		}
+		for (int i = 0; i < size; i++) {
+			TreeNode* node = q.front();
+			q.pop();
+			if (node->left && !visited.count(node->left)) {
+				q.push(node->left);
+				visited.insert(node->left);
+			}
+			if (node->right && !visited.count(node->right)) {
+				q.push(node->right);
+				visited.insert(node->right);
+			}
+			if (parent.count(node) && !visited.count(parent[node])) {
+				q.push(parent[node]);
+				visited.insert(parent[node]);
+			}
+		}
+		dist++;
+	}
+	
+	return res;
+}
+```
+
+### Count Complete Tree Nodes
+```cpp
+int countNodes(TreeNode* root) {
+	if (root == nullptr) return 0;
+	
+	int lh = find_left_height(root);
+	int rh = find_right_height(root);
+	
+	if (lh == rh) return (1<<lh) - 1;
+	return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+int find_left_height(TreeNode* node) {
+	int height = 0;
+	while (node) {
+		height++;
+		node = node->left;
+	}
+	return height;
+}
+
+int find_right_height(TreeNode* node) {
+	int height = 0;
+	while (node) {
+		height++;
+		node = node->right;
+	}
+	return height;
+}
+```
+
+## Unique Binary Tree
+if you are given Preorder and Postorder you can't construct a unique Binary Tree
+For Example: 
+	Preorder -> 123 
+	Postorder -> 321
+
+if we have Inorder and Preorder we can construct a unique Binary Tree out of it 
+similarly if we have Inorder and Postorder we can construct a unique Binary Tree of it.
+
+### Construct Binary Tree from Preorder and Inorder Traversal
+```cpp
+TreeNode* buildsubTree(map<int, int> mp, vector<int>& preorder, int preStart, int preEnd, vector<int>& inorder, int inStart, int inEnd) {
+	if (preStart > preEnd || inStart > inEnd) return nullptr;
+	
+	TreeNode* root = new TreeNode(preorder[preStart]);
+	int inRoot = mp[preorder[preStart]];
+	int leftCnt = inRoot - inStart;
+	
+	root->left = buildsubTree(mp, preorder, preStart+1, preStart+leftCnt, inorder, inStart, inRoot-1);
+	root->right = buildsubTree(mp, preorder, preStart+leftCnt+1, preEnd, inorder, inRoot+1, inEnd);
+		
+	return root;
+}
+
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+	map<int, int> mp;
+	for (int i=0; i<inorder.size(); i++) {
+		mp[inorder[i]] = i;
+	}
+	
+	return buildsubTree(mp, preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1);
+}
+```
+
+### Serialize and Deserialize Binary Tree
+```cpp
+class Codec {
+public:
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        if (!root) return "";
+        
+        string res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
+            if (node) {
+                res += to_string(node->val) + ",";
+                q.push(node->left);
+                q.push(node->right);
+            } else {
+                res += "#,";
+            }
+        }
+        return res;
+    }
+
+    vector<string> parseString(const string& s) {
+        vector<string> result;
+        stringstream ss(s);
+        string token;
+        while (getline(ss, token, ',')) {
+            result.push_back(token);
+        }
+        return result;
+    }
+	
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if (data.empty()) return nullptr;
+		
+        vector<string> parsed = parseString(data);
+        if (parsed.empty()) return nullptr;
+		
+        queue<TreeNode*> q;
+        TreeNode* root = new TreeNode(stoi(parsed[0]));
+        q.push(root);
+        int i = 1;
+		
+        while (!q.empty() && i < parsed.size()) {
+            TreeNode* node = q.front();
+            q.pop();
+			
+            // Left child
+            if (i < parsed.size() && parsed[i] != "#") {
+                node->left = new TreeNode(stoi(parsed[i]));
+                q.push(node->left);
+            }
+            i++;
+			
+            // Right child
+            if (i < parsed.size() && parsed[i] != "#") {
+                node->right = new TreeNode(stoi(parsed[i]));
+                q.push(node->right);
+            }
+            i++;
+        }
+		
+        return root;
+    }
+};
+```
+
+## Morris Traversal
+
+Morris Traversal => Threaded Binary Tree
+```cpp
+// Inorder (Left Root Right)
+vector<int> inorderTraversal(TreeNode* root) {
+	vector<int> res;
+	if (root == nullptr) return res;
+	
+	TreeNode* curr = root;
+	while (curr!=nullptr) {
+		// if curr is root without left node
+		if (curr->left == nullptr) {
+			res.push_back(curr->val);
+			curr = curr->right;
+		} else {
+			// when curr have left node
+			TreeNode* prev = curr->left;
+			while (prev->right && prev->right != curr) {
+				prev = prev->right;
+			}
+			// if thread already not exist
+			if (prev->right == nullptr) {
+				// create thread from rightmost of the left subtree to root 
+				prev->right = curr;
+				// as inorder after root move left
+				curr = curr->left;
+			} else {
+				// when thread already exist and we return back to curr 
+				// i.e. prev->right == curr
+				
+				// cut the thread
+				prev->right = nullptr;
+				res.push_back(curr->val);
+				// as inorder and left is done move right
+				curr = curr->right;
+			}
+			
+		}
+	}
+	
+	return res;
+}
+
+
+// Preorder (Root Left Right)
+vector<int> preorderTraversal(TreeNode* root) {
+	vector<int> res;
+	if (root == nullptr) return res;
+	
+	TreeNode* curr = root;
+	while (curr!=nullptr) {
+		// if curr is root without left node
+		if (curr->left == nullptr) {
+			res.push_back(curr->val);
+			curr = curr->right;
+		} else {
+			// when curr have left node
+			TreeNode* prev = curr->left;
+			while (prev->right && prev->right != curr) {
+				prev = prev->right;
+			}
+			// if thread already not exist
+			if (prev->right == nullptr) {
+				// create thread from rightmost of the left subtree to root 
+				prev->right = curr;
+				res.push_back(curr->val);
+				// as preorder after root move left
+				curr = curr->left;
+			} else {
+				// when thread already exist and we return back to curr 
+				// i.e. prev->right == curr
+				
+				// cut the thread
+				prev->right = nullptr;
+				// as preorder and left is done move right
+				curr = curr->right;
+			}
+			
+		}
+	}
+	
+	return res;
+}
+```
+
+### Flatten Binary Tree to Linked List
+reverse preorder traversal
+```cpp
+class Solution {
+    TreeNode* prev = nullptr;
+public:
+    // reverse pre order traversal (Right Left Root)
+    void flatten(TreeNode* node) {
+        if (node == nullptr) return;
+        flatten(node->right);
+        flatten(node->left);
+	
+        node->right = prev;
+        node->left = nullptr;
+        prev = node;
+    }
+};
+```
+
+# Binary Search Tree (BST)
+
+> **Note:** Inorder of a BST is always in sorted order
+
+### Insert a node in BST (Iterative)
+```cpp
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+	if (root == nullptr) return new TreeNode(val);
+	
+	TreeNode* curr = root;
+	while (true) {
+		if (curr->val < val) {
+			if (curr->right) curr = curr->right;
+			else {
+				curr->right = new TreeNode(val);
+				break;
+			}
+		} else {
+			if (curr->left) curr = curr->left;
+			else {
+				curr->left = new TreeNode(val);
+				break;
+			} 
+		}
+	}
+	
+	return root;
+}
+```
+
+### Insert a node in BST (Recursive)
+- in base case we return the new node and the assign it to `root->left` or `root->right` which ever encountered base case first 
+```cpp
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+	if(root == nullptr){
+		return new TreeNode(val);
+	}
+	if(root->val > val){
+		root->left = insertIntoBST(root->left, val);
+	}
+	else{
+		root->right = insertIntoBST(root->right, val);
+	}
+	return root;
+}
+```
+
+### Delete Node in a BST
+- start normal iteration according to the value of key
+- if key is found then we can replace it with smallest value in the Right Subtree 
+	- why ?
+	- because smallest value in the right subtree is greater than all values in left and smaller than all values in right
+	- therefore maintaining BST property
+- after replacing the value we call function with root as right subtree and key as the smallest value in the right subtree
+- so when we reach that smallest value we basically reach a leaf node 
+	- therefore we trigger `if (!root->left) return root->right;` or `if (!root->right) return root->left;` part of code which return `nullptr`
+	- therefore completely removing the key
+```cpp
+TreeNode* deleteNode(TreeNode* root, int key) {
+	if (!root) return nullptr;
+	
+	if (root->val < key) {
+		root->right = deleteNode(root->right, key);
+	} else if (root->val > key) {
+		root->left = deleteNode(root->left, key);
+	} else {
+		if (!root->left) return root->right;
+		if (!root->right) return root->left;
+		
+		TreeNode* ln = root->right;
+		while (ln->left) {
+			ln = ln->left;
+		}
+		root->val = ln->val;
+		root->right = deleteNode(root->right, ln->val);
+	}
+	
+	return root;
+}
+```
+
+### Kth Smallest Element in BST
+inorder traversal gives sorted order of all values
+```cpp
+void inorder(TreeNode* node, int& k, int& ans) {
+	if (node == nullptr) return;
+	inorder(node->left, k, ans);
+	k--;
+	if (k==0) {
+		ans = node->val;
+		return;
+	}
+	inorder(node->right, k, ans);
+}
+
+int kthSmallest(TreeNode* root, int k) {
+	int ans = 0;
+	inorder(root, k, ans);
+	return ans;
+}
+```
+
+### Validate Binary Search Tree
+```cpp
+bool isValidNode(TreeNode* node, long mini, long maxi) {
+	if (node == nullptr) return true;
+	if (node->val >= maxi || node->val <=mini) return false;
+	
+	return isValidNode(node->left, mini, node->val) && isValidNode(node->right, node->val, maxi);
+}
+
+bool isValidBST(TreeNode* root) {
+	return isValidNode(root, LONG_MIN, LONG_MAX);
+}
+```
+
+### Lowest Common Ancestor of a Binary Search Tree
+```cpp
+bool root_to_node_path(TreeNode* node, TreeNode* search, vector<TreeNode*>& path) {
+	if (node == nullptr) return false;
+	
+	path.push_back(node);
+	if (node->val == search->val) return true;
+	if (node->val > search->val) return root_to_node_path(node->left, search, path);
+	else return root_to_node_path(node->right, search, path);
+	
+	path.pop_back();
+	return false;
+}
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	vector<TreeNode*> v1, v2;
+	bool t1 = root_to_node_path(root, p, v1);
+	bool t2 = root_to_node_path(root, q, v2);
+	
+	TreeNode* res = nullptr;
+	int mini = min(v1.size(), v2.size());
+	for (int i=0; i<mini; i++) {
+		cout << v1[i]->val << " " << v2[i]->val << endl;
+		if (v1[i] == v2[i]) {
+			res = v1[i];
+		}
+	}
+	
+	return res;
+}
+```
+
+### Construct Binary Search Tree from Preorder Traversal
+```cpp
+TreeNode* fnc (vector<int>& preorder, int start, int end) {
+	if (start>end || end>=preorder.size()) return nullptr;
+	
+	TreeNode* node = new TreeNode(preorder[start]);
+	int j=start+1;
+	while (j<preorder.size() && preorder[j] < preorder[start]) {
+		j++;
+	}
+	node->left = fnc (preorder, start+1, j-1);
+	node->right = fnc (preorder, j, end); 
+	
+	return node;
+}
+
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+	if (preorder.size() == 0) return nullptr;
+	
+	TreeNode* root = fnc(preorder, 0, preorder.size()-1);
+	return root;
+}
+```
+
+BST Inorder Iterator using stack
+```cpp
+class BSTIterator {
+    stack<TreeNode*> st;
+public:
+    BSTIterator(TreeNode* root) {
+        while (root) {
+            st.push(root);
+            root = root->left;
+        }
+    }
+    
+    int next() {
+        TreeNode* node = st.top();
+        st.pop();
+        TreeNode* curr = node;
+        if (curr->right) {
+            curr = curr->right;
+            while (curr) {
+                st.push(curr);
+                curr = curr->left;
+            }
+        }
+		
+        return node->val;
+    }
+    
+    bool hasNext() {
+        return !st.empty();
+    }
+};
+```
+
+### Recover Binary Search Tree
+only 2 nodes are swapped
+```cpp
+class Solution {
+    TreeNode* first;
+    TreeNode* middle;
+    TreeNode* last;
+    TreeNode* prev;
+public:
+    void inorder(TreeNode* root) {
+        if (root == nullptr) return;
+			
+        inorder(root->left);
+        if (prev != nullptr && (root->val < prev->val)) {
+            if (first == nullptr) {
+                first = prev;
+                middle = root;
+            } else {
+                last = root;
+            }
+        }
+        prev = root;
+        inorder(root->right);
+    }
+	
+    void recoverTree(TreeNode* root) {
+        first = middle = last = nullptr;
+        prev = new TreeNode(INT_MIN);
+        inorder(root);
+        
+        if (first && last) swap(first->val, last->val);
+        else if (first && middle) swap(first->val, middle->val);
+    }
+};
+```
+
+
+# Graphs
+
+Graphs(V, E) =>   V -> vertices and E -> edges
+A Graph can be Directed or Undirected and cyclic or acyclic
+
+- **Path:** contains a lot of vertices and each of them are reachable, a vertex cannot appear twice in a path. 
+- **Degree of a vertex:** number of edges that go inside or outside of a vertex.
+	- **Indegree of vertex:** number of edges that go inside of a vertex.
+	- **Outdegree of vertex:** number of edges that go outside of a vertex.
+- **Connected Components:** if there exist a path between any two vertices of that graph
+
+**Properties:**
+- Total degree of a graph = 2 * Number of edges.
+
+**Representation:**
+- Adjacency Matrix (Space -> O(N^2))
+	```cpp
+	int n, m;
+	cin >> n >> m;
+	int adj[n+1][m+1];
+	for (int i=0; i<m; i++) {
+		int u, v;
+		cin >> u >> v;
+		adj[u][v] = 1;
+		adj[v][u] = 1;
+	}
+	```
+	For weighted graphs instead of `1` store the weight
+	
+- Adjacency List (Space -> O(2 * E))
+	```cpp
+	int n, m;
+	cin >> n >> m;
+	vector<int> adj[n+1];
+	for (int i=0; i<m; i++) {
+		int u, v;
+		cin >> u >> v;
+		adj[u].push_back(v);
+		adj[v].push_back(u);
+	}
+	```
+	For weighted graphs store a pair for all n vertices `vector<pair<int, int>> adj[n+1]` 
+
+
+## Traversals
+For all traversals we need to now about number of connected components
+so we keep a visited array 
+This way we can keep track that vertices are visited therefore visiting all connected commponents
+```cpp
+vector<bool> visited(n+1, false);
+for (int i=1; i<n+1; i++) {
+	if (!visited[i]) {
+		traversal(i, visited);
+	}
+}
+```
+
+### Breadth First Search(BFS) - Iterative
+```cpp
+vector<int> bfsOfGraph(int v, int start, vector<int> adj[]) {
+	vector<int> bfs;
+	
+	vector<bool> visited(v, false);
+	visited[start] = true;
+	
+	queue<int> q;
+	q.push(start);
+	while (!q.empty()) {
+		int vertex = q.front();
+		q.pop();
+		bfs.push_back(vertex);
+		
+		for (int it: adj[vertex]){
+			if (!visited[it]) {
+				visited[it] = true;
+				q.push(it);
+			}
+		}
+	}
+	
+	return bfs;
+}
+```
+
+### Depth First Search(DFS) - Iterative
+```cpp
+vector<int> dfsOfGraph(int v, int start, vector<int> adj[]) {
+	vector<int> dfs;
+	
+	vector<bool> visited(v, false);
+	visited[start] = true;
+	
+	stack<int> st;
+	st.push(start);
+	while (!st.empty()) {
+		int vertex = st.top();
+		st.pop();
+		dfs.push_back(vertex);
+		
+		// traverse in reverse order to match the recursive solution 
+		for (auto it = adj[vertex].rbegin(); it != adj[vertex].rend(); ++it) {
+			if (!visited[*it]) {
+				visited[*it] = true;
+				st.push(*it);
+			}
+		}
+	}
+	
+	return dfs;
+}
+```
+
+### Depth First Search(DFS) - Recursive
+```cpp
+void dfsRecursive(int vertex, vector<int> adj[], vector<bool>& visited, vector<int>& dfs) {
+    visited[vertex] = true;
+    dfs.push_back(vertex);
+    for (int neighbor : adj[vertex]) {
+        if (!visited[neighbor]) {
+            dfsRecursive(neighbor, adj, visited, dfs);
+        }
+    }
+}
+
+vector<int> dfsOfGraph(int v, int start, vector<int> adj[]) {
+    vector<int> dfs;
+    vector<bool> visited(v, false);
+    
+    dfsRecursive(start, adj, visited, dfs);
+    return dfs;
+}
+```
+
+### Number of Provinces
+- equivalent to find number of connected components
+```cpp
+int findCircleNum(vector<vector<int>>& isConnected) {
+	int n = isConnected.size();
+	vector<bool> visited(n, false);
+	
+	int provinces = 0;
+	queue<int> q;
+	for (int i=0; i<n; i++) {
+		if (!visited[i]) {
+			q.push(i);
+			visited[i] = true;
+			while (!q.empty()) {
+				int vertex = q.front();
+				q.pop();
+				for (int i=0; i<isConnected[vertex].size(); i++){
+					if (isConnected[vertex][i] == 1 && !visited[i]) {
+						visited[i] = true;
+						q.push(i);
+					}
+				}
+			}
+			provinces++;
+		} 
+	}
+	
+	return provinces;
+}
+```
+
+### Rotten Oranges
+- start bfs from all rotten locations at same time
+```cpp
+int orangesRotting(vector<vector<int>>& grid) {
+	int m = grid.size();
+	int n = grid[0].size();
+	vector<vector<bool>> visited(m, vector<bool>(n, false));
+	
+	queue<pair<int, int>> q;
+	int fresh = 0;
+	for (int row = 0; row < m; row++) {
+		for (int col = 0; col < n; col++) {
+			if (grid[row][col] == 2) {
+				q.push({row, col});
+				visited[row][col] = true;
+			} else if (grid[row][col] == 1) {
+				fresh++;
+			}
+		}
+	}
+	if (fresh == 0) return 0;
+	
+	int time = 0;
+	while (!q.empty()) {
+		int size = q.size();
+		bool rotted = false;
+		
+		for (int i=0; i<size; i++) {
+			auto [row, col] = q.front();
+			q.pop();
+			if (0 <= row+1 && row+1 < m && !visited[row+1][col] && grid[row+1][col] == 1) {
+				visited[row+1][col] = true;
+				q.push({row+1, col});
+				fresh--;
+				rotted = true;
+			}
+			if (0 <= row-1 && row-1 < m && !visited[row-1][col] && grid[row-1][col] == 1) {
+				visited[row-1][col] = true;
+				q.push({row-1, col});
+				fresh--;
+				rotted = true;
+			}
+			if (0 <= col+1 && col+1 < n && !visited[row][col+1] && grid[row][col+1] == 1) {
+				visited[row][col+1] = true;
+				q.push({row, col+1});
+				fresh--;
+				rotted = true;
+			}
+			if (0 <= col-1 && col-1 < n && !visited[row][col-1] && grid[row][col-1] == 1) {
+				visited[row][col-1] = true;
+				q.push({row, col-1});
+				fresh--;
+				rotted = true;
+			} 
+		}
+		
+		if(rotted) time++;
+	}
+	
+	return fresh == 0 ? time : -1;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
