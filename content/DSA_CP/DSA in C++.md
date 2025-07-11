@@ -52,6 +52,26 @@ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 }
 ```
 
+### Find All Duplicates in an Array (Negative marking)
+because we are given that elements of array are in the range `[0 .. n]` we can uses elements as indexes
+for every element in array mark it's absolute index -1 representing that element has been taken
+```cpp
+vector<int> findDuplicates(vector<int>& nums) {
+	if(nums.size()==1) return {};
+	// Negative marking
+	// Whenever we meet the element we mark the value - 1 as negative
+	vector<int> ans;
+	for(int i = 0; i<nums.size(); i++) {
+		if(nums[abs(nums[i])-1]>0)
+			nums[abs(nums[i])-1] *=-1; // Mark it with negative
+		else
+			ans.push_back(abs(nums[i]));
+	}
+	return ans;
+}
+```
+
+
 ### Count Inversion
 
 ### Reverse Pairs
@@ -501,6 +521,40 @@ int findKthPositive(vector<int>& arr, int k) {
 	return k+high+1;
 }
 ```
+
+### Kth Smallest Element in a Sorted Matrix
+```cpp
+int countLessThan(vector<vector<int>>& matrix, int mid, int n) {
+	int cnt = 0;
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<n; j++) {
+			if (matrix[i][j] <= mid) cnt++;
+			else break;
+		}
+	}
+	
+	return cnt;
+}
+
+int kthSmallest(vector<vector<int>>& matrix, int k) {
+	int n = matrix[0].size();
+	int low = matrix[0][0], high = matrix[n-1][n-1];
+	
+	while (low<high) {
+		int mid = low + (high-low)/2;
+		int cnt = countLessThan(matrix, mid, n);
+		
+		if (cnt < k) {
+			low = mid+1;
+		} else {
+			high = mid;
+		}
+	}
+	
+	return low;
+}
+```
+
 
 ## Binary Search on Answers find min(max) or max(min)
 max(min) type => return high
@@ -4371,6 +4425,491 @@ int orangesRotting(vector<vector<int>>& grid) {
 }
 ```
 
+### Cycle Detection in undirected Graph (DFS)
+Without tracking the parent, visiting a neighbor that is the parent node could be mistaken for a cycle.
+```cpp
+bool hasCycle(vector<vector<int>>& graph) {
+    int n = graph.size();
+    unordered_set<int> visited;
+    stack<pair<int, int>> stk; // Pair of (node, parent)
+	
+    for (int start = 0; start < n; ++start) { // Handle disconnected components
+        if (visited.find(start) != visited.end()) continue;
+        
+        stk.push({start, -1}); // Start node has no parent
+        visited.insert(start);
+		
+        while (!stk.empty()) {
+            auto [node, parent] = stk.top();
+            stk.pop();
+			
+            for (int neighbor : graph[node]) {
+                if (neighbor == parent) continue; // Skip the parent node
+                if (visited.find(neighbor) != visited.end()) {
+                    return true; // Cycle detected (non-parent visited node)
+                }
+                visited.insert(neighbor);
+                stk.push({neighbor, node});
+            }
+        }
+    }
+    return false; // No cycle found
+}
+```
+
+### Distance of Nearest Cell having 0
+```cpp
+vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+	int m = mat.size(), n = mat[0].size();
+	vector<vector<int>> dist(m, vector<int>(n, -1));
+	queue<pair<int, int>> q;
+	
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			if (mat[i][j] == 0) {
+				q.push({i, j});
+				dist[i][j] = 0;
+			}
+		}
+	}
+	
+	vector<pair<int, int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+	
+	while (!q.empty()) {
+		auto [row, col] = q.front();
+		q.pop();
+		
+		for (auto [dr, dc] : dirs) {
+			int newRow = row + dr, newCol = col + dc;
+			if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && dist[newRow][newCol] == -1) {
+				dist[newRow][newCol] = dist[row][col] + 1;
+				q.push({newRow, newCol});
+			}
+		}
+	}
+	
+	return dist;
+}
+```
+
+### Surrounded Regions
+```cpp
+void bfs(vector<vector<char>>& board, int sr, int sc, int m, int n) {
+	queue<pair<int, int>> q;
+	vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+	
+	board[sr][sc] = 'm';
+	q.push({sr,sc});
+	
+	while (!q.empty()) {
+		int size = q.size();
+		
+		for (int i=0; i<size; i++) {
+			auto [row, col] = q.front();
+			q.pop();
+			
+			for (int i=0; i<4; i++) {
+				int newRow = row + directions[i].first;
+				int newCol = col + directions[i].second;
+				
+				if (newRow >= 0 && newRow < m &&
+					newCol >= 0 && newCol < n &&
+					board[newRow][newCol] == 'O') {
+						board[newRow][newCol] = 'm';
+						q.push({newRow, newCol});
+					}
+			}
+		}
+	
+	}
+}
+
+void solve(vector<vector<char>>& board) {
+	int m = board.size();
+	int n = board[0].size();
+	
+	for (int j = 0; j < n; j++) {
+		if (board[0][j] == 'O') bfs(board, 0, j, m, n); 
+		if (board[m-1][j] == 'O') bfs(board, m-1, j, m, n);
+	}
+	
+	for (int i = 0; i < m; i++) {
+		if (board[i][0] == 'O') bfs(board, i, 0, m, n);
+		if (board[i][n-1] == 'O') bfs(board, i, n-1, m, n);
+	}
+	
+	for (int i=0; i<m; i++) {
+		for (int j=0; j<n; j++) {
+			if (board[i][j] == 'O') {
+				board[i][j] = 'X';
+			} else if (board[i][j] == 'm') {
+				board[i][j] = 'O';
+			}
+		}
+	}
+}
+```
+
+### Word Ladder
+- we replace each character of startWord and form new words that exist in wordList
+- we make(don't store it just generate next possible words in bfs traversal) a tree from startWord to endWord and keep track of levels
+```cpp
+int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+	unordered_set<string> s;
+	for (string i: wordList) {
+		s.insert(i);
+	}
+	
+	int cnt = 1;
+	queue<pair<string, int>> q;   // pair of word, level
+	q.push({beginWord, 1});
+	while (!q.empty()) {
+		int size = q.size();
+		
+		for (int i=0; i<size; i++) {
+			auto [str, lvl] = q.front();
+			q.pop();
+			
+			if (str == endWord) {
+				return lvl;
+			}
+			
+			for (int i=0; i<str.length(); i++) {
+				char ch = str[i];
+				for (char c='a'; c<='z'; c++) {
+					str[i] = c;
+					if (s.find(str) != s.end()) {
+						s.erase(str);
+						q.push({str, lvl+1});
+					}
+				}
+				str[i] = ch;
+			}
+		}
+	}
+	
+	return 0;
+}
+```
+
+## Is Graph Bipartite? (using coloring)
+if a graph has odd length of loop then it can't be bipartite
+```cpp
+bool isBipartite(vector<vector<int>>& graph) {
+	int n = graph.size();
+	vector<int> color(n, -1);
+	
+	for (int start = 0; start < n; ++start) {    // for disconnected components
+		if (color[start] != -1) continue;
+		
+		color[start] = 0;
+		stack<pair<int, int>> st;
+		st.push({start, 0});
+		while (!st.empty()) {
+			auto [node, co] = st.top();
+			st.pop();
+			
+			for (int i=0; i<graph[node].size(); i++) {
+				if (color[graph[node][i]] == -1) {
+					if (co == 1) color[graph[node][i]] = 0;
+					else if (co == 0) color[graph[node][i]] = 1;
+					st.push({graph[node][i], color[graph[node][i]]});
+				} else if (color[graph[node][i]] == co) {
+					return false;
+				}
+			}
+		}
+	}
+	
+	return true;
+}
+```
+
+### Is Cyclic DAG ?
+- three colors => 0 = unvisited, 1 = visiting, 2 = visited
+- it's cyclic if we visit a node of same path which is represented by 1 i.e. currently visiting
+```cpp
+bool is_cyclic_dag(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<int> visited(n, 0); // 0 = unvisited, 1 = visiting, 2 = visited
+	
+    for (int i = 0; i < n; i++) {
+        if (visited[i] != 0) continue;
+        
+        stack<pair<int, bool>> st; // {node, isExiting}
+        st.push({i, false}); // entering node
+        
+        while (!st.empty()) {
+            auto [node, isExiting] = st.top();
+            st.pop();
+            
+            if (isExiting) {
+                visited[node] = 2; // fully processed
+                continue;
+            }
+            
+            if (visited[node] == 1) {
+                // Back edge found — cycle detected
+                return true;
+            }
+            
+            if (visited[node] == 0) {
+                visited[node] = 1; // mark as visiting
+                st.push({node, true}); // post-visit step
+                
+                for (int neighbor : graph[node]) {
+                    if (visited[neighbor] != 2) {
+                        st.push({neighbor, false}); // pre-visit step
+                    }
+                }
+            }
+        }
+    }
+	
+    return false; // no cycles
+}
+```
+
+## Topo Sort (using DFS)
+- only applicable on DAG
+- directed graph should appear in it's linear ordering (if u->v then u should come before v)
+```cpp
+vector<int> toposort(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<bool> visited(n, false);
+    stack<int> ans; // Stack for topological order
+	
+    for (int i = 0; i < n; ++i) {
+        if (visited[i]) continue;
+        
+	    stack<int> st; // Stack for DFS traversal
+        st.push(i); // Start DFS from unvisited node
+        // here we won't mark i as visited as we haven't pushed it's neighbors in stack
+        while (!st.empty()) {
+            int node = st.top();
+            st.pop();
+            
+            if (!visited[node]) {
+                visited[node] = true;
+                st.push(node); // Re-push node for post-order processing
+                
+                // Push unvisited neighbors
+                for (int neighbor : graph[node]) {
+                    if (!visited[neighbor]) {
+                        st.push(neighbor);
+                    }
+                }
+            } else {
+                ans.push(node); // Add to result stack after processing neighbors
+            }
+        }
+    }
+	
+    // Transfer from ans stack to result vector
+    vector<int> result;
+    while (!ans.empty()) {
+        result.push_back(ans.top());
+        ans.pop();
+    }
+    
+    return result;
+}
+```
+
+### Topo Sort (using BFS called Kahn's algo)
+repeatedly remove nodes without any dependencies from the graph
+- we keep track of in-degree of all node.
+- then in bfs decrease degree of all neighbors
+- if at any point we can't find a node with degree 0 though we have nodes with degree > 0 then it's because of cycle
+```cpp
+vector<int> toposort(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<int> res;
+    vector<int> degree(n, 0);
+    
+    // find in-degree of all nodes
+    for (auto i: graph) {
+        for (auto j: i) {
+            degree[j]++;
+        }
+    }
+    
+    // enter all 0 degree nodes i.e. nodes that have no dependencies initially
+    queue<int> q;
+    for (int i=0; i<n; i++) {
+        if (degree[i] == 0) q.push(i);
+    }
+    
+    // BFS: Process level by level
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        res.push_back(node);
+		
+        for (int neighbor : graph[node]) {
+            degree[neighbor]--;
+            if (degree[neighbor] == 0) {
+                q.push(neighbor);
+            }
+        }
+    }
+    
+    // Check for cycle
+    if (res.size() != n) return {};
+    
+	return res;
+}
+```
+
+## Shortest Path
+- For Undirected, Unweighted graph
+	- -> bfs (O(E+V))
+- For Undirected, Weighted (+ve only) graph
+	- -> dijkstra
+- For Undirected, Weighted (both +ve and -ve) graph 
+	- -> bellman ford
+- For Unweighted DAG 
+	- -> bfs
+- For Weighted (both +ve and -ve) DAG
+	- -> topo sort + relaxation
+
+**Single Source Shortest Path Algos**:
+- Dijkstra => O((E+V) * log(V)) => pick the path with the shortest distance 
+- Bellman Ford => O(EV) => relax edges v-1 times, if in v'th relaxation any change in shortest path occur then graph have negative cycle/s
+
+**All Pairs Shortest Path Algos**:
+- Floyd Warshall => O(V^3) => use an 3D-DP array to store the shortest path from `i` to `j` using `k` node
+
+### Shortest Path in Weighted DAG 
+```cpp
+vector<int> toposort(vector<vector<pair<int, int>>>& graph) {
+    int n = graph.size();
+    vector<int> res;
+    vector<int> degree(n, 0);
+    
+    // find in-degree of all nodes
+    for (auto i: graph) {
+        for (auto j: i) {
+            degree[j.first]++;
+        }
+    }
+    
+    // enter all 0 degree nodes i.e. nodes that have no dependencies initially
+    queue<int> q;
+    for (int i=0; i<n; i++) {
+        if (degree[i] == 0) q.push(i);
+    }
+    
+    // BFS: Process level by level
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        res.push_back(node);
+		
+        for (auto neighbor : graph[node]) {
+            degree[neighbor.first]--;
+            if (degree[neighbor.first] == 0) {
+                q.push(neighbor.first);
+            }
+        }
+    }
+    
+    // Check for cycle
+    if (res.size() != n) return {};
+    
+	return res;
+}
+
+vector<int> shortest_path_dag(int start, int v, int e, vector<vector<int>>& edges) {
+    vector<vector<pair<int, int>>> graph(v, vector<pair<int, int>>());
+    for (int i=0; i<e; i++) {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        int w = edges[i][2];
+        graph[u].push_back({v, w});
+    }
+    
+    vector<int> temp = toposort(graph);
+    vector<int> dist(v, INT_MAX);
+    dist[start] = 0;
+    
+    for (int i=0; i<temp.size(); i++) {
+        if (dist[temp[i]] == INT_MAX) continue;
+        for (auto neighbor: graph[temp[i]]) {
+            dist[neighbor.first] = min(dist[neighbor.first], dist[temp[i]] + neighbor.second);
+        }
+    }
+    
+    return dist;
+}
+
+int main()
+{
+    int v = 6, e = 7;
+    vector<vector<int>> edges= {{0,1,2},{0,4,1},{4,5,4},{4,2,2},{1,2,3},{2,3,6},{5,3,1}};
+	
+	vector<int> res = shortest_path_dag(0, v, e, edges);
+	for (int i: res) {
+	    cout << i << " ";
+	}
+	cout << endl;
+	
+	return 0;
+}
+```
+
+### Shortest Path in Weighted (+ve only) graph
+Dijkstra => pick the path with the shortest distance 
+```cpp
+vector<int> djisktra (int v, int start, vector<vector<pair<int, int>>>& graph) {
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // node index, distance from start
+    pq.push({start, 0});
+     
+    vector<int> dist(v, INT_MAX);
+    dist[start] = 0;
+    
+    while (!pq.empty()) {
+        auto node = pq.top();
+        pq.pop();
+        
+        for (auto neighbor: graph[node.first]) {
+            int new_dist = node.second + neighbor.second;
+            if (new_dist < dist[neighbor.first]) {
+                dist[neighbor.first] = node.second + neighbor.second; 
+                pq.push({neighbor.first, dist[neighbor.first]});
+            }
+        }
+    }
+    
+    return dist;
+}
+
+vector<int> shortest_path_pos(int start, int v, int e, vector<vector<int>>& edges) {
+    vector<vector<pair<int, int>>> graph(v, vector<pair<int, int>>());
+    for (int i=0; i<e; i++) {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        int w = edges[i][2];
+        graph[u].push_back({v, w});
+    }
+    
+    return djisktra(v, start, graph);
+}
+
+int main()
+{
+    int v = 6, e = 7;
+    vector<vector<int>> edges= {{0,1,2},{0,4,1},{4,5,4},{4,2,2},{1,2,3},{2,3,6},{5,3,1}};
+	
+	vector<int> res = shortest_path_pos(0, v, e, edges);
+	for (int i: res) {
+	    cout << i << " ";
+	}
+	cout << endl;
+	
+	return 0;
+}
+```
 
 
 
@@ -4387,6 +4926,128 @@ int orangesRotting(vector<vector<int>>& grid) {
 
 
 
+# DP
+
+Methods to solve:
+- Tabulation (Iterative) -> bottom up
+- Memoization (Recursive) -> top down
+
+find recurrence relation in problems
+
+### Fibonacci numbers
+in recursion we end up solving same subproblems which are called overlapping subproblems
+so we memoization the condition of subproblem with solution using matrix, map, table etc
+```cpp
+// Recursion
+int fib (int n) {
+	if (n <= 1) return n;
+	return fib(n-1) + fib(n-2);
+}
+
+// Dynamic Programming
+// Memoization -> Recursive -> top down
+int fib (int n, vector<int>& dp) {
+	if (n <= 1) return n;
+	if (dp[n] != -1) return dp[n];
+	return dp[n] = fib(n-1, dp) + fib(n-2, dp);
+}
+int main() {
+	int n = 7;
+	vector<int> dp(n+1, -1);
+	cout << fib(n, dp) << endl;
+	
+	return 0;
+}
+
+// Tabulation -> Iterative -> bottom up
+int main() {
+	int n = 7;
+	vector<int> dp(n+1, -1);
+	
+	dp[0] = 0, dp[1] = 1;
+	for (int i=2; i<=n; i++) {
+		dp[i] = dp[i-1] + dp[i-2];
+	}
+	cout << dp[n] << endl;
+	
+	return 0;
+}
+
+// Tabulation space optimized
+int main() {
+	int n = 7;
+	
+	int prev2 = 0, prev = 1;
+	for (int i=2; i<=n; i++) {
+		int curr = prev + prev2;
+		prev2 = prev;
+		prev = curr;
+	}
+	cout << prev << endl;
+	
+	return 0;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 1D DP
+
+- Try to represent the problem in terms of index
+- write all possible ways an index can behave according to the question
+- sum up, find min, find max etc. according to the question 
+
+### Climbing Stairs
+```cpp
+// Recursive
+int fnc(int stair) {
+	if (stair == 0 || stair == 1) return 1;
+	int c1 = fnc(stair-1);
+	int c2 = fnc(stair-2);
+	return c1+c2; 
+}
+
+int climbStairs(int n) {
+	return fnc(n);
+}
+
+// Memoization
+int fnc(int stair, vector<int>& dp) {
+	if (stair == 0 || stair == 1) return 1;
+	int c1=0, c2=0;
+	if (dp[stair-1] != -1) c1 = dp[stair-1];
+	else {
+		c1 = fnc(stair-1, dp);
+		dp[stair-1] = c1;
+	}
+	if (dp[stair-2] != -1) c2 = dp[stair-2];
+	else {
+		c2 = fnc(stair-2, dp);
+		dp[stair-2] = c2;
+	}
+	return c1+c2; 
+}
+
+int climbStairs(int n) {
+	vector<int> dp(n+1, -1);
+	return fnc(n, dp);
+}
+```
 
 
 
