@@ -22,7 +22,7 @@ vector<vector<int>> merge(vector<vector<int>>& intervals) {
 		}
 	}
 	res.push_back({start, end});
-
+	
 	return res;
 }
 ```
@@ -1626,21 +1626,21 @@ bool powerof2(int x){
 ```
 
 ### Multiply or Divide a number by 2^k
-> `x * 2^k`  = `x<<k`
-> `x / 2^k  = x>>k`
+-  `x * 2^k`  = `x<<k`
+-  `x / 2^k  = x>>k`
 
 ### kth bit:
 `1<<k = 2^k`
 
-> Toggle kth bit: `x ^ (1<<k)`
-> Set kth bit (make kth bit `1`): `x | (1<<k)`
-> Unset kth bit (make kth bit `0`): `x & ~(1<<k)`
-> Remove the last set bit (rightmost): `x & (x-1)`
+- Toggle kth bit: `x ^ (1<<k)`
+- Set kth bit (make kth bit `1`): `x | (1<<k)`
+- Unset kth bit (make kth bit `0`): `x & ~(1<<k)`
+- Remove the last set bit (rightmost): `x & (x-1)`
 
 ### Swap 2 numbers using bit manipulation
-`x = x^y` => `x = x^y , y = y`
-`y = x^y` => `x = x^y , y = x^y^y = x`
-`x = x^y` => `x = x^y^x = y , y = x`
+- `x = x^y` => `x = x^y , y = y`
+- `y = x^y` => `x = x^y , y = x^y^y = x`
+- `x = x^y` => `x = x^y^x = y , y = x`
 
 ### Count number of set bits (traditional method)
 ```cpp
@@ -1828,8 +1828,8 @@ int subsequence_sum_equal_k(vector<int>& nums, int k) {
 ```
 
 # Stacks and Queue
-Stack => Last In First Out (LIFO) rule
-Queue => First In First Out (FIFO) rule
+- Stack => Last In First Out (LIFO) rule
+- Queue => First In First Out (FIFO) rule
 
 stack using array
 ```cpp
@@ -2868,7 +2868,7 @@ int subarraysWithAtMostKDistinct(vector<int>& nums, int k) {
 	
 	while (r < n) {
 		mp[nums[r]]++;
-	
+		
 		// shrink window till less than k
 		while (mp.size() > k) {
 			mp[nums[l]]--;
@@ -2877,7 +2877,7 @@ int subarraysWithAtMostKDistinct(vector<int>& nums, int k) {
 			}
 			l++;
 		}
-	
+		
 		// total valid subarray with <=k distinct elements are all elements
 		// till r so length of a window == new valid subarrays
 		res += r-l+1;
@@ -3139,14 +3139,14 @@ keep track of max u can reach so that if any point you encounter a `i` that you 
 bool canJump(vector<int>& nums) {
 	int n = nums.size();
 	int max_reach = 0;
-
+	
 	for (int i=0; i<n; i++) {
 		if (i > max_reach) {
 			return false;
 		}
 		max_reach = max(i+nums[i], max_reach);
 	}
-
+	
 	return true;
 }
 ```
@@ -3299,6 +3299,12 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 	return res;
 }
 ```
+
+
+
+
+
+
 
 # Binary Trees
 
@@ -4778,9 +4784,9 @@ vector<int> toposort(vector<vector<int>>& graph) {
 - Bellman Ford => O(EV) => relax edges v-1 times, if in v'th relaxation any change in shortest path occur then graph have negative cycle/s
 
 **All Pairs Shortest Path Algos**:
-- Floyd Warshall => O(V^3) => use an 3D-DP array to store the shortest path from `i` to `j` using `k` node
+- Floyd Warshal => O(V^3) => use an 3D-DP array to store the shortest path from `i` to `j` using `k` node
 
-### Shortest Path in Weighted DAG 
+### Shortest Path in Weighted DAG (Topo Sort)
 ```cpp
 vector<int> toposort(vector<vector<pair<int, int>>>& graph) {
     int n = graph.size();
@@ -4858,7 +4864,7 @@ int main()
 }
 ```
 
-### Shortest Path in Weighted (+ve only) graph
+### Shortest Path in Weighted (+ve only) graph (Djikstra)
 Dijkstra => pick the path with the shortest distance 
 ```cpp
 vector<int> djisktra (int v, int start, vector<vector<pair<int, int>>>& graph) {
@@ -4910,6 +4916,713 @@ int main()
 	return 0;
 }
 ```
+
+### Cheapest Flights Within K Stops
+```cpp
+int dijkstra(int v, int src, int dst, int k, vector<vector<pair<int, int>>>& graph) {
+	// {price, city, stops}
+	priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> pq;
+	pq.push({0, src, 0}); // {price, city, stops}
+	
+	vector<vector<int>> dist(v, vector<int>(k + 2, INT_MAX)); // Track dist per city and stops
+	dist[src][0] = 0;
+	
+	while (!pq.empty()) {
+		auto [price, city, stops] = pq.top();
+		pq.pop();
+		
+		if (city == dst) return price; // Return as soon as destination is reached
+		
+		if (stops <= k) { // Allow up to k stops (k+1 edges)
+			for (auto [new_city, travel_price] : graph[city]) {
+				int new_price = price + travel_price;
+				if (new_price < dist[new_city][stops + 1]) {
+					dist[new_city][stops + 1] = new_price;
+					pq.push({new_price, new_city, stops + 1});
+				}
+			}
+		}
+	}
+	
+	return dist[dst][k + 1] == INT_MAX ? -1 : dist[dst][k + 1];
+}
+
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+	vector<vector<pair<int, int>>> graph(n);
+	for (int i = 0; i < flights.size(); i++) {
+		int u = flights[i][0];
+		int v = flights[i][1];
+		int w = flights[i][2];
+		graph[u].push_back({v, w});
+	}
+	
+	return dijkstra(n, src, dst, k, graph);
+}
+```
+
+### Number of ways to arrive at destination
+```cpp
+int djikstra(int n, int src, int dst, vector<vector<pair<int, int>>>& graph) {
+	const long long mod_val = 1e9 + 7;
+	priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<pair<long long, int>>> pq;
+	pq.push({0, src});
+	
+	vector<pair<long long, long long>> min_times(n, {LLONG_MAX, 0});
+	min_times[src] = {0, 1};
+	
+	while (!pq.empty()) {
+		auto [time, node] = pq.top();
+		pq.pop();
+		
+		if (time > min_times[node].first) continue;
+		
+		for (auto [neighbor, time_taken]: graph[node]) {
+			long long new_time_taken = time_taken + time;
+			if (new_time_taken < min_times[neighbor].first) {
+				min_times[neighbor] = {new_time_taken, min_times[node].second};
+				pq.push({new_time_taken, neighbor});
+			} else if (new_time_taken == min_times[neighbor].first) {
+				min_times[neighbor].second = (min_times[neighbor].second + min_times[node].second) % mod_val;
+			} 
+		}
+	}
+	
+	return min_times[dst].first == LLONG_MAX ? 0 : min_times[dst].second % mod_val;
+}
+
+int countPaths(int n, vector<vector<int>>& roads) {
+	 vector<vector<pair<int, int>>> graph(n);
+	for (int i = 0; i < roads.size(); i++) {
+		int u = roads[i][0];
+		int v = roads[i][1];
+		int w = roads[i][2];
+		graph[u].push_back({v, w});
+		graph[v].push_back({u, w});
+	}
+	
+	return djikstra(n, 0, n-1, graph);
+}
+```
+
+### Bellman Ford Algorithm
+```cpp
+vector<int> bellman_ford(int start, int v, vector<vector<int>>& edges) {
+    vector<int> dist(v, 1e8);
+    dist[start] = 0;
+    
+    for (int i=0; i<v-1; i++) {
+        for (auto it: edges) {
+            int u = it[0];
+            int v = it[1];
+            int w = it[2];
+            if (dist[u] != 1e8 && dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+            }
+        }
+    }
+    
+    // nth relaxation to check for negative cycle 
+    for (auto it: edges) {
+        int u = it[0];
+        int v = it[1];
+        int w = it[2];
+        if (dist[u] != 1e8 && dist[u] + w < dist[v]) return {-1};
+    }
+    
+    return dist;
+}
+```
+
+### Floyd Warshal Algorithm
+```cpp
+void floyd_warshal(vector<vector<int>>&matrix) {
+	int n = matrix.size();
+	// initalize
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			// if not reachable i.e. -1 then assign infinity
+			if (matrix[i][j] == -1) {
+				matrix[i][j] = 1e9;
+			}
+			if (i == j) matrix[i][j] = 0;
+		}
+	}
+	
+	// find shortest via all k's
+	for (int k = 0; k < n; k++) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+			}
+		}
+	}
+	
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			// reverse the infinity assigned to unreachable nodes
+			if (matrix[i][j] == 1e9) {
+				matrix[i][j] = -1;
+			}
+		}
+	}
+}
+```
+
+### Find the City With the Smallest Number of Neighbors at a Threshold Distance
+```cpp
+void floyd_warshal(vector<vector<int>>&matrix) {
+	int n = matrix.size();
+	// initalize
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			// if not reachable i.e. -1 then assign infinity
+			if (matrix[i][j] == -1) {
+				matrix[i][j] = 1e9;
+			}
+			if (i == j) matrix[i][j] = 0;
+		}
+	}
+	
+	// find shortest via all k's
+	for (int k = 0; k < n; k++) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+			}
+		}
+	}
+	
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			// reverse the infinity assigned to unreachable nodes
+			if (matrix[i][j] == 1e9) {
+				matrix[i][j] = -1;
+			}
+		}
+	}
+}
+
+int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+	vector<vector<int>> dist(n, vector<int> (n, -1));
+	for (auto it: edges) {
+		int u = it[0];
+		int v = it[1];
+		int w = it[2];
+		dist[u][v] = w;
+		dist[v][u] = w;
+	}
+	
+	floyd_warshal(dist);
+	
+	int neighbor_cities = INT_MAX, res = 0;
+	for (int i=0; i<n; i++) {
+		int cnt = 0;
+		for (int j=0; j<n; j++) {
+			if (i!=j && dist[i][j] <= distanceThreshold) cnt++; 
+		}
+		if (cnt <= neighbor_cities) {
+			neighbor_cities = cnt;
+			res = i;
+		}
+	}
+	
+	return res;
+}
+```
+
+## Minimum Spanning Tree (MST)
+Spanning Tree => A tree with `n` nodes, `n-1` edges and all nodes are reachable from other nodes
+Minimum Spanning Tree => Spanning Tree in a graph with minimum sum of edge weights
+
+### Prim's Algorithm
+```cpp
+vector<pair<int, int>> prims_mst(int v, vector<vector<vector<int>>>& graph) {
+    priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+    vector<int> visited(v, 0);
+    vector<pair<int, int>> mst;
+    
+    pq.push({0, 0, -1}); // weight, node, parent
+    int mst_sum = 0;
+	
+	// between parent to node greedily pick the least weight
+    while (!pq.empty()) {
+        auto it = pq.top();
+        pq.pop();
+        
+        int wt = it[0];
+        int node = it[1];
+        int parent = it[2];
+        
+        if (visited[node]) continue;
+        visited[node] = 1;
+        
+        if (parent != -1) {
+            mst.push_back({parent, node});
+        }
+        mst_sum += wt;
+        
+        for (auto jt : graph[node]) {
+            int neighbor = jt[0];
+            int ewt = jt[1];
+            if (!visited[neighbor]) {
+                pq.push({ewt, neighbor, node});
+            }
+        }
+    }
+    
+    cout << "MST sum: " << mst_sum << endl;
+    return mst;
+}
+
+int main() {
+    int V = 5;
+    vector<vector<int>> edges = {
+        {0, 1, 2}, {0, 2, 1}, {1, 2, 1},
+        {2, 3, 2}, {3, 4, 1}, {4, 2, 2}
+    };
+	
+    vector<vector<vector<int>>> adj(V);
+    for (auto it : edges) {
+        int u = it[0], v = it[1], w = it[2];
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    }
+	
+    vector<pair<int, int>> res = prims_mst(V, adj);
+    for (auto [u, v] : res) {
+        cout << u << " " << v << endl;
+    }
+	
+    return 0;
+}
+```
+
+## Disjoint Set / Union Find
+used when array/graph is dynamic 
+
+It gives us two options:
+- finding ultimate parent ~ alpha(n) ~ O(1)
+- union ~ alpha(n) ~ O(1) => add new value to array/graph
+	- union by rank
+	- union by size
+
+```cpp
+class DisjointSet {
+    vector<int> rank, union_size, parent;
+
+public:
+    DisjointSet(int n) {
+        rank.resize(n+1, 0);
+        union_size.resize(n+1, 1);
+        parent.resize(n+1);
+        for (int i=0; i<=n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    int find_ultimate_parent(int node) {
+        if (node == parent) return node;
+        // path compression
+        return parent[node] = find_ultimate_parent(parent[node]);
+    }
+    
+    void union_by_rank(int u, int v) {
+        int ultimate_parent_u = find_ultimate_parent(u);
+        int ultimate_parent_v = find_ultimate_parent(v);
+        
+        if (ultimate_parent_u == ultimate_parent_v) return;
+        
+        if (rank[ultimate_parent_u] < rank[ultimate_parent_v]) {
+            parent[ultimate_parent_u] = ultimate_parent_v;
+        } else if (rank[ultimate_parent_u] > rank[ultimate_parent_v]) {
+            parent[ultimate_parent_v] = ultimate_parent_u;
+        } else {
+            parent[ultimate_parent_v] = ultimate_parent_u;
+            rank[ultimate_parent_u]++;
+        }
+    }
+    
+    void union_by_size(int u, int v) {
+        int ultimate_parent_u = find_ultimate_parent(u);
+        int ultimate_parent_v = find_ultimate_parent(v);
+        
+        if (ultimate_parent_u == ultimate_parent_v) return;
+        
+        if (union_size[ultimate_parent_u] < union_size[ultimate_parent_v]) {
+            parent[ultimate_parent_u] = ultimate_parent_v;
+            union_size[ultimate_parent_v] += union_size[ultimate_parent_u];
+        } else {
+            parent[ultimate_parent_v] = ultimate_parent_u;
+            union_size[ultimate_parent_u] += union_size[ultimate_parent_v];
+        }
+    }
+};
+```
+
+### Kruskal's Algorithm
+```cpp
+class DisjointSet {
+    vector<int> union_size, parent;
+public:
+    DisjointSet(int n) {
+        union_size.resize(n+1, 1);
+        parent.resize(n+1);
+        for (int i=0; i<=n; i++) {
+            parent[i] = i;
+        }
+    }
+    
+    int find_ultimate_parent(int node) {
+        if (node == parent[node]) return node;
+        // path compression
+        return parent[node] = find_ultimate_parent(parent[node]);
+    }
+    
+    void union_by_size(int u, int v) {
+        int ultimate_parent_u = find_ultimate_parent(u);
+        int ultimate_parent_v = find_ultimate_parent(v);
+        
+        if (ultimate_parent_u == ultimate_parent_v) return;
+        
+        if (union_size[ultimate_parent_u] < union_size[ultimate_parent_v]) {
+            parent[ultimate_parent_u] = ultimate_parent_v;
+            union_size[ultimate_parent_v] += union_size[ultimate_parent_u];
+        } else {
+            parent[ultimate_parent_v] = ultimate_parent_u;
+            union_size[ultimate_parent_u] += union_size[ultimate_parent_v];
+        }
+    }
+};
+
+int kruskal_mst(int v, vector<pair<int, pair<int, int>>>& edges) {
+    // edges => {weight, {u, v}}
+    
+    sort(edges.begin(), edges.end());
+    
+    DisjointSet ds(v);
+    int mst_sum = 0;
+    for (auto it: edges) {
+        int wt = it.first;
+        int u = it.second.first;
+        int v = it.second.second;
+        
+        if (ds.find_ultimate_parent(u) != ds.find_ultimate_parent(v)) {
+            mst_sum += wt;
+            ds.union_by_size(u, v);
+        }
+    }
+    
+    return mst_sum;
+}
+```
+
+### Number of Operations to Make Network Connected
+```cpp
+class DisjointSet {
+	vector<int> union_size, parent;
+public:
+	DisjointSet(int n) {
+		union_size.resize(n+1, 1);
+		parent.resize(n+1);
+		for (int i=0; i<=n; i++) {
+			parent[i] = i;
+		}
+	}
+	
+	int find_ultimate_parent(int node) {
+		if (node == parent[node]) return node;
+		// path compression
+		return parent[node] = find_ultimate_parent(parent[node]);
+	}
+	
+	void union_by_size(int u, int v) {
+		int ultimate_parent_u = find_ultimate_parent(u);
+		int ultimate_parent_v = find_ultimate_parent(v);
+		
+		if (ultimate_parent_u == ultimate_parent_v) return;
+		
+		if (union_size[ultimate_parent_u] < union_size[ultimate_parent_v]) {
+			parent[ultimate_parent_u] = ultimate_parent_v;
+			union_size[ultimate_parent_v] += union_size[ultimate_parent_u];
+		} else {
+			parent[ultimate_parent_v] = ultimate_parent_u;
+			union_size[ultimate_parent_u] += union_size[ultimate_parent_v];
+		}
+	}
+};
+
+int makeConnected(int n, vector<vector<int>>& connections) {
+	DisjointSet ds(n);
+	int cnt = 0; // Count redundant edges
+	for (auto& it : connections) {
+		int u = it[0];
+		int v = it[1];
+		if (ds.find_ultimate_parent(u) == ds.find_ultimate_parent(v)) {
+			cnt++;
+		} else {
+			ds.union_by_size(u, v);
+		}
+	}
+	
+	// Count components
+	unordered_set<int> components;
+	for (int i = 0; i < n; i++) {
+		components.insert(ds.find_ultimate_parent(i));
+	}
+	int num_components = components.size();
+	
+	// Need (num_components - 1) edges to connect all components
+	if (cnt >= num_components - 1) {
+		return num_components - 1;
+	}
+	return -1; // Not enough edges to connect
+}
+```
+
+### Most Stones Removed with Same Row or Column
+```cpp
+class DisjointSet {
+	vector<int> union_size, parent;
+	public: 
+		DisjointSet(int n) {
+			union_size.resize(n+1, 1);
+			parent.resize(n+1);
+			for (int i=0; i<n+1; i++) parent[i]=i;
+		}
+		
+		int find_ultimate_parent(int node) {
+			if (parent[node] == node) return node;
+			return parent[node] = find_ultimate_parent(parent[node]);
+		}
+		
+		void union_by_size(int u, int v) {
+			int ultimate_parent_u = find_ultimate_parent(u);
+			int ultimate_parent_v = find_ultimate_parent(v);
+			
+			if (ultimate_parent_u == ultimate_parent_v) return;
+			
+			if (union_size[ultimate_parent_u] < union_size[ultimate_parent_v]) {
+				parent[ultimate_parent_u] = ultimate_parent_v;
+				union_size[ultimate_parent_v] += union_size[ultimate_parent_u];
+			} else {
+				parent[ultimate_parent_v] = ultimate_parent_u;
+				union_size[ultimate_parent_u] += union_size[ultimate_parent_v];
+			}
+		}
+};
+
+int removeStones(vector<vector<int>>& stones) {
+	// we can use dfs on each stone to find all connected stones
+	// then from each of connected stone component remove all except one stone
+	// therefore the formula boils down to (no of stones - no of connected components)
+	
+	// but we will use DSU to group them
+	// but DSU have a 1D array so we will convert columns
+	// rows number from 0 to no_of_rows then columns are (column_number + no_of_rows + 1)   
+	int no_of_rows = 0;
+	int no_of_cols = 0;
+	
+	for (auto it: stones) {
+		no_of_rows = max(no_of_rows, it[0]);
+		no_of_cols = max(no_of_cols, it[1]);
+	}
+	
+	DisjointSet ds(no_of_rows + no_of_cols + 1);
+	
+	// connect stones columns and rows to represent a connected component
+	for (auto it: stones) {
+		int stone_row = it[0];
+		int stone_col = it[1] + no_of_rows + 1;
+		ds.union_by_size(stone_row, stone_col);
+	}
+	
+	// no of unique ultimate parents of stone  == no of components
+	unordered_set<int> s;
+	for (auto it: stones) {
+		int stone_row = it[0];
+		s.insert(ds.find_ultimate_parent(stone_row));
+	}
+	
+	return stones.size() - s.size();
+}
+```
+
+### Making A Large Island
+```cpp
+class DSU{
+	public: 
+		vector<int> union_size, parent;
+		DSU(int n) {
+			union_size.resize(n+1, 1);
+			parent.resize(n+1);
+			for (int i=0; i<n+1; i++) parent[i] = i;
+		}
+		
+		int find_ultimate_parent(int node) {
+			if (parent[node] == node) return node;
+			return parent[node] = find_ultimate_parent(parent[node]);
+		}
+		
+		void union_by_size(int u, int v) {
+			int ultimate_parent_u = find_ultimate_parent(u);
+			int ultimate_parent_v = find_ultimate_parent(v);
+			if (ultimate_parent_u == ultimate_parent_v) return;
+			
+			if (ultimate_parent_u < ultimate_parent_v) {
+				parent[ultimate_parent_u] = ultimate_parent_v;
+				union_size[ultimate_parent_v] += union_size[ultimate_parent_u]; 
+			} else {
+				parent[ultimate_parent_v] = ultimate_parent_u;
+				union_size[ultimate_parent_u] += union_size[ultimate_parent_v];
+			}
+		}
+};
+
+int largestIsland(vector<vector<int>>& grid) {
+	int n = grid.size();
+	vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+	vector<pair<int, int>> zeros;
+	DSU ds(n*n);
+	
+	for (int i=0; i<n; ++i) {
+		for (int j=0; j<n; j++) {
+			if (grid[i][j] == 0) {
+				zeros.push_back({i, j});
+				continue;
+			}
+			for (auto it: directions) {
+				int newRow = it.first+i;
+				int newCol = it.second+j;
+				if (newRow >= 0 && newRow < n &&
+					newCol >= 0 && newCol < n &&
+					grid[newRow][newCol] == 1) {
+						int nodeNo = i * n + j;
+						int adjNodeNo = newRow * n + newCol;
+						ds.union_by_size(nodeNo, adjNodeNo);
+				}
+			}
+		}
+	}
+	
+	// entire grid is of one's
+	bool allOnes = zeros.empty();
+	if (allOnes) return n * n;
+	
+	int res = 0;
+	for (auto it: zeros) {
+		int row = it.first;
+		int col = it.second;
+		set<int> components;
+		for (auto it: directions) {
+			int newRow = it.first+row;
+			int newCol = it.second+col;
+			if (newRow >= 0 && newRow < n &&
+				newCol >= 0 && newCol < n &&
+				grid[newRow][newCol] == 1) {
+					components.insert(ds.find_ultimate_parent(newRow*n+newCol));
+			}
+		}
+		int total_size = 0;
+		for (auto it: components) {
+			total_size += ds.union_size[it];
+		}
+		res = max(res, total_size+1);
+	}
+	
+	return res;
+}
+```
+
+### Swim in Rising Water
+```cpp
+int swimInWater(vector<vector<int>>& grid) {
+	int n = grid.size();
+	vector<vector<int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+	vector<vector<bool>> visited(n, vector<bool>(n, false));
+	priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<>> pq;
+	
+	pq.push({grid[0][0], {0, 0}});
+	visited[0][0] = true;
+	int maxElevation = grid[0][0];
+	
+	while (!pq.empty()) {
+		auto [elevation, pos] = pq.top();
+		int row = pos.first, col = pos.second;
+		pq.pop();
+		
+		maxElevation = max(maxElevation, elevation);
+		if (row == n-1 && col == n-1) return maxElevation;
+		
+		for (auto& dir : directions) {
+			int newRow = row + dir[0], newCol = col + dir[1];
+			if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < n && !visited[newRow][newCol]) {
+				visited[newRow][newCol] = true;
+				pq.push({grid[newRow][newCol], {newRow, newCol}});
+			}
+		}
+	}
+	return maxElevation;
+}
+```
+
+## Bridges in Graph
+
+a bridge is any edges in graph that on removal will create a new connected component
+
+when we do a dfs traversal if we have visited an adjacent node then we skip that, this adjacent nodes are ancestors of the current node. 
+
+The skipped edges are called back edges while the edges of the resultant tree formed due to dfs are called forward edges.
+
+```cpp
+void dfs(int node, int parent, int timer, vector<vector<int>>& adj, 
+         vector<vector<int>>& bridges, vector<int>& visited,
+         vector<int>& in_time, vector<int>& lowest_time) {
+        
+    visited[node] = 1;
+    in_time[node] = timer;
+    lowest_time[node] = timer;
+    timer++;
+        
+    for (auto it: adj[node]) {
+        if (it == parent) continue;
+        
+        if (visited[it] == 0) {
+            dfs(it, node, timer, adj, bridges, visited, in_time, lowest_time);
+            
+            // take lowest of lowest_time of node and lowest_time of it
+            lowest_time[node] = min(lowest_time[node], lowest_time[it]);
+            // check if node to it is a bridge
+            if (lowest_time[it] > in_time[node]) {
+                bridges.push_back({it, node});
+            }
+        } else {
+            lowest_time[node] = min(lowest_time[node], lowest_time[it]);
+        }
+    }
+}
+
+vector<vector<int>> tarjan_bridges(int n, vector<vector<int>>& adj) {
+    vector<int> visited(n, 0);
+    vector<int> in_time(n);
+    vector<int> lowest_time(n);
+    vector<vector<int>> bridges;
+    
+    int timer = 1;
+    dfs(0, -1, timer, adj, bridges, visited, in_time, lowest_time);
+    return bridges;
+}
+```
+
+## Articulation Points in Graph
+
+node that on removal create new connected components
+
+
+
+
+
+
+
 
 
 
@@ -4989,23 +5702,6 @@ int main() {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 1D DP
 
 - Try to represent the problem in terms of index
@@ -5048,6 +5744,184 @@ int climbStairs(int n) {
 	return fnc(n, dp);
 }
 ```
+
+### House Robber
+question => don't pick adjacent elements
+```cpp
+int fnc(int i, vector<int>& nums, vector<int>& memo) {
+	if (i >= nums.size()) return 0;
+	if (memo[i] != -1) return memo[i];
+	
+	int skip = fnc(i + 1, nums, memo);
+	int rob = nums[i] + fnc(i + 2, nums, memo);
+	
+	return memo[i] = max(skip, rob);
+}
+
+int rob(vector<int>& nums) {
+	if (nums.empty()) return 0;
+	vector<int> memo(nums.size(), -1);
+	return fnc(0, nums, memo);
+}
+```
+
+### House Robber II
+question => don't pick adjacent elements where elements are in circle
+apply algo on start to end-1 and start+1 to end then return max of both 
+```cpp
+int fnc(int start, int end, vector<int>& nums) {
+	int prev_rob = 0, max_rob = 0;
+	for (int i=start; i<=end; i++) {
+		int temp = max(max_rob, prev_rob + nums[i]);
+		prev_rob = max_rob;
+		max_rob = temp;
+	}
+	return max_rob;
+}
+
+int rob(vector<int>& nums) {
+	int n = nums.size();
+	if (n == 0) return 0;
+	if (n == 1) return nums[0];
+	if (n == 2) return max(nums[0], nums[1]);
+	
+	int case1 = fnc(0, n - 2, nums);
+	int case2 = fnc(1, n - 1, nums);
+	
+	return max(case1, case2);
+}
+```
+
+## 2D DP
+
+- count unique paths
+- count unique paths with obstacles
+- min path sum
+- max path sum
+- triangle problem
+- 2 start points
+
+### Count unique paths
+question => unique paths from `[0,0]` to `[m-1, n-1]`
+
+we can think of dfs but for each cell we go right and down so TC => `O(2^(m*n))` SC => `O(n-1 + m-1)`
+```cpp
+int uniquePaths(int m, int n) {
+	int cnt = 0;
+	
+	stack<pair<int, int>> st;
+	st.push({0, 0});
+	while (!st.empty()) {
+		auto [row, col] = st.top();
+		st.pop();
+		
+		if (row == m-1 && col == n-1) {
+			cnt++;
+			continue;
+		}
+		if (row+1 < m) st.push({row+1, col});
+		if (col+1 < n) st.push({row, col+1});
+	}
+	
+	return cnt;
+}
+
+// gives TLE
+```
+
+so we need to memoize the repeating subproblems TC => `O(n*m)` SC => `O(n-1 + m-1) + O(n*m)`
+```cpp
+int fnc (int row, int col, int m, int n, vector<vector<int>>& dp) {
+	if (row == m-1 && col == n-1) return 1;
+	if (row >= m || col >= n) return 0;
+	
+	if(dp[row][col] != -1) return dp[row][col];
+	int right = fnc(row, col+1, m, n, dp);
+	int down = fnc(row+1, col, m, n, dp);
+	
+	return dp[row][col] = right+down;
+}
+
+int uniquePaths(int m, int n) {
+	vector<vector<int>> dp(m, vector<int>(n, -1));
+	return fnc(0 , 0, m, n, dp);
+}
+```
+
+we are using recursion stack space `O(n-1 + m-1)` which can be optimized by tabulation i.e. iterative bottom up approach
+```cpp
+int uniquePaths(int m, int n) {
+	vector<vector<int>> dp(m, vector<int>(n, 0));
+	
+	for (int i=0; i<m; ++i) {
+		for (int j=0; j<n; ++j) {
+			if (i == 0 && j == 0) dp[i][j] = 1;
+			else {
+				int left = 0, up = 0;
+				if (i>0) up = dp[i-1][j];
+				if (j>0) left = dp[i][j-1];
+				dp[i][j] = up + left;
+			}
+		}
+	}
+	
+	return dp[m-1][n-1];
+}
+```
+
+### Count Unique paths without obstacle
+```cpp
+int fnc (int row, int col, int m, int n, vector<vector<int>>& dp, vector<vector<int>>& obstacleGrid) {
+	if (row >= m || col >= n) return 0;
+	if (obstacleGrid[row][col] == 1) return 0;
+	if (row == m-1 && col == n-1) return 1;
+	
+	if(dp[row][col] != -1) return dp[row][col];
+	int right = fnc(row, col+1, m, n, dp, obstacleGrid);
+	int down = fnc(row+1, col, m, n, dp, obstacleGrid);
+	
+	return dp[row][col] = right+down;
+}
+
+int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+	int m = obstacleGrid.size();
+	int n = obstacleGrid[0].size();
+	vector<vector<int>> dp(m, vector<int>(n, -1));
+	
+	return fnc(0 , 0, m, n, dp, obstacleGrid);
+}
+```
+
+### Minimum Path Sum in Grid
+```cpp
+int fnc (int row, int col, int m, int n, vector<vector<int>>& dp, vector<vector<int>>& grid) {
+	if (row >= m || col >= n) return 1e7;
+	if (row == m-1 && col == n-1) return grid[row][col];
+	
+	if(dp[row][col] != -1) return dp[row][col];
+	int right = grid[row][col] + fnc(row, col+1, m, n, dp, grid);
+	int down = grid[row][col] + fnc(row+1, col, m, n, dp, grid);
+	
+	return dp[row][col] = min(right, down);
+}
+
+int minPathSum(vector<vector<int>>& grid) {
+	int m = grid.size();
+	int n = grid[0].size();
+	vector<vector<int>> dp(m, vector<int>(n, -1));
+	
+	return fnc(0 , 0, m, n, dp, grid);
+}
+```
+
+### Minimum Path Sum in Triangle
+```cpp
+
+```
+
+
+
+
 
 
 

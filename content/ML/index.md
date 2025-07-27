@@ -14,6 +14,7 @@
 
 # Machine Learning
 - [MLU-Explain](https://mlu-explain.github.io/)is an education initiative from Amazon designed to teach machine learning theory and practical application.
+- [Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras & TensorFlow](http://14.139.161.31/OddSem-0822-1122/Hands-On_Machine_Learning_with_Scikit-Learn-Keras-and-TensorFlow-2nd-Edition-Aurelien-Geron.pdf)
 - [Machine Learning University (MLU)](https://aws.amazon.com/machine-learning/mlu/) 
 - Teaching library for machine learning engineers [MiniTorch](https://minitorch.github.io/)
 - Detailed and clear explanation of ML https://distill.pub/

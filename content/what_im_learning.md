@@ -2,6 +2,7 @@
 [[Tech Articles & Videos]]
 
 ## what_im_learning
+- [Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras & TensorFlow](http://14.139.161.31/OddSem-0822-1122/Hands-On_Machine_Learning_with_Scikit-Learn-Keras-and-TensorFlow-2nd-Edition-Aurelien-Geron.pdf)
 - https://doc.rust-lang.org/book/
 - [Implementing an Orderbook in C++ by Coding Jesus](https://youtube.com/playlist?list=PLIkrF4j3_p-2C5VuzbBxpBsFzh0qqXtgm&si=G2PDIAoDelxU-JPx)
 - C++ design patterns for low-latency applications including high-frequency trading: 
