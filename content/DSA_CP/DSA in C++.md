@@ -5915,14 +5915,93 @@ int minPathSum(vector<vector<int>>& grid) {
 ```
 
 ### Minimum Path Sum in Triangle
+Recursive top down approach
 ```cpp
+int fnc(int row, int i, int m, vector<vector<int>>& dp, vector<vector<int>>& triangle) {
+	if (row == m) return triangle[row][i];
+	if (dp[row][i] != -1) return dp[row][i];
+	
+	int left = fnc(row + 1, i, m, dp, triangle);
+	int right = fnc(row + 1, i + 1, m, dp, triangle);
+	
+	return dp[row][i] = triangle[row][i] + min(left, right);
+}
 
+int minimumTotal(vector<vector<int>>& triangle) {
+	int m = triangle.size() - 1;
+	vector<vector<int>> dp(triangle.size(), vector<int>(triangle.size(), -1));
+	return fnc(0, 0, m, dp, triangle);
+}
 ```
 
+Iterative bottom up approach
+```cpp
+int minimumTotal(vector<vector<int>>& triangle) {
+	int m = triangle.size();
+	if (m-1 == 0) return triangle[0][0];
+	vector<vector<int>> dp = triangle;
+	
+	for (int row = m-2; row >= 0; --row) {
+		for (int col = 0; col <= row; ++col) {
+			dp[row][col] += min(dp[row+1][col], dp[row+1][col+1]);
+		}
+	}
+	return dp[0][0];
+}
+```
 
+### Minimum Falling Path Sum
+Recursive top down approach
+```cpp
+int fnc (int row, int col, int m, int n, vector<vector<int>>& dp, vector<vector<int>>& matrix) {
+	if (dp[row][col] != -1) return dp[row][col];
+	if (row == m) return matrix[row][col];
+	
+	int dl =  INT_MAX, dr = INT_MAX, d = INT_MAX;
+	
+	if (col-1 >= 0) dl = fnc(row+1, col-1, m, n, dp, matrix);
+	if (col+1 <= n) dr = fnc(row+1, col+1, m, n, dp, matrix);
+	d = fnc(row+1, col, m, n, dp, matrix);
+	
+	return dp[row][col] = matrix[row][col] + min(d, min(dl, dr));
+}
 
+int minFallingPathSum(vector<vector<int>>& matrix) {
+	int m = matrix.size()-1;
+	int n = matrix[0].size()-1;
+	vector<vector<int>> dp(m+1, vector<int>(n+1, -1));
+	int ans = INT_MAX;
+	
+	for (int i=0; i<=n; ++i) {
+		ans = min(ans, fnc(0, i, m, n, dp, matrix));
+	}
+	
+	return ans;
+}
+```
 
-
+Iterative bottom up approach
+```cpp
+int minFallingPathSum(vector<vector<int>>& matrix) {
+	int m = matrix.size()-1;
+	int n = matrix[0].size()-1;
+	vector<vector<int>> dp = matrix;
+	
+	for (int row = m-1; row>=0; --row) {
+		for (int col = 0; col<=n; ++col) {
+			int dlu =  INT_MAX, dru = INT_MAX, d = INT_MAX;
+			
+			if (col-1 >= 0) dlu = dp[row+1][col-1];
+			if (col+1 <= n) dru = dp[row+1][col+1];
+			d = dp[row+1][col];
+			
+			dp[row][col] = matrix[row][col] + min(d, min(dlu, dru));
+		}
+	}
+	
+	return *min_element(dp[0].begin(), dp[0].end());
+}
+```
 
 
 
