@@ -87,7 +87,7 @@ void merge(vector<int>& arr, int low, int mid, int high) {
 	vector<int> temp;
 	int a = low;
 	int b = mid+1;
-
+	
 	while (a <= mid && b <= high) {
 		if (arr[a] < arr[b]) {
 			temp.push_back(arr[a]);
@@ -97,7 +97,7 @@ void merge(vector<int>& arr, int low, int mid, int high) {
 			b++;
 		}
 	}
-
+	
 	while (a <= mid) {
 		temp.push_back(arr[a]);
 		a++;
@@ -106,7 +106,7 @@ void merge(vector<int>& arr, int low, int mid, int high) {
 		temp.push_back(arr[b]);
 		b++;
 	}
-
+	
 	for (int i = 0; i < temp.size(); ++i) {
         arr[low + i] = temp[i];
     }
@@ -116,7 +116,7 @@ void merge_sort(vector<int>& arr, int low, int high) {
 	if (low>=high) {
 		return;
 	}
-
+	
 	int mid = (low+high)/2;
 	merge_sort(arr, low, mid);
 	merge_sort(arr, mid+1, high);
@@ -152,7 +152,7 @@ int main()
 	}
 	cout << endl;
 	cout << binary_search(nums, x) << endl;
-
+	
 	return 0;
 }
 ```
@@ -266,11 +266,11 @@ int singleNonDuplicate(vector<int>& arr) {
 	
 	while (low<=high) {
 		int mid = (low+high)/2;
-	
+		
 		if (arr[mid] != arr[mid + 1] && arr[mid] != arr[mid - 1]) {
 			return arr[mid];
 		}
-	
+		
 		if ((mid % 2 == 1 && arr[mid] == arr[mid - 1])
 			|| (mid % 2 == 0 && arr[mid] == arr[mid + 1])) {
 			low = mid + 1;
@@ -296,10 +296,10 @@ int findPeakElement(vector<int>& nums) {
 			return 1;
 		}
 	};
-
+	
 	int low = 0;
 	int high = n-1;
-
+	
 	while (low<=high) {
 		int mid = (low+high)/2;
 		if (mid == 0) {
@@ -418,8 +418,7 @@ int minDays(vector<int>& bloomDay, int m, int k) {
 		} else {
 			low = mid+1;
 		}
-	}
-	
+	}	
 	
 	return min;
 }
@@ -431,7 +430,7 @@ int smallestDivisor(vector<int>& nums, int threshold) {
 	int low = 1;
 	int high = *max_element(nums.begin(), nums.end());
 	int ans = INT_MAX;
-
+	
 	while(low<=high) {
 		int mid = (low+high)/2;
 		int sum = 0;
@@ -635,7 +634,7 @@ int allocatePages(vector<int>& pageNumbers, int m) {
 	if (m > (n+1)) return -1;
 	int low = *max_element(pageNumbers.begin(), pageNumbers.end());
 	int high = accumulate(pageNumbers.begin(), pageNumbers.end(), 0);
-
+	
 	while (low<=high) {
 		int mid = (low+high)/2;
 		cout << low << "-" << mid << "-" << high << endl;
@@ -6002,6 +6001,105 @@ int minFallingPathSum(vector<vector<int>>& matrix) {
 	return *min_element(dp[0].begin(), dp[0].end());
 }
 ```
+
+### Cherry Pickup II
+```cpp
+int fnc(int row, int c1, int c2, vector<vector<vector<int>>>& dp, vector<vector<int>>& grid) {
+	int rows = grid.size();
+	int cols = grid[0].size();
+	
+	if (c1 < 0 || c1 >= cols || c2 < 0 || c2 >= cols) return -1e8;
+	
+	if (row == rows - 1) {
+		if (c1 == c2) return grid[row][c1];
+		return grid[row][c1] + grid[row][c2];
+	}
+	
+	if (dp[row][c1][c2] != -1) return dp[row][c1][c2];
+	
+	int maxi = 0;
+	for (int delta1 = -1; delta1 <= 1; ++delta1) {
+		for (int delta2 = -1; delta2 <= 1; ++delta2) {
+			int new_c1 = c1 + delta1;
+			int new_c2 = c2 + delta2;
+			int value = (c1 == c2 ? grid[row][c1] : grid[row][c1] + grid[row][c2]);
+			value += fnc(row + 1, new_c1, new_c2, dp, grid);
+			maxi = max(maxi, value);
+		}
+	}
+	
+	return dp[row][c1][c2] = maxi;
+}
+
+int cherryPickup(vector<vector<int>>& grid) {
+	int rows = grid.size();
+	int cols = grid[0].size();
+	vector<vector<vector<int>>> dp(rows, vector<vector<int>>(cols, vector<int>(cols, -1)));
+	
+	return fnc(0, 0, cols - 1, dp, grid);
+}
+```
+
+
+## DP on Subsequences / Subsets
+
+Subsequences (non-contiguous)
+Subsets (contiguous)
+
+### Partition Equal Subset Sum
+```cpp
+bool fnc (int i, int n, int s1, int s2, vector<int>& nums) {
+	if (i == n) {
+		if (s1 == s2) return true; 
+		else return false;
+	}
+	int res1 = false, res2 = false;
+	res1 = fnc (i+1, n, s1+nums[i], s2, nums);
+	res2 = fnc (i+1, n, s1, s2+nums[i], nums);
+	
+	return res1 || res2;
+}
+
+bool canPartition(vector<int>& nums) {
+	int n = nums.size();
+	if (n == 1) return false; 
+	
+	return fnc (1, n, nums[0], 0, nums);
+}
+```
+
+recursive 
+```cpp
+bool fnc (int i, int n, int s1, int total, vector<int>& nums, vector<vector<int>>& dp) {
+	if (i == n) {
+		int s2 = total - s1;
+		if (s1 == s2) return true; 
+		else return false;
+	}
+	if (dp[i][s1] != -1) return dp[i][s1]; 
+	int res1 = false, res2 = false;
+	res1 = fnc (i+1, n, s1+nums[i], total, nums, dp);
+	res2 = fnc (i+1, n, s1, total, nums, dp);
+	
+	return dp[i][s1] = (res1 || res2);
+}
+
+bool canPartition(vector<int>& nums) {
+	int n = nums.size();
+	if (n == 1) return false;
+	
+	int total = accumulate(nums.begin(), nums.end(), 0);
+	if (total % 2 != 0) return false;
+	
+	vector<vector<int>> dp(n, vector<int>(total+1, -1));
+	return fnc (1, n, nums[0], total, nums, dp);
+}
+```
+
+
+
+
+
 
 
 
