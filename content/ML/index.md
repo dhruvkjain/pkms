@@ -7,6 +7,9 @@
 # Project ideas
 [Machine Learning Projects - YouTube](https://www.youtube.com/playlist?list=PLfFghEzKVmjvuSA67LszN1dZ-Dd_pkus6)
 
+# Grind-75 ML version
+https://products.123ofai.com/qnalab/problems
+
 # Mathematics
 
 [The Complete Mathematics of Neural Networks and Deep Learning (youtube.com)](https://www.youtube.com/watch?v=Ixl3nykKG9M)

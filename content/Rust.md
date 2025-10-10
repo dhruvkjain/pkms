@@ -8,6 +8,7 @@ example: https://youtu.be/0XFq9K7N9o4?si=5ehhwDs4HURIhAa1
 # Learning Resources
 - [ ] [A 10-minute lightning talk taking you from zero to Rust!](https://youtu.be/br3GIIQeefY?si=6V39a6fD_djz44cL)
 - [ ] [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
+- [ ] [Rust Ownership Visualizer](https://cel.cs.brown.edu/aquascope/)
 
 
 # Basics

@@ -5,6 +5,18 @@
 **`CAUTION :`** Don't waste much time in HTML and CSS as you will learn them along the way, focus more on the basics of JavaScript. <br>
 **`ADVICE :`** You will definitely always feel underconfident about HTML CSS JS but after making some basic projects move on to React.js as you will learn them along the way,
 
+# **`Animation/Components libraries`**:
+- transitions between your website’s pages - https://barba.js.org/
+- Animations: https://animejs.com/
+- Animations: https://gsap.com/
+- Components: https://ui.shadcn.com/
+- Components:  https://www.8bitcn.com/
+- Components: https://magicui.design/
+- Components: https://uiverse.io/
+- Components: https://ui.aceternity.com/components
+- Components: https://component.gallery/
+- Components: https://reactbits.dev/get-started/introduction
+- 
 
 > # **`Resources`** :
 - Vite + Typescript : https://www.youtube.com/watch?v=665UnOGx3Pg
@@ -218,11 +230,6 @@
     - Zapier end to end
     - Real world open source projects
 
-# **`Animation/Components libraries`**:
-- transitions between your website’s pages - https://barba.js.org/
-- Animations: https://animejs.com/
-- Animations: https://gsap.com/
-- Components: https://ui.shadcn.com/
 
 # **`TOOLS/WEBSITES`**:
 

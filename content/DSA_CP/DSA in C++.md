@@ -2,6 +2,136 @@
 
 # Arrays
 
+### Longest subarray with sum k
+- using hashing:
+```cpp
+int getLongestSubarray(vector<int>& nums, int k) {
+    int n = nums.size();
+    unordered_map<int, int> mp;
+    int prefixsum = 0, res = 0;
+    
+    for (int i=0; i<n; ++i) {
+        prefixsum += nums[i];
+        
+        if (prefixsum == k) {
+            res = max(res, i+1);
+        }
+        
+        if (mp.find(prefixsum-k) != mp.end()) {
+            res = max(res, i-mp[prefixsum-k]+1);
+        }
+        
+        if (mp.find(prefixsum) == mp.end()) {
+            mp[prefixsum] = i;
+        }
+    }
+    
+    return res;
+}
+```
+
+- optimal 2 pointers:
+```cpp
+int getLongestSubarray(vector<int>& nums, int k) {
+    int n = nums.size();
+    int res = 0, ptr1 = 0, ptr2 = 0;
+    int sum = 0;
+    
+    while (ptr2<n) {
+        sum += nums[ptr2];
+        
+        while (sum > k && ptr1 < ptr2) {
+            sum -= nums[ptr1];
+            ++ptr1;
+        }
+        
+        if (sum == k) {
+            res = max(res, ptr2-ptr1+1);
+        }
+        
+        ++ptr2;
+    }
+    
+    return res;
+}
+```
+
+### 2 sum
+- using hashing:
+```cpp
+vector<int> twoSum(vector<int>& nums, int target) {
+	int n = nums.size();
+	unordered_map<int, int> mp;
+	for (int i=0; i<n; ++i) {
+		mp[nums[i]] = i;
+	}
+	
+	vector<int> res;
+	for (int i=0; i<n; ++i) {
+		if (mp.find(target-nums[i]) != mp.end()) {
+			if (mp[target-nums[i]] != i) {
+				res.push_back(mp[target-nums[i]]);
+				res.push_back(i);
+				return res;
+			} 
+		}
+	}
+	
+	return res;
+}
+```
+
+- optimal 2 pointers:
+```cpp
+vector<int> twoSum(vector<int>& nums, int target) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+	vector<int> res;
+	int ptr1 = 0, ptr2 = n-1;
+	
+	while (ptr1<ptr2) {
+		int sum = nums[ptr1]+nums[ptr2];
+		if (sum == target) {
+			res.push_back(nums[ptr1]);
+			res.push_back(nums[ptr2]);
+			return res;
+		}
+		
+		if (sum > target) --ptr2;
+		else ++ptr1;
+	}
+	
+	return res;
+}
+```
+
+### Longest Consecutive Subsequence
+```cpp
+int longest_consecutive_subseqeunce(vector<int>& nums) {
+    int n = nums.size();
+    int res = 0;
+    unordered_set<int> st;
+    
+    for (auto num: nums) {
+        st.insert(num);
+    }
+    
+    for (auto num: st) {
+        if (st.find(num-1) == st.end()) {
+            int start = num+1, cnt = 1;
+            while (st.find(start) != st.end()) {
+                ++cnt;
+                ++start;
+            }
+            res = max(res, cnt);
+        }
+    }
+    
+    return res;
+}
+```
+
+
 Merge Intervals
 ```cpp
 vector<vector<int>> merge(vector<vector<int>>& intervals) {
@@ -349,7 +479,7 @@ int minEatingSpeed(vector<int>& piles, int h) {
 	int n = piles.size();
 	if (n==1) return ceil((double)piles[0]/(double)h);
 	int max = *max_element(piles.begin(), piles.end());
-	int low = 0;
+	int low = 1;
 	int high = max;
 	int ans = -1;
 	while (low<=high) {

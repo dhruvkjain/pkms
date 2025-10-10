@@ -10,6 +10,7 @@ Siddh recommendation :
 https://youkn0wwho.academy/topic-list
 
 Standard Questions :
+[InterviewBit](https://www.interviewbit.com/courses/programming/)
 [NeetCode](https://neetcode.io/)
 [AlgoMap](https://algomap.io/)
 
@@ -160,6 +161,7 @@ int main()
         cout << pq.top() << " ";
         pq.pop();
     }
+    // 100 43 12 7 4 2 1
     
     return 0;
 }
@@ -278,7 +280,7 @@ to find number of set bits in a number (x) ==> `__buitin_popcount(x)` for int an
 
 ## bitmask :
 
-```C++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -631,6 +633,110 @@ vector<int> mergesort(vector<int> nums, int start, int end) {
 
 # Array
 
+### Longest subarray with sum k
+using hashing:
+```cpp
+int getLongestSubarray(vector<int>& nums, int k) {
+    int n = nums.size();
+    unordered_map<int, int> mp;
+    int prefixsum = 0, res = 0;
+    
+    for (int i=0; i<n; ++i) {
+        prefixsum += nums[i];
+        
+        if (prefixsum == k) {
+            res = max(res, i+1);
+        }
+        
+        if (mp.find(prefixsum-k) != mp.end()) {
+            res = max(res, i-mp[prefixsum-k]+1);
+        }
+        
+        if (mp.find(prefixsum) == mp.end()) {
+            mp[prefixsum] = i;
+        }
+    }
+    
+    return res;
+}
+```
+
+optimal 2 pointers:
+```cpp
+int getLongestSubarray(vector<int>& nums, int k) {
+    int n = nums.size();
+    int res = 0, ptr1 = 0, ptr2 = 0;
+    int sum = 0;
+    
+    while (ptr2<n) {
+        sum += nums[ptr2];
+        
+        while (sum > k && ptr1 < ptr2) {
+            sum -= nums[ptr1];
+            ++ptr1;
+        }
+        
+        if (sum == k) {
+            res = max(res, ptr2-ptr1+1);
+        }
+        
+        ++ptr2;
+    }
+    
+    return res;
+}
+```
+
+### 2 sum
+- using hashing:
+```cpp
+vector<int> twoSum(vector<int>& nums, int target) {
+	int n = nums.size();
+	unordered_map<int, int> mp;
+	for (int i=0; i<n; ++i) {
+		mp[nums[i]] = i;
+	}
+	
+	vector<int> res;
+	for (int i=0; i<n; ++i) {
+		if (mp.find(target-nums[i]) != mp.end()) {
+			if (mp[target-nums[i]] != i) {
+				res.push_back(mp[target-nums[i]]);
+				res.push_back(i);
+				return res;
+			} 
+		}
+	}
+	
+	return res;
+}
+```
+
+- optimal 2 pointers:
+```cpp
+vector<int> twoSum(vector<int>& nums, int target) {
+	int n = nums.size();
+	sort(nums.begin(), nums.end());
+	vector<int> res;
+	int ptr1 = 0, ptr2 = n-1;
+	
+	while (ptr1<ptr2) {
+		int sum = nums[ptr1]+nums[ptr2];
+		if (sum == target) {
+			res.push_back(nums[ptr1]);
+			res.push_back(nums[ptr2]);
+			return res;
+		}
+		
+		if (sum > target) --ptr2;
+		else ++ptr1;
+	}
+	
+	return res;
+}
+```
+
+
 ### Find All Duplicates in an Array (Negative marking)
 because we are given that elements of array are in the range `[0 .. n]` we can uses elements as indexes
 for every element in array mark it's absolute index -1 representing that element has been taken
@@ -652,11 +758,18 @@ vector<int> findDuplicates(vector<int>& nums) {
 
 ### Kadane's Algorithm
 for each index we find max_sum till that index by greedily taking max of sum of current index and sum till now   
--  Initialize `max_current` and `max_global` to the first element.
--  For each element from index 1 onward:
-    - Update `max_current` as the maximum of the current element or the sum of max_current and the current element.
-    - Update `max_global` if `max_current` is greater.
-- Return `max_global`.
+```cpp
+int maxSubArray(vector<int>& nums) {
+	int glo_max = nums[0], curr_sum = nums[0];
+	
+	for (int i=1; i<nums.size(); ++i) {
+		curr_sum = max(curr_sum, 0) + nums[i];
+		glo_max = max(glo_max, curr_sum);
+	}
+	
+	return glo_max;
+}
+```
 
 **Questions:**
 - find the subarray with maximum sum
@@ -795,6 +908,33 @@ vector<vector<int>> triplet(int n, vector<int> &arr) {
     return ans;
 }
 ```
+
+### Merge Intervals
+```cpp
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+	int n = intervals.size();
+	sort(intervals.begin(), intervals.end());
+	vector<vector<int>> merged_intervals;
+	merged_intervals.push_back(intervals[0]);
+	
+	for (int i=1; i<n; ++i) {
+		vector<int>& last = merged_intervals.back();
+		if (last[1] >= intervals[i][0]) {
+			
+			int ele1 = last[0];
+			int ele2 = max(intervals[i][1], last[1]);
+			
+			merged_intervals.pop_back();
+			merged_intervals.push_back({ele1, ele2});
+		} else {
+			merged_intervals.push_back(intervals[i]);
+		}
+	}
+	
+	return merged_intervals;
+}
+```
+
 
 # Binary Search
 
