@@ -20,3 +20,27 @@ uv:
 uv cache clean
 ```
 
+python venv:
+```shell
+pip cache purge
+```
+
+list the size of folders:
+```shell
+du -h . | sort -hr | head -20
+```
+
+cache:
+```shell
+rm -rf ~/.cache/BraveSoftware/Brave-Browser/Default
+rm -rf ~/.cache/kioexec
+rm -rf ~/.cache/yay
+rm -rf ~/.cache/go-build
+```
+
+kornia-rs:
+```shell
+rm -rf "./codes/oss opensource/kornia-rs/target"
+rm -rf "./codes/oss opensource/kornia-rs/kornia-py/target"
+```
+
