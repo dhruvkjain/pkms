@@ -1,5 +1,4 @@
-[[index]]
-[[Arch Linux]]
+[[Linux/index|Linux/index]]
 
 ### AppArmor and SELinux:
 

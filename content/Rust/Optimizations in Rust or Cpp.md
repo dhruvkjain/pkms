@@ -1,5 +1,4 @@
-[[Rust]]
-[[OS]]
+[[Rust/index|Rust/index]]
 
 ### Rust optimizations / Advance Rust
 - [Measure Rust Performance - Let's Get Rusty YT](https://youtu.be/q3VOsGzkM-M) 

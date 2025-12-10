@@ -6173,8 +6173,8 @@ int cherryPickup(vector<vector<int>>& grid) {
 
 ## DP on Subsequences / Subsets
 
-Subsequences (non-contiguous)
-Subsets (contiguous)
+Subsequences (contiguous)
+Subsets (non-contiguous)
 
 ### Partition Equal Subset Sum
 ```cpp

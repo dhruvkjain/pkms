@@ -1,4 +1,4 @@
-[[index]]
+[[Linux/index|Linux/index]]
 
 ### Cleanup Routine Commands:
 pacman, yay
