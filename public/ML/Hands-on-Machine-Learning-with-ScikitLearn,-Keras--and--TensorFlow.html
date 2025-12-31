@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="PKMS"/><meta property="og:title" content="Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow"/><meta name="twitter:description" content="index Sources Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow Research Articles How Deepseek used MultiToken Prediction Informer (this channel discuss and implement a lot of ML models) Understanding the difficulty of t..."/><meta property="og:description" content="index Sources Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow Research Articles How Deepseek used MultiToken Prediction Informer (this channel discuss and implement a lot of ML models) Understanding the difficulty of t..."/><meta property="og:image:alt" content="index Sources Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow Research Articles How Deepseek used MultiToken Prediction Informer (this channel discuss and implement a lot of ML models) Understanding the difficulty of t..."/><meta property="og:image" content="https://dhruvkjain.github.io/pkms/static/og-image.png"/><meta property="og:image:url" content="https://dhruvkjain.github.io/pkms/static/og-image.png"/><meta name="twitter:image" content="https://dhruvkjain.github.io/pkms/static/og-image.png"/><meta property="og:image:type" content="image/.png"/><meta property="twitter:domain" content="dhruvkjain.github.io/pkms"/><meta property="og:url" content="https://dhruvkjain.github.io/pkms/ML/Hands-on-Machine-Learning-with-ScikitLearn,-Keras--and--TensorFlow"/><meta property="twitter:url" content="https://dhruvkjain.github.io/pkms/ML/Hands-on-Machine-Learning-with-ScikitLearn,-Keras--and--TensorFlow"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="index Sources Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow Research Articles How Deepseek used MultiToken Prediction Informer (this channel discuss and implement a lot of ML models) Understanding the difficulty of t..."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvZGhydXZramFpbi9PYnNpZGlhbiBWYXVsdC9wa21zL3F1YXJ0ei9jb21wb25lbnRzL3N0eWxlcyIsInNvdXJjZXMiOlsibWVybWFpZC5pbmxpbmUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTs7O0FBS0Y7RUFDRTtFQUNBOzs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwYWRkaW5nOiAycmVtO1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgdHJhbnNmb3JtLW9yaWdpbjogMCAwO1xuICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuMXMgZWFzZTtcbiAgICAgIG92ZXJmbG93OiB2aXNpYmxlO1xuICAgICAgbWluLWhlaWdodDogMjAwcHg7XG4gICAgICBtaW4td2lkdGg6IDIwMHB4O1xuXG4gICAgICBwcmUge1xuICAgICAgICBtYXJnaW46IDA7XG4gICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgIH1cblxuICAgICAgc3ZnIHtcbiAgICAgICAgbWF4LXdpZHRoOiBub25lO1xuICAgICAgICBoZWlnaHQ6IGF1dG87XG4gICAgICB9XG4gICAgfVxuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRyb2xzIHtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIGJvdHRvbTogMjBweDtcbiAgICAgIHJpZ2h0OiAyMHB4O1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGdhcDogOHB4O1xuICAgICAgcGFkZGluZzogOHB4O1xuICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgICAgIGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMSk7XG4gICAgICB6LWluZGV4OiAyO1xuXG4gICAgICAubWVybWFpZC1jb250cm9sLWJ1dHRvbiB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgICB3aWR0aDogMzJweDtcbiAgICAgICAgaGVpZ2h0OiAzMnB4O1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICAgIGNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgZm9udC1mYW1pbHk6IHZhcigtLWJvZHlGb250KTtcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcblxuICAgICAgICAmOmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICB9XG5cbiAgICAgICAgJjphY3RpdmUge1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgxcHgpO1xuICAgICAgICB9XG5cbiAgICAgICAgLy8gU3R5bGUgdGhlIHJlc2V0IGJ1dHRvbiBkaWZmZXJlbnRseVxuICAgICAgICAmOm50aC1jaGlsZCgyKSB7XG4gICAgICAgICAgd2lkdGg6IGF1dG87XG4gICAgICAgICAgcGFkZGluZzogMCAxMnB4O1xuICAgICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl19 */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://dhruvkjain.github.io/pkms/index.xml"/></head><body data-slug="ML/Hands-on-Machine-Learning-with-ScikitLearn,-Keras--and--TensorFlow"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">PKMS</a></h2><div class="spacer mobile-only"></div><div style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-content"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="explorer-content" aria-expanded="false"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../ML/">ML</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow</a></div></nav><h1 class="article-title">Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow</h1><p show-comma="true" class="content-meta"><time datetime="2025-08-24T19:42:20.000Z">Aug 25, 2025</time><span>17 min read</span></p></div></div><article class="popover-hint"><p><a href="../ML/" class="internal" data-slug="ML/index">index</a></p>
+<h1 id="sources">Sources<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#sources" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<ul>
+<li><a href="http://14.139.161.31/OddSem-0822-1122/Hands-On_Machine_Learning_with_Scikit-Learn-Keras-and-TensorFlow-2nd-Edition-Aurelien-Geron.pdf" class="external">Great for learning concepts, functions and different methods - Hands on Machine Learning with ScikitLearn, Keras &amp; TensorFlow<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+</ul>
+<h1 id="research-articles">Research Articles<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#research-articles" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<ul>
+<li><a href="https://youtu.be/4BhZZYg2_J4?si=JkppbxMu1gMyqETy" class="external">How Deepseek used MultiToken Prediction<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://www.youtube.com/watch?v=XGPr_uFM3Uk" class="external">Informer (this channel discuss and implement a lot of ML models)<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf" class="external">Understanding the difficulty of training deep feedforward neural networks<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://arxiv.org/pdf/1803.09820" class="external">A DISCIPLINED APPROACH TO NEURAL NETWORK HYPER-PARAMETERS<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://arxiv.org/pdf/1601.06071" class="external">Bitwise Neural Networks<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://aman.ai/primers/ai/top-30-papers/" class="external">https://aman.ai/primers/ai/top-30-papers/<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+</ul>
+<h1 id="fine-tuning">Fine Tuning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#fine-tuning" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p><strong>Hyperparameters</strong> <span>⇒</span> Variables that are constant throughout the training for example, Neural Net architecture (number of layers, neuron in layers etc…), Learning Rate, batch size, Loss function, Optimizers, Activation functions, number of iterations etc..</p>
+<p><strong>Parameters</strong> <span>⇒</span> variables that are fine tuned during training weights and biasis</p>
+<h2 id="hyperparameters-fine-tuning">Hyperparameters fine tuning<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#hyperparameters-fine-tuning" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="number-of-hidden-layers">Number of Hidden Layers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#number-of-hidden-layers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>for complex problems, deep networks have a much higher parameter efficiency than shallow ones. They can model complex functions using exponentially fewer neurons than shallow nets, allowing them to reach much better performance with the same amount of training data.</li>
+</ul>
+<h3 id="number-of-neurons-per-hidden-layer">Number of Neurons per Hidden Layer<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#number-of-neurons-per-hidden-layer" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>using the same number of neurons in all hidden layers performs just as well in most cases, or even better; plus, there is only one hyperparameter to tune, instead of one per layer.</li>
+<li>depending on the dataset, it can sometimes help to make the first hidden layer bigger than the others.</li>
+<li>a layer with two neurons can only output 2D data, so if it processes 3D data, some information will be lost</li>
+<li><strong>In general you will get better performance by increasing the number of layers instead of the number of neurons per layer.</strong></li>
+</ul>
+<h3 id="learning-rate">Learning rate<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#learning-rate" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>learning rate is too small, then the algorithm will have to go through many iterations to converge</li>
+<li>learning rate is too high, you might jump across the minimum value and end up on the other side, possibly even higher up than you were before</li>
+<li><strong>The curve of the Mean Squared Error (MSE) cost function for linear regression is typically a convex shape, which means it has no local minima, just one global minimum.</strong></li>
+<li>eliminate models that take too long to converge</li>
+<li><strong>starting with a very low learning rate (e.g., 10-5) and gradually increasing it up to a very large value (e.g., 10).</strong></li>
+<li><strong>This is done by multiplying the learning rate by a constant factor at each iteration (e.g., by exp(log(10^6 )/500) to go from 10^-5 to 10 in 500 iterations).</strong></li>
+<li>If you plot the <strong>loss as a function of the learning rate (using a log scale for the learning rate),</strong> you should see it dropping at first. But after a while, the learning rate will be too large, so the loss will shoot back up: the optimal learning rate will be a bit lower than the point at which the loss starts to climb (typically about 10 times lower than the turning point).</li>
+</ul>
+<h3 id="number-of-iterations">Number of Iterations<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#number-of-iterations" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>set a very large number of iterations but to interrupt the algorithm when the gradient vector becomes tiny that is, when its norm becomes smaller than a tiny number ϵ (called the tolerance)—because this happens when Gradient Descent has (almost) reached the minimum</strong></li>
+<li>it can take O(1/ϵ) iterations to reach the optimum within a range of ϵ, depending on the shape of the cost function</li>
+</ul>
+<h3 id="loss-functions">Loss functions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#loss-functions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Root Mean Square Error (RMSE) is generally the preferred performance measure for regression tasks, in some contexts you may prefer to use another function. For example, suppose that there are many outlier districts. In that case, you may consider using the Mean Absolute Error (MAE)</strong>
+<ul>
+<li><strong>Root Mean Square Error (RMSE)</strong> corresponds to the Euclidean norm <span>→</span> shortest distance between two points calculated using Pythagoras’ theorem. The square of the total distance between two objects is the sum of the squares of the distances along each perpendicular co-ordinate.</li>
+<li><strong>Mean Absolute Error (MAE)</strong> corresponds to Manhattan norm <span>→</span> sum of absolute differences between points across all the dimensions calculated using sum of the absolute differences of their Cartesian coordinates. Total sum of the difference between the x-coordinates and y-coordinates.</li>
+</ul>
+</li>
+<li><strong>Hamming Distance</strong>: Used to Calculate the distance between binary vectors.</li>
+<li><strong>Minkowski Distance</strong>: Generalization of Euclidean and Manhattan distance.</li>
+<li><strong>Cosine distance</strong>: measures the similarity between two vectors of an inner product space.</li>
+</ul>
+<h3 id="accuracy--cross-validation">Accuracy / Cross Validation<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#accuracy--cross-validation" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Confusion Matrix</strong>: count the number of times instances of class A are classified as class B. For example, to know the number of times the classifier confused images of 5s with 3s, you would look in the fifth row and third column of the confusion matrix.
+<ul>
+<li><strong>Precision</strong>: true positives / (true positives + false positives)</li>
+<li><strong>Recall (sensitivity)</strong>: true positives / (true positives + false negatives). Precision is typically used along with another metric named recall, also called sensitivity or the true positive rate (TPR). This is the ratio of positive instances that are correctly detected by the classifier.</li>
+<li>both precision and recall can be calculated from confusion matrix</li>
+</ul>
+</li>
+<li>F1 score is the harmonic mean of precision and recall</li>
+<li>Binary classifiers <span>⇒</span> <strong>Receiver Operating Characteristic (ROC)</strong> curve are used that plots true positive rate / false positive rate i.e. sensitivity (recall) versus 1 – specificity, where <strong>Sensitivity</strong> is true negative rate.</li>
+<li>One way to compare classifiers is to measure the <strong>Area Under the Curve (AUC)</strong>. A perfect classifier will have a ROC AUC equal to 1, whereas a purely random classifier will have a ROC AUC equal to 0.5</li>
+<li><strong>you should prefer the PR curve whenever the positive class is rare or when you care more about the false positives than the false negatives. Otherwise, use the ROC curve.</strong></li>
+</ul>
+<h3 id="activation-functions">Activation functions<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#activation-functions" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>biological neurons <span>⇒</span> roughly sigmoid activation functions, but not good for artificial neurons</li>
+<li>different layers may learn at widely different speeds.</li>
+<li>this is mostly caused by activation functions (logistic sigmoid) and the weight initialization techniques (i.e., a normal distribution with a mean of 0 and a standard deviation of 1)</li>
+<li>vanishing gradients problem (gradients grow smaller and smaller)
+<ul>
+<li>gradients often get smaller and smaller as the back propagation algorithm progresses down to the lower layers</li>
+</ul>
+</li>
+<li>exploding gradients problem (gradients grow larger and larger)</li>
+<li><strong>Glorot and He Initialization</strong>:
+<ul>
+<li>variance of the outputs of each layer to be equal to the variance of its inputs</li>
+<li>number of inputs in a layer = fan-in</li>
+<li>number of neuron in a layer = fan-out</li>
+<li><strong>Glorot initialization</strong> or Xavier initialization
+<ul>
+<li>fan-avg = (fan-in + fan-out) / 2</li>
+<li>Normal distribution with mean 0 and variance σ^2 = 1 / fan-avg</li>
+<li>Or a uniform distribution between −r and  + r, with r = sqrt( 3 / fan-avg )</li>
+</ul>
+</li>
+<li><strong>LeCun initialization</strong>
+<ul>
+<li>when fan-avg = fan-in is used in Glorot initialization</li>
+<li>Normal distribution with mean 0 and variance σ^2 = 1 / fan-in</li>
+<li>Or a uniform distribution between −r and  + r, with r = sqrt( 3 / fan-in )</li>
+</ul>
+</li>
+<li><strong>He initialization</strong> (initialization of ReLU layers and it’s variants)
+<ul>
+<li>Normal distribution with mean 0 and variance σ^2 = 2 / fan-in</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Initialization parameters for each type of activation function:
+<img src="../Pasted-image-20250729095932.png" width="auto" height="auto" alt/></p>
+<p>for the uniform distribution, just compute r = sqrt ( 3 * σ^2 )</p>
+<ul>
+<li>ReLU better than sigmoid function but suffers from dying ReLU where they only output 0, never activating that side of neural network</li>
+<li>Use Leaky ReLU-α (z) = max(αz, z) instead
+<ul>
+<li>α = 0.2 (a huge leak) better than α = 0.01 (a small leak)</li>
+</ul>
+</li>
+<li>Randomized Leaky ReLU (RReLU)
+<ul>
+<li>α is picked randomly in a given range during training and is fixed to an average value during testing</li>
+</ul>
+</li>
+<li>Parametric Leaky ReLU (PReLU)
+<ul>
+<li>α is authorized to be learned during training</li>
+<li>making α an parameter instead of hyperparameter</li>
+<li>good for large dataset</li>
+</ul>
+</li>
+<li>Exponential Linear Unit (ELU) (good but heavy to compute so use Leaky instead)
+<ul>
+<li>ELU-α (z) = α * (e^z − 1)       if z &lt; 0</li>
+<li>
+<pre><code>                 z                         if z ≥ 0
+</code></pre>
+</li>
+<li>α = 1 is a good start</li>
+</ul>
+</li>
+<li>Scaled ELU (SELU) (conditional best)
+<ul>
+<li>SELU-α (z) = λ* α * (e^z − 1)       if z &lt; 0
+<ul>
+<li>
+<pre><code>           λ * z                         if z ≥ 0
+</code></pre>
+</li>
+<li>α = λ = 1 is a good start</li>
+</ul>
+</li>
+<li>network will self-normalize: the output of each layer will tend to preserve a mean of 0 and standard deviation of 1 during training only if:
+<ul>
+<li>input features must be standardized (mean 0 and standard deviation 1)</li>
+<li>LeCun normal initialization is done</li>
+<li>network’s architecture must be sequential</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>SELU > ELU > leaky ReLU (and its variants) > ReLU > tanh > logistic</strong></li>
+<li><strong>Batch Normalization</strong>
+<ul>
+<li>zero-centers and normalizes each input, then scales and shifts the result using two new parameter vectors per layer: one for scaling, the other for shifting.</li>
+<li><img src="../Pasted-image-20250729132157.png" width="auto" height="auto" alt/></li>
+<li>Here x are inputs of that layer and z are output x-hat is normalized vector</li>
+<li>To sum up, four parameter vectors are learned in each batch-normalized layer: γ (the output scale vector) and β (the output offset vector) are learned through regular backpropagation, and μ (the final input mean vector) and σ (the final input standard deviation vector) are estimated using an exponential moving average.</li>
+<li>clip the gradients during backpropagation so that they never exceed some threshold. This is called <strong>Gradient Clipping</strong>.
+<ul>
+<li>ideal is to clip for -1 to 1 after normalizing the values i.e. the vector (0.9, 100.0) will be clipped to (0.00899964, 0.9999595)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="optimizers">Optimizers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#optimizers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Momentum Optimization</strong>: Imagine a bowling ball rolling down a gentle slope on a smooth surface: it will start out slowly, but it will quickly pick up momentum until it eventually reaches terminal velocity (if there is some friction or air resistance).
+<ul>
+<li>Gradient Descent: θ = θ – η * ∇θ(J(θ))
+<ul>
+<li>gradient of the cost function J(θ) with regard to the weights (∇θ(J(θ)))</li>
+</ul>
+</li>
+<li>Momentum algorithm:
+<ul>
+<li>m = βm - η * ∇θ(J(θ))</li>
+<li>θ = θ + m</li>
+<li>here m is momentum vector (initially all 0).</li>
+<li>β is momentum which must be set between 0 (high friction) and 1 (no friction), 0.9 mostly used.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Nesterov Accelerated Gradient</strong>: measures the gradient of the cost function not at the local position θ but slightly ahead in the direction of the momentum, at θ + βm
+<ul>
+<li>m = βm − η * ∇θ(J(θ + βm))</li>
+<li>θ = θ + m</li>
+</ul>
+</li>
+<li><strong>AdaGrad</strong>: Consider the elongated bowl problem again: Gradient Descent starts by quickly going down the steepest slope, which does not point straight toward the global optimum, then it very slowly goes down to the bottom of the valley. It would be nice if the algorithm could correct its direction earlier to point a bit more toward the global optimum. The AdaGrad algorithm achieves this correction by <strong>scaling down the gradient vector along the steepest dimensions.</strong>
+<ul>
+<li><strong>often stops too early when training neural networks so don’t use this</strong></li>
+<li>s = s + ∇θ(J(θ)) ⊗ ∇θ(J(θ))</li>
+<li>θ = θ − η * ∇θ(J(θ)) ⊘ sqrt(s + ε)</li>
+<li>⊗ means element-wise multiplication, ⊘ means element-wise division</li>
+<li>ε is a smoothing term to avoid division by zero, typically set to 10^(–10)</li>
+<li><strong>this algorithm decays the learning rate, but it does so faster for steep dimensions than for dimensions with gentler slopes</strong></li>
+<li>This is called an <strong>adaptive learning rate</strong>.</li>
+</ul>
+</li>
+<li><strong>RMSProp</strong>: fix for AdaGrad slowing down a bit too fast and never converging to the global optimum. RMSProp algorithm fixes this by accumulating only the gradients from the most recent iterations (as opposed to all the gradients since the beginning of training). <strong>It does so by using exponential decay in the first step</strong>.
+<ul>
+<li>s = βs + (1-β) * ( ∇θ(J(θ)) ⊗ ∇θ(J(θ)) )</li>
+<li>θ = θ − η * ∇θ(J(θ)) ⊘ sqrt(s + ε)</li>
+<li>The decay rate β is typically set to 0.9</li>
+<li>ε is a smoothing term to avoid division by zero, typically set to 10^(-7) or 10^(–10)</li>
+</ul>
+</li>
+<li><strong>Adam Optimization (adaptive moment estimation)</strong>: momentum optimization (exponentially decaying average of past gradients) + RMSProp (exponentially decaying average of past squared gradients)
+<ul>
+<li>m = (β1 * m) − (1-β1) * ∇θ(J(θ))</li>
+<li>s = (β2 * s) + (1-β2) * ( ∇θ(J(θ)) ⊗ ∇θ(J(θ)) )</li>
+<li>m-hat = m / (1 - (β1^t))</li>
+<li>s-hat = s / (1 - (β2^t))</li>
+<li>θ = θ + η * (m-hat ⊘ sqrt(s-hat + ε))</li>
+<li>t represents the iteration number (starting at 1)</li>
+<li>β1 is typically initialized to 0.9, β2 is often initialized to 0.999</li>
+<li>ε is a smoothing term to avoid division by zero, typically set to 10^(–7) or 10^(-10)</li>
+<li>two variants of Adam:
+<ul>
+<li><strong>AdaMax Optimization</strong>:
+<ul>
+<li>m = (β1 * m) − (1-β1) * ∇θ(J(θ))</li>
+<li>s = max(   (β2 * s)   ,   ∇θ(J(θ))   )</li>
+<li>m-hat = m / (1 - (β1^t))</li>
+<li>θ = θ + η * (m-hat ⊘ s)</li>
+</ul>
+</li>
+<li><strong>Nadam Optimization</strong>:
+<ul>
+<li>Adam + Nesterov Accelerated Gradient</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>All the optimization techniques discussed so far only rely on the first-order partial derivatives (Jacobians). The optimization literature also contains amazing algorithms based on the second-order partial derivatives (the Hessians, which are the partial derivatives of the Jacobians). Unfortunately, these algorithms are very hard to apply to deep neural networks because there are n 2 Hessians per output (where n is the number of parameters), as opposed to just n Jacobians per output. Since DNNs typically have tens of thousands of parameters, the second-order optimization algorithms often don’t even fit in memory, and even when they do, computing the Hessians is just too slow.</li>
+<li><strong>RMSProp ~ Nadam > AdaMax > Adam > Nestrov > Momentum > SGD > GD</strong></li>
+</ul>
+<h3 id="classifiers">Classifiers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#classifiers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>Some algorithms (such as SGD classifiers, Random Forest classifiers, and naive Bayes classifiers) are capable of handling multiple classes natively.</li>
+<li>Others (such as Logistic Regression or Support Vector Machine classifiers) are strictly binary classifiers.</li>
+</ul>
+<h2 id="avoiding-overfitting-through-regularization">Avoiding Overfitting Through Regularization<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#avoiding-overfitting-through-regularization" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="early-stopping">Early stopping<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#early-stopping" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>stops training when the model’s performance on a <strong>validation set starts to degrade</strong>, even if training loss is still decreasing.</p>
+<h3 id="l1-lasso-regression">l1 (Lasso Regression)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#l1-lasso-regression" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Lasso (Least Absolute Shrinkage and Selection Operator) Regression adds a <strong>penalty proportional to the absolute value</strong> of the weights</p>
+<ul>
+<li>lossl1 = original_loss + λ * (∑ ∣w(i)∣)   where w(i) = ith weight</li>
+<li>Encourages <strong>sparsity</strong>, it pushes some weights <strong>exactly to zero</strong>.</li>
+<li>So it’s good for <strong>feature selection</strong>, it selects only the most important features.</li>
+<li>λ = 0.01 is a good value</li>
+</ul>
+<h3 id="l2-ridge-regression">l2 (Ridge Regression)<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#l2-ridge-regression" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Ridge Regression adds a <strong>penalty proportional to the square</strong> of the weights</p>
+<ul>
+<li>lossl2 = original_loss + λ * (∑ w(i)^2 )     where w(i) = ith weight</li>
+<li>Encourages weights to be small, but <strong>not zero</strong></li>
+<li>Smooths the model and helps generalization, but <strong>doesn’t eliminate features</strong></li>
+</ul>
+<h3 id="elastic-net">Elastic Net<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#elastic-net" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>mix l1 &amp; l2 regularization</p>
+<ul>
+<li>loss =  original_loss + λ * (∑ ∣w(i)∣) + λ * (∑ w(i)^2 )     where w(i) = ith weight</li>
+<li>Encourage spare and stable model</li>
+</ul>
+<h3 id="dropout">Dropout<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#dropout" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>at every training step, every neuron (including the input neurons, but always excluding the output neurons) has a probability p of being temporarily “dropped out,” meaning it will be entirely ignored during this training step, but it may be active during the next step.</p>
+<p>The hyperparameter p is called the dropout rate</p>
+<ul>
+<li>and it is typically set between 10% and 50%</li>
+<li>closer to 20– 30% in RNN,</li>
+<li>closer to 40–50% in CNN</li>
+</ul>
+<p><strong>In practice, you can usually apply dropout only to the neurons in the top one to three layers (excluding the output layer).</strong>
+Suppose p = 50%, in which case during testing a neuron would be connected to twice as many input neurons as it would be (on average) during training. To compensate for this fact, we multiply outputs with 1 / (1-p)</p>
+<h2 id="final-deep-neural-network-configs">Final Deep Neural Network Configs<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#final-deep-neural-network-configs" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><img src="../Pasted-image-20250731013706.png" width="auto" height="auto" alt/></li>
+<li><img src="../Pasted-image-20250731013731.png" width="auto" height="auto" alt/></li>
+</ul>
+<h1 id="cnn">CNN<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cnn" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>Instead of 1 weight per pixel, CNN uses same kernel (for example a 3x3 kernel <span>⇒</span> 9 weights) over the feature map</p>
+<h3 id="fourier-series">Fourier Series<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#fourier-series" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Represent a <strong>periodic function</strong> as a sum of sinusoids (sines and cosines)</p>
+<h3 id="fourier-transform">Fourier Transform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#fourier-transform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>transform the signal/waveform from time domain to frequency domain
+frequency domain have representation tells which frequencies were used to generate that signal/waveform
+Represent any function (even aperiodic) as an <strong>integral</strong> of sinusoids
+Fourier Transform(f(t)) <span>⇒</span> F(ω) = ∫ f(t) * e^(-iωt) dt
+e^(-iωt) <span>⇒</span> cos(ωt) - i * sine(ωt)</p>
+<h3 id="inverse-fourier-transform">Inverse Fourier Transform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#inverse-fourier-transform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>f(t) =  (1/ 2π) * ∫ F(ω) * e^(iωt) dω</p>
+<h3 id="laplace-transform">Laplace Transform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#laplace-transform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>generalized fourier transform
+Laplace Transform(f(t)) <span>⇒</span> F(s) = ∫ f(t) * e^(-(a+iω)t) dt
+where s = a+iω
+<strong>take s so that as F(s) <span>→</span> 0 as t <span>→</span> infinity</strong></p>
+<p>useful to solve <strong>ordinary differential equations (ODEs)</strong>, analyzing <strong>linear time-invariant (LTI)</strong> systems, and working with <strong>control systems</strong></p>
+<h3 id="inverse-laplace-transform">Inverse Laplace Transform<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#inverse-laplace-transform" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>f(t) =  (1/ i2π) * ∫ F(s) * e^st) ds</p>
+<h2 id="convolution">Convolution<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#convolution" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>flipping, sliding, integrating</p>
+<ul>
+<li><strong>Time-domain convolution</strong> ↔ <strong>Frequency-domain multiplication</strong></li>
+<li><strong>Time-domain multiplication</strong> ↔ <strong>Frequency-domain convolution</strong></li>
+</ul>
+<p>A neuron located in row i, column j of a given layer is connected to the outputs of the neurons in the previous layer located in rows <code>i</code> to <code>i + fh – 1</code>, columns <code>j</code> to <code>j + fw – 1</code>, where fh and fw are the height and width of the receptive field.</p>
+<p>In order for a layer to have the same height and width as the previous layer, it is common to add zeros around the inputs, as shown in the diagram. This is called zero padding.</p>
+<p>It is also possible to connect a large input layer to a much smaller layer by spacing out the receptive fields. This shift from one receptive field to the next is called the <strong>stride</strong>.
+A neuron located in row i, column j in the upper layer is connected to the outputs of the neurons in the previous layer located in rows <code>i × sh</code> to <code>i × sh + fh – 1</code>, columns <code>j × sw</code> to <code>j × sw + fw – 1</code>, where sh and sw are the vertical and horizontal strides.</p>
+<h3 id="filters--kernels">Filters / Kernels<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#filters--kernels" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>A neuron’s weights in a receptive decide the filter property and which feature of the image is focused on.
+outputs of filters / kernels are called feature maps.
+<strong>n CNNs, the model learns kernels values / weights as part of training, instead of using fixed ones.</strong></p>
+<p>but here are some common ones for understanding</p>
+<ul>
+<li>
+<p><strong>Edge Detection Filters</strong></p>
+<ul>
+<li><strong>Sobel filter</strong> (horizontal / vertical edges)
+<ul>
+<li>vertical edges example:
+<ul>
+<li><code>[ 0.25  0  -0.25 ]</code></li>
+<li><code>[ 0.50  0  -0.50 ]</code></li>
+<li><code>[ 0.25  0  -0.25 ]</code></li>
+</ul>
+</li>
+<li>horizontal edges example:
+<ul>
+<li><code>[ 0.25   0.50  0.25 ]</code></li>
+<li><code>[   0      0     0  ]</code></li>
+<li><code>[ -0.25 -0.50 -0.25 ]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Prewitt filter</li>
+<li><strong>Laplacian filter</strong> (second-order edges)</li>
+</ul>
+</li>
+<li>
+<p><strong>Sharpening Filters</strong>: Emphasize fine details and edges</p>
+<ul>
+<li><code>[ 0 -1  0 ]</code></li>
+<li><code>[-1  5 -1 ]</code></li>
+<li><code>[ 0 -1  0 ]</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Blurring / Smoothing Filters</strong>: Reduce noise, remove detail</p>
+<ul>
+<li>Gaussian blur (assign weights from gaussian curve)</li>
+<li>Average blur (every weights is 1 / number of neurons in a kernel)</li>
+</ul>
+</li>
+<li>
+<p><strong>Learned Filters in CNNs</strong>: in modern CNNs (like ResNet, VGG, etc.)</p>
+</li>
+<li>
+<p><strong>Depthwise Separable Filters</strong>: Used in <strong>MobileNet</strong> and other lightweight models</p>
+</li>
+<li>
+<p><strong>Dilated (Atrous) Filters</strong></p>
+</li>
+<li>
+<p><strong>Transposed Convolution Filters</strong>: Used in upsampling, e.g., in decoders (GANs, autoencoders).</p>
+</li>
+<li>
+<p>Input images are also composed of multiple sublayers, one per color channel.</p>
+</li>
+<li>
+<p>There are typically three channels: red, green, and blue (RGB).</p>
+</li>
+<li>
+<p>Grayscale images have just one channel.</p>
+</li>
+</ul>
+<h3 id="pooling-layers">Pooling Layers<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pooling-layers" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>subsample (i.e., shrink) the input image in order to reduce the computational load, the memory usage, and the number of parameters (thereby limiting the risk of overfitting).
+types:</p>
+<ul>
+<li><strong>Max Pooling</strong>: (most common)
+<ul>
+<li>take maximum of inputs in kernel</li>
+</ul>
+</li>
+<li><strong>Average Pooling</strong>:
+<ul>
+<li>take average of all inputs in kernel</li>
+</ul>
+</li>
+<li><strong>Global Pooling</strong>: (Global Average/Max Pooling)
+<ul>
+<li>Takes the average or max over the entire feature map.</li>
+<li>Often used at the end of CNNs instead of fully connected layers.</li>
+</ul>
+</li>
+</ul>
+<p>By inserting a max pooling layer every few layers in a CNN, it is possible to get some level of translation invariance at a larger scale.</p>
+<p>Note that max pooling and average pooling can be performed along the depth dimension (across same layer feature maps) rather than the spatial dimensions (same feature map), although this is not as common.</p>
+<h3 id="cnn-architectures">CNN Architectures<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cnn-architectures" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p><img src="../Pasted-image-20250816193046.png" width="auto" height="auto" alt/></p>
+<p>input <span>→</span> convolutional layers (each one generally followed by a ReLU layer) <span>→</span> pooling layer <span>→</span>  convolutional layers (each one generally followed by a ReLU layer) <span>→</span> pooling … <span>→</span> FNN + ReLUs <span>→</span> Softmax</p>
+<p>AlexNet introduced competitive normalization step immediately after the ReLU called <strong>local response normalization (LRN)</strong></p>
+<ul>
+<li>If a neuron fires very strongly compared to its neighbors, it <strong>suppresses</strong> them.</li>
+<li>This makes the network more selective and helps it <strong>generalize better</strong>.</li>
+</ul></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-content" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul class="toc-content overflow" id="list-1"><li class="depth-0"><a href="#sources" data-for="sources">Sources</a></li><li class="depth-0"><a href="#research-articles" data-for="research-articles">Research Articles</a></li><li class="depth-0"><a href="#fine-tuning" data-for="fine-tuning">Fine Tuning</a></li><li class="depth-1"><a href="#hyperparameters-fine-tuning" data-for="hyperparameters-fine-tuning">Hyperparameters fine tuning</a></li><li class="depth-2"><a href="#number-of-hidden-layers" data-for="number-of-hidden-layers">Number of Hidden Layers</a></li><li class="depth-2"><a href="#number-of-neurons-per-hidden-layer" data-for="number-of-neurons-per-hidden-layer">Number of Neurons per Hidden Layer</a></li><li class="depth-2"><a href="#learning-rate" data-for="learning-rate">Learning rate</a></li><li class="depth-2"><a href="#number-of-iterations" data-for="number-of-iterations">Number of Iterations</a></li><li class="depth-2"><a href="#loss-functions" data-for="loss-functions">Loss functions</a></li><li class="depth-2"><a href="#accuracy--cross-validation" data-for="accuracy--cross-validation">Accuracy / Cross Validation</a></li><li class="depth-2"><a href="#activation-functions" data-for="activation-functions">Activation functions</a></li><li class="depth-2"><a href="#optimizers" data-for="optimizers">Optimizers</a></li><li class="depth-2"><a href="#classifiers" data-for="classifiers">Classifiers</a></li><li class="depth-1"><a href="#avoiding-overfitting-through-regularization" data-for="avoiding-overfitting-through-regularization">Avoiding Overfitting Through Regularization</a></li><li class="depth-2"><a href="#early-stopping" data-for="early-stopping">Early stopping</a></li><li class="depth-2"><a href="#l1-lasso-regression" data-for="l1-lasso-regression">l1 (Lasso Regression)</a></li><li class="depth-2"><a href="#l2-ridge-regression" data-for="l2-ridge-regression">l2 (Ridge Regression)</a></li><li class="depth-2"><a href="#elastic-net" data-for="elastic-net">Elastic Net</a></li><li class="depth-2"><a href="#dropout" data-for="dropout">Dropout</a></li><li class="depth-1"><a href="#final-deep-neural-network-configs" data-for="final-deep-neural-network-configs">Final Deep Neural Network Configs</a></li><li class="depth-0"><a href="#cnn" data-for="cnn">CNN</a></li><li class="depth-2"><a href="#fourier-series" data-for="fourier-series">Fourier Series</a></li><li class="depth-2"><a href="#fourier-transform" data-for="fourier-transform">Fourier Transform</a></li><li class="depth-2"><a href="#inverse-fourier-transform" data-for="inverse-fourier-transform">Inverse Fourier Transform</a></li><li class="depth-2"><a href="#laplace-transform" data-for="laplace-transform">Laplace Transform</a></li><li class="depth-2"><a href="#inverse-laplace-transform" data-for="inverse-laplace-transform">Inverse Laplace Transform</a></li><li class="depth-1"><a href="#convolution" data-for="convolution">Convolution</a></li><li class="depth-2"><a href="#filters--kernels" data-for="filters--kernels">Filters / Kernels</a></li><li class="depth-2"><a href="#pooling-layers" data-for="pooling-layers">Pooling Layers</a></li><li class="depth-2"><a href="#cnn-architectures" data-for="cnn-architectures">CNN Architectures</a></li><li class="overflow-end"></li></ul></div></div><footer class><ul><li><a href="https://github.com/dhruvkjain">GitHub</a></li></ul></footer></div></div></body><script type="application/javascript">function o(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.classList.contains("is-collapsed")?this.scrollHeight:t.scrollHeight;t.style.maxHeight=e+"px";let c=t,l=t.parentElement;for(;l;){if(!l.classList.contains("callout"))return;let i=l.classList.contains("is-collapsed")?l.scrollHeight:l.scrollHeight+c.scrollHeight;l.style.maxHeight=i+"px",c=l,l=l.parentElement}}function n(){let t=document.getElementsByClassName("callout is-collapsible");for(let s of t){let e=s.firstElementChild;if(!e)continue;e.addEventListener("click",o),window.addCleanup(()=>e.removeEventListener("click",o));let l=s.classList.contains("is-collapsed")?e.scrollHeight:s.scrollHeight;s.style.maxHeight=l+"px"}}document.addEventListener("nav",n);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script type="application/javascript">
+        const socket = new WebSocket('ws://localhost:3001')
+        // reload(true) ensures resources like images and scripts are fetched again in firefox
+        socket.addEventListener('message', () => document.location.reload(true))
+      </script><script src="../postscript.js" type="module"></script></html>

@@ -2,6 +2,8 @@
 
 ## Resources
 [windows core processes ](https://youtu.be/B_ThnFkhJOA?si=B7XXJ6roW_OxBDSA)
+[Windows Internals for Red Teams](https://www.youtube.com/watch?v=U5dhuyPm6n8)
+[Official Windows Win32 API list - Microsoft Learn](https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list)
 
 ## windows crate
 

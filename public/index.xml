@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>PKMS</title>
+      <link>https://dhruvkjain.github.io/pkms</link>
+      <description>Last 10 notes on PKMS</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Arch Linux</title>
+    <link>https://dhruvkjain.github.io/pkms/Arch-Linux</link>
+    <guid>https://dhruvkjain.github.io/pkms/Arch-Linux</guid>
+    <description>index Cleanup Routine Commands: pacman, yay sudo pacman -Rns $(pacman -Qdtq) # remove repo orphans yay -Rns $(yay -Qdtq) # remove AUR orphans sudo paccache -r # trim repo package cache yay -Sc # trim yay build cache cargo: cargo cache cargo cache -a uv: uv cache clean.</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>CP-31 Sheet in C++</title>
+    <link>https://dhruvkjain.github.io/pkms/DSA_CP/CP-31-Sheet-in-C++</link>
+    <guid>https://dhruvkjain.github.io/pkms/DSA_CP/CP-31-Sheet-in-C++</guid>
+    <description>index 800 Rating Jagged Swaps Determine whether it is possible to sort the permutation after a finite number of operations, where an operations means: Select an index i from 2 to n−1 such that (a[i]−1 &lt; a[i]) &amp;&amp; (a[i] &gt; a[i]+1), then Swap a[i] and a[i]+1 Sol: as all number except a[0] ...</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>DSA in C++</title>
+    <link>https://dhruvkjain.github.io/pkms/DSA_CP/DSA-in-C++</link>
+    <guid>https://dhruvkjain.github.io/pkms/DSA_CP/DSA-in-C++</guid>
+    <description>index Arrays Longest subarray with sum k using hashing: int getLongestSubarray(vector&lt;int&gt;&amp; nums, int k) { int n = nums.size(); unordered_map&lt;int, int&gt; mp; int prefixsum = 0, res = 0; for (int i=0; i&lt;n; ++i) { prefixsum += nums[i]; if (prefixsum == k) { res = max(res, i+1); } if (...</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>DSA</title>
+    <link>https://dhruvkjain.github.io/pkms/DSA_CP/DSA</link>
+    <guid>https://dhruvkjain.github.io/pkms/DSA_CP/DSA</guid>
+    <description>index Striver sheet A2Z : takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/ CP-31 sheet : www.tle-eliminators.com/cp-sheet Siddh recommendation : youkn0wwho.academy/topic-list Standard Questions : InterviewBit NeetCode AlgoMap CP-algorithms : cp-algorithms.com/ CSES Problemse...</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>GitHub</title>
+    <link>https://dhruvkjain.github.io/pkms/GitHub</link>
+    <guid>https://dhruvkjain.github.io/pkms/GitHub</guid>
+    <description>Home GitHub git reset HEAD~1: To unstage local change (only 1) from commits Readme: Diagrams: stan-smith.github.io/FossFLOW/ uithub: file structure for readme gitmvp: a prompt that reverse engineer the repo in form of mvps .</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>ML</title>
+    <link>https://dhruvkjain.github.io/pkms/ML/</link>
+    <guid>https://dhruvkjain.github.io/pkms/ML/</guid>
+    <description>Home Roadmap Machine Learning Roadmap 2020 (whimsical.com) Project ideas Machine Learning Projects - YouTube Grind-75 ML version products.123ofai.com/qnalab/problems Mathematics The Complete Mathematics of Neural Networks and Deep Learning (youtube.com) Machine Learning MLU-Explainis an education in...</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>Research</title>
+    <link>https://dhruvkjain.github.io/pkms/Research</link>
+    <guid>https://dhruvkjain.github.io/pkms/Research</guid>
+    <description>Home BioTech Research: Futurehouse www.connectedpapers.com/https://hal.science/ www.findmypapers.ai/search hal.science/ 1️⃣ How to Do Research Mindset, habits, tools, writing, productivity, and advice.</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>Rust</title>
+    <link>https://dhruvkjain.github.io/pkms/Rust</link>
+    <guid>https://dhruvkjain.github.io/pkms/Rust</guid>
+    <description>Home 70% of errors listed in MISRA rules for C++ to avoid error are avoided by RUST by default.</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>Frontend</title>
+    <link>https://dhruvkjain.github.io/pkms/Web-Dev/Frontend</link>
+    <guid>https://dhruvkjain.github.io/pkms/Web-Dev/Frontend</guid>
+    <description>index Advice : CAUTION : Don’t waste much time in HTML and CSS as you will learn them along the way, focus more on the basics of JavaScript.</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item><item>
+    <title>NextAuth + Prisma + Supabase</title>
+    <link>https://dhruvkjain.github.io/pkms/Web-Dev/NextAuth-+-Prisma-+-Supabase</link>
+    <guid>https://dhruvkjain.github.io/pkms/Web-Dev/NextAuth-+-Prisma-+-Supabase</guid>
+    <description>index OAuth response: { user: { id: &#039;a_number&#039;, name: &#039;name&#039;, email: &#039;email.com&#039;, image: undefined }, account: { provider: &#039;google&#039;, type: &#039;oauth&#039;, providerAccountId: &#039;a_number&#039;, access_token: &#039;string&#039;, expires_at: 1758458065, sco...</description>
+    <pubDate>Fri, 10 Oct 2025 12:10:34 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
