@@ -1,4 +1,4 @@
-[[Web Dev/index|index]]
+[[Web Dev/index|WebDev/index]]
 
 ACID explained in fun way :
 https://www.instagram.com/reel/C2j8YlvsX4c/?utm_source=ig_web_copy_link

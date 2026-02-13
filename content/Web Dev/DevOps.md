@@ -1,4 +1,4 @@
-[[Web Dev/index|index]]
+[[Web Dev/index|WebDev/index]]
 
 # CI/CD
 ![Pasted image 20240605163256](https://github.com/user-attachments/assets/1e09275d-e460-446c-8854-5a09d4e91d93)

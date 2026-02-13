@@ -1,4 +1,4 @@
-[[Web Dev/index|index]]
+[[Web Dev/index|WebDev/index]]
 
 [ZTM Three.js](https://www.youtube.com/watch?v=KM64t3pA4fs)
 [Robot Bobby - YouTube](https://www.youtube.com/@robotbobby9)

@@ -1,3 +1,6 @@
+---
+title: Quant
+---
 [[index|Home]]
 
 

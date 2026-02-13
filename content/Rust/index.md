@@ -1,2 +1,6 @@
+---
+title: Rust
+---
+
 [[index|Home]]
 

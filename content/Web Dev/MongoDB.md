@@ -1,4 +1,4 @@
-[[Web Dev/index|index]]
+[[Web Dev/index|WebDev/index]]
 
 # In Node.js :
 

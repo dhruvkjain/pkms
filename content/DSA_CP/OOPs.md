@@ -1,4 +1,4 @@
-[[index|Home]]
+[[DSA_CP/index|DSA_CP/index]]
 
 ### 4 Pillars: 
 - **Encapsulation** => encapsulating functions and variable having same objective into a single unit (often function or object)

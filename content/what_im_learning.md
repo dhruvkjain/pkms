@@ -1,5 +1,4 @@
 [[index|Home]]
-[[Tech Articles & Videos]]
 
 ## what_im_learning
 - [[Quant/index|Quantitative Development]] (Data Oriented Design, Compiler and Hardware level optimizations)

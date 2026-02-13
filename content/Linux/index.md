@@ -1,2 +1,5 @@
+---
+title: Linux
+---
 [[index|Home]]
 

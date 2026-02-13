@@ -1,4 +1,4 @@
 ---
-title: DSA and CP
+title: Bioinformatics
 ---
 [[index|Home]]

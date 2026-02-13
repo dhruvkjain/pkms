@@ -1,4 +1,4 @@
-[[Web Dev/index|index]]
+[[Web Dev/index|WebDev/index]]
 
 > FROM ZTM COURSE AND CODEVOLUTION (youtube (to learn imp concepts))
 
