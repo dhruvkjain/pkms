@@ -37,10 +37,3 @@ rm -rf ~/.cache/kioexec
 rm -rf ~/.cache/yay
 rm -rf ~/.cache/go-build
 ```
-
-kornia-rs:
-```shell
-rm -rf "./codes/oss opensource/kornia-rs/target"
-rm -rf "./codes/oss opensource/kornia-rs/kornia-py/target"
-```
-

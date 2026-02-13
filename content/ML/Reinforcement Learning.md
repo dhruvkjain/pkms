@@ -26,6 +26,9 @@ At time t and model parameters θ (weights and biasis):
 9. For z(k) = w(k)^T * ​h(n−1) + b(k) neuron apply any optimizer   
 	  ∂L​ / ∂z(k) = 2 * ( Qθ​(s(t)​,a(t)​) − y(t) ​)
 
+> In 4th and 5th step above, we use Relay Buffer and Target Network in actual implementation.
+
+![[Pasted image 20260201144005.png]]
 
 #### Policy-Based Approximation (REINFORCE as policy is softmax) High Level View
 At time t and model parameters θ (weights and biasis):

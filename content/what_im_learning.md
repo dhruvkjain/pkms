@@ -2,6 +2,8 @@
 [[Tech Articles & Videos]]
 
 ## what_im_learning
+- [[Quant/index|Quantitative Development]] (Data Oriented Design, Compiler and Hardware level optimizations)
+- [[Reinforcement Learning]] (DQN, BiLSTM, Federated RL, GRU)
 - 
 
 ## Ideas

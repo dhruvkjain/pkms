@@ -10,3 +10,6 @@ System Design concepts: ([Quastor](https://blog.quastor.org/), [DEV Community](h
 [Singleton Method Design Pattern - GeeksforGeeks](https://www.geeksforgeeks.org/singleton-design-pattern/)
 
 [Reddit Architecture](https://www.youtube.com/watch?v=nUcO7n4hek4)
+
+What actually means to understand System Design: [Medium - I Thought I Knew System Design Until I Met a Google L7 Interviewer](https://freedium-mirror.cfd/https://medium.com/beyond-localhost/i-thought-i-knew-system-design-until-i-met-a-google-l7-interviewer-239385b24881)
+

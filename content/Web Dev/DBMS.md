@@ -26,3 +26,6 @@ https://www.youtube.com/watch?v=pomxJOFVcQs
 - Mutex => Mutual Exclusion => single thread access => lock is binary
 - Semaphore => multiple (but limited) threads can access => lock is a count => it's like ;load balancing if all servers are busy then queue the request
 
+### Techniques that Databases use
+- [Ben Dicken (Planet Scale Led Dev)](https://www.youtube.com/@benjdicken)
+

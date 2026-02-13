@@ -1,4 +1,7 @@
-[[Rust/index|Rust/index]]
+[[index|Home]]
+
+
+[LeetGPU - leetcode for optimizations](https://leetgpu.com/)
 
 ### Rust optimizations / Advance Rust
 - [Measure Rust Performance - Let's Get Rusty YT](https://youtu.be/q3VOsGzkM-M) 
