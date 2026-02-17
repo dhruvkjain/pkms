@@ -1,3 +1,20 @@
+Electron Repulsion Integral => describes electrostatic repulsion between two electron in an multi-electron system.
+According to Coulomb’s Law, two particles with the same charge will repel each other. The strength of this repulsion depends on the distance between them. In a quantum mechanical context, we don't know exactly where the electrons are, so we must integrate over all possible positions of both Electron 1 and Electron 2, weighted by their probability densities (orbitals).
+
+[theochem explanation on GTOs](https://www.theochem.ru.nl/~pwormer/Knowino/knowino.org/wiki/Gaussian_type_orbitals.html)
+
+Primitive Gaussian type orbital (GTO) => a real-valued function of a 3-dimensional vector r = (x, y, z), the vector pointing from an origin to the position of an electron. 
+
+Radial part of GTO is given by a Gaussian function $e^(-alpha*r^2)$ where r is the length of the vector r, alpha is taken from the tables of atomic orbital basis sets (given in dataset).
+
+Contracted GTO =>Primitive GTO is a poor approximation of the true atomic orbital shape. By summing several Gaussians with different exponents (radial component) (some tight near the nucleus, some diffuse far away), you can construct a function that closely mimics the desired orbital shape (like a Slater-type orbital that is computational difficult but more accurate than primitive GTO). 
+
+[NPTEL IITB - Quantum Chemistry](https://youtu.be/Uwv51JZAuJ8?si=2la6_jrq__SQpBD_)
+
+
+**RIJCOSX** approximation
+
+
 **The Problem:** The bottleneck of Hartree-Fock (HF) and DFT calculations is the evaluation of 4-center 2-electron repulsion integrals (ERIs). Standard open-source tools (like PySCF’s `libcint`) use C code that is often hard to parallelize safely or lacks modern AVX-512 optimizations.
 
 - **The Standard (PySCF / `libcint`):**

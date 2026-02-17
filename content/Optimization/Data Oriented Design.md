@@ -1,6 +1,5 @@
 [[Optimization/index|Optimization/index]]
 
-[[OOPs]]
 
 General Intuition on why OOPs is bad:
 - [Casey Muratori | Smart-Pointers, RAII, ZII? Becoming an N+2 programmer](https://youtu.be/xt1KNDmOYqA?si=YgKaHB6on-Y8hJFI)
