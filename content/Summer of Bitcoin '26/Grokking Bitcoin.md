@@ -4,3 +4,5 @@
 
 [Grokking Bitcoin - web book](https://rosenbaum.se/book/grokking-bitcoin.html)
 
+Bitcoin is an **electronic payment system** that allows anyone to create an account and send any amount of money to anyone in the world.
+
