@@ -3,7 +3,10 @@
 ---
 [[index|Home]]
 
-What actually means to understand System Design: [Medium - I Thought I Knew System Design Until I Met a Google L7 Interviewer](https://freedium-mirror.cfd/https://medium.com/beyond-localhost/i-thought-i-knew-system-design-until-i-met-a-google-l7-interviewer-239385b24881)
+What actually means to understand System Design: 
+- [Medium - I Thought I Knew System Design Until I Met a Google L7 Interviewer](https://freedium-mirror.cfd/https://medium.com/beyond-localhost/i-thought-i-knew-system-design-until-i-met-a-google-l7-interviewer-239385b24881)
+- [The Day a Google L7 Engineer Tore My System Design to Shreds](https://freedium-mirror.cfd/https://medium.com/expocomputing/google-l7-system-design-interview-lessons-0b3834fded07)
+
 
 System Design concepts: ([Quastor](https://blog.quastor.org/), [DEV Community](https://dev.to/), [Medium](https://medium.com/), [Archive - ByteByteGo Newsletter](https://blog.bytebytego.com/archive), [system-design-primer](https://github.com/donnemartin/system-design-primer))
 
@@ -15,3 +18,4 @@ System Design concepts: ([Quastor](https://blog.quastor.org/), [DEV Community](h
 - How Hotstar Application Scaled 25 Million Concurrent Users | Performance Testing | Load Testing: https://www.youtube.com/watch?v=9b7HNzBB3OQ
 - [How CloudFlare Processes a Million Logs per Second (quastor.org)](https://blog.quastor.org/p/cloudflare-processes-million-logs-per-second)
 - [Reddit Architecture](https://www.youtube.com/watch?v=nUcO7n4hek4)
+

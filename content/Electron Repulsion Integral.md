@@ -1,4 +1,4 @@
-Electron Repulsion Integral => describes electrostatic repulsion between two electron in an multi-electron system.
+1Electron Repulsion Integral => describes electrostatic repulsion between two electron in an multi-electron system.
 According to Coulomb’s Law, two particles with the same charge will repel each other. The strength of this repulsion depends on the distance between them. In a quantum mechanical context, we don't know exactly where the electrons are, so we must integrate over all possible positions of both Electron 1 and Electron 2, weighted by their probability densities (orbitals).
 
 [theochem explanation on GTOs](https://www.theochem.ru.nl/~pwormer/Knowino/knowino.org/wiki/Gaussian_type_orbitals.html)

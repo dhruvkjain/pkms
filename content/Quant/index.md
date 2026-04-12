@@ -53,3 +53,203 @@ Data are of two types Quantitative and Qualitative
 		Important considering factor for Venture capitals, Investors etc.
 - **Qualitative** =>  subjective factors like management quality, brand value, regulatory risks, and macroeconomic trends
 		Important considering factor for Private equity, Risk management, HFT, asset pricing etc.
+
+
+
+## **Foundation (CPU/Hardware)**
+
+1. CPU cache hierarchy (L1/L2/L3)
+2. Cache lines and alignment
+3. Cache coherency (MESI/MOESI)
+4. False sharing
+5. True sharing and cache bouncing
+6. Memory barriers and fences
+7. Store buffers and load buffers
+8. Write-combining
+9. Branch prediction (static/dynamic)
+10. Instruction pipelining
+11. Out-of-order execution
+12. Speculative execution
+13. SIMD basics (SSE, AVX, NEON)
+14. Prefetching (hardware/software)
+15. TLB (Translation Lookaside Buffer)
+16. Page faults and memory paging
+17. NUMA topology and awareness
+18. CPU affinity and core pinning
+19. Hyper-threading effects
+
+## **Memory & Data Structures**
+
+20. Memory layout and padding
+21. Struct packing and alignment
+22. Pointer aliasing
+23. Temporal/spatial locality
+24. Working set size
+25. Cache line coloring
+26. Ring buffers
+27. Circular queues
+28. Lock-free queues (MPMC, SPSC)
+29. Skip lists (lock-free variants)
+30. Hash tables (concurrent)
+31. Memory pools and pre-allocation
+32. Object reuse patterns
+33. Disruptor pattern
+34. Bounded queues vs unbounded
+
+## **Synchronization & Concurrency**
+
+35. Atomics (compare-and-swap, load/store)
+36. Memory ordering (acquire/release/relaxed)
+37. Spinlocks vs mutexes
+38. Reader-writer locks
+39. Condition variables
+40. Semaphores
+41. Lock-free vs wait-free
+42. ABA problem
+43. Acquire/release semantics
+44. Sequential consistency
+45. Double-checked locking
+46. Seqlock pattern
+
+## **Threading & Scheduling**
+
+47. Thread creation overhead
+48. Thread pooling
+49. Work stealing
+50. Thread affinity pinning
+51. NUMA-aware scheduling
+52. Real-time scheduling (SCHED_FIFO/SCHED_RR)
+53. CPU isolation (isolcpus)
+54. Context switching costs
+55. Jitter sources
+56. Priority inversion
+57. Busy-wait loops
+58. Backpressure strategies
+
+## **I/O & Networking**
+
+59. Polling vs interrupts
+60. Interrupt coalescing
+61. Socket options (TCP_NODELAY, SO_REUSEADDR)
+62. UDP vs TCP tradeoffs
+63. Non-blocking I/O
+64. epoll/kqueue/IOCP
+65. Event-driven architecture
+66. Reactor pattern
+67. Proactor pattern
+68. Zero-copy (sendfile, mmap, io_uring)
+69. RX/TX ring buffers (NIC level)
+70. DPDK basics
+71. Kernel bypass
+72. Packet filtering/XDP
+
+## **System Calls & OS Interaction**
+
+73. Syscall overhead
+74. Avoiding syscalls
+75. Batch syscalls
+76. vDSO (virtual dynamic shared object)
+77. Read/write/mmap syscalls
+78. mlock/mlockall
+79. Process vs thread creation
+80. Signal handling in low-latency code
+
+## **Profiling & Analysis Tools**
+
+81. perf (Linux performance counters)
+82. Flamegraphs
+83. VTune (Intel)
+84. Cachegrind/Callgrind
+85. Strace syscall tracing
+86. ltrace library tracing
+87. GDB debugging
+88. Valgrind/Helgrind
+89. ThreadSanitizer
+90. CPU cycle counting (RDTSC)
+91. Microbenchmarking frameworks
+92. Statistical significance in benchmarks
+93. Variance and tail latency analysis
+94. Load testing tools
+
+## **C++ Specific**
+
+95. Move semantics and RVO
+96. RAII and scope guards
+97. Smart pointers (unique/shared)
+98. Noexcept and exception safety
+99. Constexpr and compile-time computation
+100. Templates and specialization
+101. SFINAE and concepts
+102. Variadic templates
+103. Inline assembly (**asm**)
+104. Compiler intrinsics (__builtin_*)
+105. Volatile and compiler barriers
+106. Undefined behavior pitfalls
+107. Aliasing rules
+108. Link-time optimization (LTO)
+109. Profile-guided optimization (PGO)
+
+## **Rust Specific**
+
+110. Ownership and borrowing semantics
+111. Send/Sync traits
+112. Interior mutability (Cell/RefCell/Atomic)
+113. Async/await for systems
+114. Tokio/async-std runtimes
+115. Crossbeam (threading/concurrency)
+116. Parking lot mutexes
+117. Unsafe code and correctness
+118. Inline assembly in Rust
+119. SIMD in Rust (packed_simd, std::simd)
+
+## **Design Patterns & Architecture**
+
+120. Ring buffer patterns
+121. Event sourcing
+122. Command pattern
+123. Observer pattern
+124. Pub-sub architectures
+125. Pipeline patterns
+126. Batching for throughput
+127. Backpressure handling
+128. Graceful degradation
+129. Circuit breakers
+130. Rate limiting
+
+## **Benchmarking & Validation**
+
+131. Microbenchmarking methodology
+132. Cold vs warm cache testing
+133. Variance measurement
+134. Reproducibility
+135. Tail latency percentiles
+136. Throughput vs latency tradeoffs
+137. Load generation
+138. Stress testing
+139. Long-running stability tests
+140. Regression testing
+
+## **Real-world HFT/Low-Latency Specifics**
+
+141. Order matching engines
+142. Market data processing
+143. Serialization formats (FIX, protobuf, flatbuffers)
+144. Time synchronization (NTP, PTP)
+145. Latency budgets
+146. Jitter quantification
+147. Tick-to-trade timing
+148. Colocation considerations
+149. Network latency measurement
+150. Hardware clocking
+
+## **Build & Deployment**
+
+151. CMake/Bazel build optimization
+152. Compiler flags for performance
+153. Static vs dynamic linking
+154. Code generation options (-O3, -march, etc)
+155. Stripping/dead code elimination
+156. Docker for reproducibility
+157. Linux container tuning
+158. Kernel parameters (sysctl)
+
