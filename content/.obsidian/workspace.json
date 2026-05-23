@@ -4,55 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "22ca81e59880b832",
-        "type": "tabs",
-        "dimension": 46.875,
-        "children": [
-          {
-            "id": "4bf5ac16e535b57e",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
-            }
-          }
-        ]
-      },
-      {
         "id": "40fa9fdf5e6c43cc",
         "type": "tabs",
-        "dimension": 53.125,
         "children": [
-          {
-            "id": "b347478581c87ba1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Quant/index.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "index"
-            }
-          },
-          {
-            "id": "9fd13d8be2cf3c51",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "System Design/index.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "index"
-            }
-          },
           {
             "id": "22352611f1ccdaa9",
             "type": "leaf",
@@ -68,7 +22,45 @@
             }
           },
           {
-            "id": "17b67e3f198e001f",
+            "id": "f67b2450c34b4dbd",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "1df41f4ec8af4adb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Quant/index.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "index"
+            }
+          },
+          {
+            "id": "5d0f9b4ee523e581",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ML/Hands on Machine Learning with ScikitLearn, Keras & TensorFlow.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Hands on Machine Learning with ScikitLearn, Keras & TensorFlow"
+            }
+          },
+          {
+            "id": "610b27d79ac5fa5c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -81,7 +73,8 @@
               "title": "Reinforcement Learning"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -247,10 +240,16 @@
       "pdf-plus:PDF++: Toggle auto-paste": false
     }
   },
-  "active": "b347478581c87ba1",
+  "active": "1df41f4ec8af4adb",
   "lastOpenFiles": [
     "ML/Reinforcement Learning.md",
+    "ML/Hands on Machine Learning with ScikitLearn, Keras & TensorFlow.md",
     "OS.md",
+    "Pasted image 20260506082054.png",
+    "Pasted image 20260506030744.png",
+    "Pasted image 20260505205829.png",
+    "Pasted image 20260505205801.png",
+    "Optimization/index.md",
     "System Design/index.md",
     "Quant/index.md",
     "Linux/Arch Linux.md",
@@ -275,8 +274,6 @@
     "Bioinformatics/Algorithms of Bioinformatics.md",
     "Bioinformatics/index.md",
     "Literature Notes/C++ Design Patterns for Low-latency Applications Including High-frequency Trading (2309.04259v1).md",
-    "Literature Notes/index.md",
-    "Web Dev/UI-UX.md",
     "Assets/C++ Design Patterns for Low-latency Applications Including High-frequency Trading (2309.04259v1).pdf",
     "Pasted image 20260201152833.png",
     "Pasted image 20260201144005.png",
@@ -285,9 +282,7 @@
     "C++",
     "Pasted image 20251216193237.png",
     "Pasted image 20251216174729.png",
-    "Pasted image 20251216142515.png",
     "Bioinformatics",
-    "Pasted image 20250225141155.png",
     "Linux",
     "Rust"
   ]
