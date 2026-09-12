@@ -4,79 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "40fa9fdf5e6c43cc",
+        "id": "f6f593d2645f5d25",
         "type": "tabs",
         "children": [
           {
-            "id": "22352611f1ccdaa9",
+            "id": "c1255bec64ec9d36",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OS.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "OS"
-            }
-          },
-          {
-            "id": "f67b2450c34b4dbd",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted image 20260506082054.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260506082054"
-            }
-          },
-          {
-            "id": "5d0f9b4ee523e581",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ML/Hands on Machine Learning with ScikitLearn, Keras & TensorFlow.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Hands on Machine Learning with ScikitLearn, Keras & TensorFlow"
-            }
-          },
-          {
-            "id": "1df41f4ec8af4adb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Quant/A Firm.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "A Firm"
-            }
-          },
-          {
-            "id": "610b27d79ac5fa5c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ML/Reinforcement Learning.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Reinforcement Learning"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -96,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -242,45 +185,48 @@
       "pdf-plus:PDF++: Toggle auto-paste": false
     }
   },
-  "active": "f67b2450c34b4dbd",
+  "active": "c1255bec64ec9d36",
   "lastOpenFiles": [
-    "Pasted image 20260628083608.png",
-    "Pasted image 20260506082054.png",
-    "Pasted image 20260628083643.png",
+    "Rust/Rust crux.md",
+    "Rust/async rust ... tokio.md",
+    "Pasted image 20260912203937.png",
     "Pasted image 20260506030744.png",
-    "Pasted image 20260505205829.png",
-    "Pasted image 20260628083722.png",
-    "Pasted image 20260628083911.png",
-    "Pasted image 20260628084001.png",
-    "Pasted image 20260628084043.png",
-    "Pasted image 20260628084129.png",
-    "Pasted image 20260628084230.png",
-    "Quant/Akuna Capital University.md",
-    "Quant/A Firm.md",
-    "Electron Repulsion Integral.md",
-    "Quant/Orderbook in Rust.md",
-    "Quant/index.md",
-    "Untitled.md",
-    "ML/Hands on Machine Learning with ScikitLearn, Keras & TensorFlow.md",
-    "ML/Reinforcement Learning.md",
-    "OS.md",
-    "Optimization/index.md",
-    "System Design/index.md",
-    "Linux/Arch Linux.md",
-    "ML/index.md",
-    "Quant/World Quant.md",
+    "Pasted image 20260506082054.png",
+    "Pasted image 20260817014856.png",
+    "Pasted image 20260912203153.png",
+    "Pasted image 20260912203731.png",
+    "crux_index.md",
+    "DSA_CP/DSA crux.md",
     "index.md",
-    "Summer of Bitcoin '26/index.md",
-    "Summer of Bitcoin '26/Grokking Bitcoin.md",
-    "Summer of Bitcoin '26",
+    "MATLAB.md",
+    "Pasted image 20260505205801.png",
+    "Pasted image 20250511120559.png",
+    "Pasted image 20250511120517.png",
+    "Pasted image 20250511120424.png",
+    "Database Internals/HydraDB.md",
+    "DSA_CP/DSA.md",
+    "DSA_CP/CP-31 Sheet in C++.md",
+    "DSA_CP/OOPs.md",
+    "DSA_CP/Striver Sheet in Rust.md",
+    "Database Internals/Book.md",
+    "Blogs/Philosophy/The only way of thinking.md",
+    "DSA_CP/DSA in C++.md",
+    "Bioinformatics/Algorithms of Bioinformatics.md",
     "Optimization/Data Oriented Design.md",
+    "Optimization/index.md",
+    "AI and WebDev.md",
+    "Electron Repulsion Integral.md",
     "Ethical Hacking.md",
     "Git and GitHub.md",
-    "MATLAB.md",
     "Online Courses.md",
-    "Random.md",
-    "Research.md",
+    "OS.md",
     "Startups.md",
+    "Research.md",
+    "Untitled.canvas",
+    "Untitled",
+    "Database Internals/Untitled",
+    "Database Internals",
+    "Summer of Bitcoin '26",
     "Assets/C++ Design Patterns for Low-latency Applications Including High-frequency Trading (2309.04259v1).pdf",
     "Optimization",
     "C++",

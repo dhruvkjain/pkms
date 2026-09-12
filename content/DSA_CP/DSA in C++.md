@@ -3234,6 +3234,44 @@ public:
 };
 ```
 
+### Merge K sorted arrays
+```cpp
+vector<int> mergeKArrays(vector<vector<int>>& arr) {
+    // {value, array_index, element_index}
+    priority_queue<
+        tuple<int, int, int>,
+        vector<tuple<int, int, int>>,
+        greater<tuple<int, int, int>>
+    > pq;
+    
+    // Put first element of every array into heap
+    for (int i = 0; i < arr.size(); i++) {
+        if (!arr[i].empty()) {
+            pq.push({arr[i][0], i, 0});
+        }
+    }
+    
+    vector<int> ans;
+    
+    while (!pq.empty()) {
+        auto [value, arrayIdx, elementIdx] = pq.top();
+        pq.pop();
+		
+        ans.push_back(value);
+		
+        // Insert next element from the same array
+        if (elementIdx + 1 < arr[arrayIdx].size()) {
+            pq.push({
+                arr[arrayIdx][elementIdx + 1],
+                arrayIdx,
+                elementIdx + 1
+            });
+        }
+    }
+	
+    return ans;
+}
+```
 
 # Greedy
 

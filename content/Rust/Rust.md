@@ -20,6 +20,7 @@ In Rust, projects are typically classified into **binary** and **library** proje
 Binary Project 
 - Produces an executable program, 
 - output is a compiled binary file (e.g., .exe, ELF, or Mach-O)
+
 Library Project 
 - Produces reusable code (a library), 
 - output is a .rlib (Rust library) or .so/.dll (dynamic library)
@@ -207,8 +208,9 @@ fn main() {
 **The types covered below are of a known size, can be stored on the stack and popped off the stack when their scope is over, and can be quickly and trivially copied to make a new, independent instance if another part of code needs to use the same value in a different scope.**
 ### Integer Types:
  the `isize` and `usize` types depend on the architecture of the computer your program is running on, which is denoted in the table as “arch”: 64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit architecture.
- 
- > Integer Literal Notations:
+
+
+Integer Literal Notations:
 ```rust
 let decimal = 42;        // Decimal (Base-10) 
 let hex = 0x2A;          // Hexadecimal (0x prefix) 
